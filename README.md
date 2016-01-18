@@ -1,4 +1,4 @@
-# Multi-module-maven-archetype example
+# multi-module-maven-archetype example
 
 To install 
 
