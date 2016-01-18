@@ -4,9 +4,10 @@ To install archetype into your local machine
 
      mvn clean install
      
-To create new archetype 
+To create new archetype,create a new directory where you want to make a project
 
      mvn archetype:generate -DarchetypeCatalog=local
+
      
 Then select the iot.devicetype:iot-device-type-archetype (iot-device-type-archetype) as new artifact. Then you need to provide groupId, artifactId, version and packging as shown bellow.
 
