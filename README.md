@@ -1,6 +1,6 @@
 # Multi-module-maven-archetype example
 
-to install 
+To install 
 
      mvn clean install
      
