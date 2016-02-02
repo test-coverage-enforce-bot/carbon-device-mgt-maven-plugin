@@ -40,6 +40,7 @@
         <maven-compiler-plugin.version>2.3.2</maven-compiler-plugin.version>
         <maven-war-plugin.version>2.6</maven-war-plugin.version>
         <maven-antrun-plugin.version>1.8</maven-antrun-plugin.version>
+        <maven-scr-plugin.version>1.7.2</maven-scr-plugin.version>
     </properties>
     <pluginRepositories>
         <pluginRepository>

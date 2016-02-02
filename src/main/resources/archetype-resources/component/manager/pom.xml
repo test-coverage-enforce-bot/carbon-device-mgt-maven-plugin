@@ -55,7 +55,6 @@
         <dependency>
             <groupId>${groupId}</groupId>
             <artifactId>${project-base-package}.plugin</artifactId>
-            <version>${version}</version>
         </dependency>
     </dependencies>
 </project>

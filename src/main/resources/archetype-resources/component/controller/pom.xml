@@ -50,4 +50,10 @@
             </plugin>
         </plugins>
     </build>
+    <dependencies>
+        <dependency>
+            <groupId>${groupId}</groupId>
+            <artifactId>${project-base-package}.plugin</artifactId>
+        </dependency>
+    </dependencies>
 </project>
