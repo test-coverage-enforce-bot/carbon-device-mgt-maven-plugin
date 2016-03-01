@@ -237,8 +237,8 @@
         <paho.mqtt.version>1.0.2</paho.mqtt.version>
         <commons-json.version>3.0.0.wso2v1</commons-json.version>
         <eclipse.osgi.version>3.8.1.v20120830-144521</eclipse.osgi.version>
-        <carbon.iot.device.mgt.version>1.9.2-SNAPSHOT</carbon.iot.device.mgt.version>
-        <carbon.iot.device.mgt.jar.version>1.9.2.SNAPSHOT</carbon.iot.device.mgt.jar.version>
+        <carbon.iot.device.mgt.version>2.0.4-SNAPSHOT</carbon.iot.device.mgt.version>
+        <carbon.iot.device.mgt.jar.version>2.0.4.SNAPSHOT</carbon.iot.device.mgt.jar.version>
         <javax.ws.rs.version>1.1.1</javax.ws.rs.version>
         <commons-io.version>2.4</commons-io.version>
         <!--XMPP/MQTT Version-->
