@@ -181,7 +181,7 @@ public class ControllerService {
     @POST
     @Feature(code = "change-status", name = "Change status of sensor: on/off", type = "operation",
             description = "Change status of sensor: on/off")
-    public void changeLockerState(@HeaderParam("owner") String owner, @HeaderParam("deviceId") String deviceId,
+    public void changeStatus(@HeaderParam("owner") String owner, @HeaderParam("deviceId") String deviceId,
                                   @HeaderParam("protocol") String protocol, @FormParam("state") String state,
                                   @Context HttpServletResponse response) {
         DeviceValidator deviceValidator = new DeviceValidator();
