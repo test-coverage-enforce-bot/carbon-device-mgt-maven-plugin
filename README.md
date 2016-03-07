@@ -5,7 +5,8 @@ First you need to download this maven archetype. To download
     git clone https://github.com/GPrathap/cdmf-devicetype-archetype.git
 
 To install this maven archetype into your local system, inside the cdmf-devicetype-archetype
-    `mvn clean install`
+
+    mvn clean install
 
 # Create sample device type plugin using cdmf-devicetype-archetype  
 
@@ -35,7 +36,7 @@ Then select the cdmf.devicetype:cdmf-devicetype-archetype as new archetype.
         1: local -> org.apache.synapse:synapse-package-archetype (This archetype can be used to create Maven projects that bundle a mediation
                 into a standalone distribution ready to be executed)
         2: local -> org.wso2.mdm:mdm-android-agent-archetype (Creates a MDM-Android agent project)
-        3: local -> cdmf.devicetype:cdmf-devicetype-archetype (WSO2 CDMF Device Type Archetype)
+        3: local -> org.wso2.cdmf.devicetype:cdmf-devicetype-archetype (WSO2 CDMF Device Type Archetype)
         Choose a number or apply filter (format: [groupId:]artifactId, case sensitive contains): : 3
 
 
