@@ -1,4 +1,3 @@
-package ${groupId}.${rootArtifactId}.plugin.constants;
 /*
  * Copyright (c) 2016, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
  *
@@ -16,6 +15,9 @@ package ${groupId}.${rootArtifactId}.plugin.constants;
  * specific language governing permissions and limitations
  * under the License.
  */
+
+package ${groupId}.${rootArtifactId}.plugin.constants;
+
 public class DeviceTypeConstants {
     public final static String DEVICE_TYPE = "${deviceType}";
     public final static String DEVICE_PLUGIN_DEVICE_NAME = "DEVICE_NAME";

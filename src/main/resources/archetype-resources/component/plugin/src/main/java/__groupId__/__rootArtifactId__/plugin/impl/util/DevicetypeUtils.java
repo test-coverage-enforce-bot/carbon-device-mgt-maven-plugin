@@ -1,4 +1,3 @@
-package ${groupId}.${rootArtifactId}.plugin.impl.util;
 /*
  * Copyright (c) 2015, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
  * 
@@ -16,6 +15,8 @@ package ${groupId}.${rootArtifactId}.plugin.impl.util;
  * specific language governing permissions and limitations
  * under the License.
  */
+package ${groupId}.${rootArtifactId}.plugin.impl.util;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 

@@ -1,4 +1,3 @@
-package ${groupId}.${rootArtifactId}.plugin.impl;
 /*
  * Copyright (c) 2016, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
  *
@@ -16,6 +15,9 @@ package ${groupId}.${rootArtifactId}.plugin.impl;
  * specific language governing permissions and limitations
  * under the License.
  */
+
+package ${groupId}.${rootArtifactId}.plugin.impl;
+
 import ${groupId}.${rootArtifactId}.plugin.constants.DeviceTypeConstants;
 import org.wso2.carbon.device.mgt.common.DeviceIdentifier;
 import org.wso2.carbon.device.mgt.common.DeviceManagementException;

@@ -18,7 +18,6 @@
 
 package ${groupId}.${rootArtifactId}.plugin.impl;
 
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import ${groupId}.${rootArtifactId}.plugin.impl.dao.DeviceTypeDAO;

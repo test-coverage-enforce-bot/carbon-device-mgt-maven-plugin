@@ -1,4 +1,3 @@
-package ${groupId}.${rootArtifactId}.plugin.impl.dao;
 /*
  * Copyright (c) 2016, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
  *
@@ -17,6 +16,8 @@ package ${groupId}.${rootArtifactId}.plugin.impl.dao;
  * under the License.
  */
 
+package ${groupId}.${rootArtifactId}.plugin.impl.dao;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import ${groupId}.${rootArtifactId}.plugin.constants.DeviceTypeConstants;
@@ -25,7 +26,6 @@ import org.wso2.carbon.device.mgt.iot.util.iotdevice.dao.IotDeviceDAO;
 import org.wso2.carbon.device.mgt.iot.util.iotdevice.dao.IotDeviceManagementDAOException;
 import org.wso2.carbon.device.mgt.iot.util.iotdevice.dao.IotDeviceManagementDAOFactory;
 import org.wso2.carbon.device.mgt.iot.util.iotdevice.dao.IotDeviceManagementDAOFactoryInterface;
-
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
