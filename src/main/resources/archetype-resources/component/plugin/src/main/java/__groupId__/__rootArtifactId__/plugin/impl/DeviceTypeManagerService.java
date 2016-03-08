@@ -55,7 +55,7 @@ public class DeviceTypeManagerService implements DeviceManagementService{
 
 	@Override
 	public void init() throws DeviceManagementException {
-		deviceManager= new DeviceTypeManager();
+		this.deviceManager = new DeviceTypeManager();
 	}
 
 	@Override
@@ -69,7 +69,7 @@ public class DeviceTypeManagerService implements DeviceManagementService{
 	}
 
 	@Override
-	public void notifyOperationToDevices(Operation operation, List<DeviceIdentifier> list) throws
+	public void notifyOperationToDevices(Operation operation, List<DeviceIdentifier> deviceIds) throws
 			DeviceManagementException {
 	}
 
@@ -92,17 +92,19 @@ public class DeviceTypeManagerService implements DeviceManagementService{
 	}
 
 	@Override
-	public void installApplicationForDevices(Operation operation, List<DeviceIdentifier> list)
+	public void installApplicationForDevices(Operation operation, List<DeviceIdentifier> deviceIdentifiers)
 			throws ApplicationManagementException {
 	}
 
 	@Override
-	public void installApplicationForUsers(Operation operation, List<String> list)
+	public void installApplicationForUsers(Operation operation, List<String> userNameList)
 			throws ApplicationManagementException {
+
 	}
 
 	@Override
-	public void installApplicationForUserRoles(Operation operation, List<String> list)
+	public void installApplicationForUserRoles(Operation operation, List<String> userRoleList)
 			throws ApplicationManagementException {
+
 	}
 }
