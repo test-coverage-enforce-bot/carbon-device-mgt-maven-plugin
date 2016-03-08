@@ -127,7 +127,7 @@ public class ControllerService {
     @GET
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    @Feature(code = "read-current-status", name = "Sensor", type = "monitor",
+    @Feature(code = "read-current-status", name = "${nameOfTheSensor}", type = "monitor",
             description = "Request current status of sensor from device")
     public SensorRecord readCurrentStatus(@HeaderParam("owner") String owner,
                                        @HeaderParam("deviceId") String deviceId,
