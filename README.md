@@ -58,7 +58,7 @@ Then select the cdmf.devicetype:cdmf-devicetype-archetype as new archetype.
 
 
 
-# Configure the device-deployer.xml file that is in the <IoTS_HOME> directory.
+# Configure the device-deployer.xml file that is in the IoTS_HOME directory.
 
 Add the new module under the <modules> tag.
 
