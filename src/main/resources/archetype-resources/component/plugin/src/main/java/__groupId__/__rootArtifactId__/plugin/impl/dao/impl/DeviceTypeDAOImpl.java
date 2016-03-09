@@ -43,7 +43,7 @@ public class DeviceTypeDAOImpl {
 
     private static final Log log = LogFactory.getLog(DeviceTypeDAOImpl.class);
 
-    public Device getDevice(String iotDeviceId) throws DeviceTypePluginException {
+    public Device getDevice(String deviceId) throws DeviceTypePluginException {
         Connection conn = null;
         PreparedStatement stmt = null;
         Device iotDevice = null;
@@ -54,7 +54,7 @@ public class DeviceTypeDAOImpl {
                     "SELECT ${deviceType}_DEVICE_ID, DEVICE_NAME" +
                             " FROM ${deviceType}_DEVICE WHERE ${deviceType}_DEVICE_ID = ?";
             stmt = conn.prepareStatement(selectDBQuery);
-            stmt.setString(1, iotDeviceId);
+            stmt.setString(1, deviceId);
             resultSet = stmt.executeQuery();
 
             if (resultSet.next()) {
@@ -64,12 +64,12 @@ public class DeviceTypeDAOImpl {
                 List<Device.Property> propertyList = new ArrayList<>();
                 iotDevice.setProperties(propertyList);
                 if (log.isDebugEnabled()) {
-                    log.debug("${deviceType} device " + iotDeviceId + " data has been fetched from " +
+                    log.debug("${deviceType} device " + deviceId + " data has been fetched from " +
                             "${deviceType} database.");
                 }
             }
         } catch (SQLException e) {
-            String msg = "Error occurred while fetching ${deviceType} device : '" + iotDeviceId + "'";
+            String msg = "Error occurred while fetching ${deviceType} device : '" + deviceId + "'";
             log.error(msg, e);
             throw new DeviceTypePluginException(msg, e);
         } finally {
@@ -109,7 +109,7 @@ public class DeviceTypeDAOImpl {
         return status;
     }
 
-    public boolean updateDevice(Device iotDevice) throws DeviceTypePluginException {
+    public boolean updateDevice(Device device) throws DeviceTypePluginException {
         boolean status = false;
         Connection conn = null;
         PreparedStatement stmt = null;
@@ -118,22 +118,22 @@ public class DeviceTypeDAOImpl {
             String updateDBQuery =
                     "UPDATE ${deviceType}_DEVICE SET  DEVICE_NAME = ? WHERE ${deviceType}_DEVICE_ID = ?";
             stmt = conn.prepareStatement(updateDBQuery);
-            if (iotDevice.getProperties() == null) {
-                iotDevice.setProperties(new ArrayList<Device.Property>());
+            if (device.getProperties() == null) {
+                device.setProperties(new ArrayList<Device.Property>());
             }
-            stmt.setString(1, iotDevice.getName());
-            stmt.setString(2, iotDevice.getDeviceIdentifier());
+            stmt.setString(1, device.getName());
+            stmt.setString(2, device.getDeviceIdentifier());
             int rows = stmt.executeUpdate();
             if (rows > 0) {
                 status = true;
                 if (log.isDebugEnabled()) {
-                    log.debug("${deviceType} device " + iotDevice.getDeviceIdentifier() + " data has been" +
+                    log.debug("${deviceType} device " + device.getDeviceIdentifier() + " data has been" +
                             " modified.");
                 }
             }
         } catch (SQLException e) {
             String msg = "Error occurred while modifying the ${deviceType} device '" +
-                    iotDevice.getDeviceIdentifier() + "' data.";
+                    device.getDeviceIdentifier() + "' data.";
             log.error(msg, e);
             throw new DeviceTypePluginException(msg, e);
         } finally {
@@ -142,7 +142,7 @@ public class DeviceTypeDAOImpl {
         return status;
     }
 
-    public boolean deleteDevice(String iotDeviceId) throws DeviceTypePluginException {
+    public boolean deleteDevice(String deviceId) throws DeviceTypePluginException {
         boolean status = false;
         Connection conn = null;
         PreparedStatement stmt = null;
@@ -151,17 +151,17 @@ public class DeviceTypeDAOImpl {
             String deleteDBQuery =
                     "DELETE FROM ${deviceType}_DEVICE WHERE ${deviceType}_DEVICE_ID = ?";
             stmt = conn.prepareStatement(deleteDBQuery);
-            stmt.setString(1, iotDeviceId);
+            stmt.setString(1, deviceId);
             int rows = stmt.executeUpdate();
             if (rows > 0) {
                 status = true;
                 if (log.isDebugEnabled()) {
-                    log.debug("${deviceType} device " + iotDeviceId + " data has deleted" +
+                    log.debug("${deviceType} device " + deviceId + " data has deleted" +
                             " from the ${deviceType} database.");
                 }
             }
         } catch (SQLException e) {
-            String msg = "Error occurred while deleting ${deviceType} device " + iotDeviceId;
+            String msg = "Error occurred while deleting ${deviceType} device " + deviceId;
             log.error(msg, e);
             throw new DeviceTypePluginException(msg, e);
         } finally {
@@ -174,7 +174,7 @@ public class DeviceTypeDAOImpl {
         Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet resultSet = null;
-        Device iotDevice;
+        Device device;
         List<Device> iotDevices = new ArrayList<>();
         try {
             conn = DeviceTypeDAO.getConnection();
@@ -184,11 +184,11 @@ public class DeviceTypeDAOImpl {
             stmt = conn.prepareStatement(selectDBQuery);
             resultSet = stmt.executeQuery();
             while (resultSet.next()) {
-                iotDevice = new Device();
-                iotDevice.setDeviceIdentifier(resultSet.getString(DeviceTypeConstants.DEVICE_PLUGIN_DEVICE_ID));
-                iotDevice.setName(resultSet.getString(DeviceTypeConstants.DEVICE_PLUGIN_DEVICE_NAME));
+                device = new Device();
+                device.setDeviceIdentifier(resultSet.getString(DeviceTypeConstants.DEVICE_PLUGIN_DEVICE_ID));
+                device.setName(resultSet.getString(DeviceTypeConstants.DEVICE_PLUGIN_DEVICE_NAME));
                 List<Device.Property> propertyList = new ArrayList<>();
-                iotDevice.setProperties(propertyList);
+                device.setProperties(propertyList);
             }
             if (log.isDebugEnabled()) {
                 log.debug("All ${deviceType} device details have fetched from ${deviceType} database.");
