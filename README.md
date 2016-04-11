@@ -15,7 +15,7 @@ To create new project go to this folder:  IOTS_HOME/samples
     
     mvn archetype:generate -DarchetypeCatalog=local
     
-Then select the cdmf.devicetype:cdmf-devicetype-archetype as new archetype. 
+Then select the org.wso2.cdmf.devicetype:cdmf-devicetype-archetype as new archetype. 
 
         jobs@jobs-ThinkPad-T530:~/wso2/IoT/m3/product/IOTS_HOME/samples$ 
         mvn archetype:generate -DarchetypeCatalog=local
