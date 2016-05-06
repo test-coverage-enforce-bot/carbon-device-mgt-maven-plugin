@@ -1,8 +1,8 @@
 # Install cdmf-devicetype-archetype
 
-First you need to download correct version of maven archetype. Replace IoTS-1.0.0-M* with required version you need to download 
+First you need to download correct version of maven archetype. Replace [version] with required version you need to download 
 
-    git clone -b IoTS-1.0.0-M* --single-branch https://github.com/GPrathap/cdmf-devicetype-archetype.git
+    git clone -b IoTS-1.0.0-M[version] --single-branch https://github.com/GPrathap/cdmf-devicetype-archetype.git
 
 
 To install this maven archetype into your local system, from inside the cdmf-devicetype-archetype
