@@ -19,13 +19,14 @@
 package ${groupId}.${rootArtifactId}.api;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import ${groupId}.${rootArtifactId}.api.util.APIUtil;
 import ${groupId}.${rootArtifactId}.plugin.constants.DeviceTypeConstants;
 import ${groupId}.${rootArtifactId}.api.dto.DeviceJSON;
-import ${groupId}.${rootArtifactId}.api.transport.MQTTConnector;
 import ${groupId}.${rootArtifactId}.api.dto.SensorRecord;
 
 import org.apache.commons.logging.Log;
@@ -39,17 +40,13 @@ import org.wso2.carbon.device.mgt.common.DeviceIdentifier;
 import org.wso2.carbon.device.mgt.common.authorization.DeviceAccessAuthorizationException;
 import org.wso2.carbon.device.mgt.extensions.feature.mgt.annotations.DeviceType;
 import org.wso2.carbon.device.mgt.extensions.feature.mgt.annotations.Feature;
-import org.wso2.carbon.device.mgt.iot.controlqueue.mqtt.MqttConfig;
-import org.wso2.carbon.device.mgt.iot.service.IoTServerStartupListener;
-import org.wso2.carbon.device.mgt.iot.transport.TransportHandlerException;
+
 
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.Consumes;
-import javax.ws.rs.FormParam;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.GET;
-import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -67,49 +64,7 @@ import javax.ws.rs.core.Response;
 public class ControllerServiceImpl implements ControllerService{
 
     private static Log log = LogFactory.getLog(ControllerService.class);
-    private MQTTConnector mqttConnector;
     private ConcurrentHashMap<String, DeviceJSON> deviceToIpMap = new ConcurrentHashMap<>();
-
-    private boolean waitForServerStartup() {
-        while (!IoTServerStartupListener.isServerReady()) {
-            try {
-                Thread.sleep(5000);
-            } catch (InterruptedException e) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public MQTTConnector getMQTTConnector() {
-        return mqttConnector;
-    }
-
-    public void setMQTTConnector(final MQTTConnector MQTTConnector) {
-        Runnable connector = new Runnable() {
-            public void run() {
-                if (waitForServerStartup()) {
-                    return;
-                }
-                //The delay is added for the server to starts up.
-                try {
-                    Thread.sleep(5000);
-                } catch (InterruptedException e) {
-                    Thread.currentThread().interrupt();
-                }
-                ControllerServiceImpl.this.mqttConnector = MQTTConnector;
-                if (MqttConfig.getInstance().isEnabled()) {
-                    mqttConnector.connect();
-                } else {
-                    log.warn("MQTT disabled in 'devicemgt-config.xml'. Hence, MQTTConnector" +
-                            " not started.");
-                }
-            }
-        };
-        Thread connectorThread = new Thread(connector);
-        connectorThread.setDaemon(true);
-        connectorThread.start();
-    }
 
     /**
      * @param agentInfo device owner,id and sensor value
@@ -150,12 +105,13 @@ public class ControllerServiceImpl implements ControllerService{
                 log.error("The requested state change should be either - 'ON' or 'OFF'");
                 return Response.status(Response.Status.BAD_REQUEST.getStatusCode()).build();
             }
-            String mqttResource = DeviceTypeConstants.SENSOR_CONTEXT.replace("/", "");
-            mqttConnector.publishDeviceData(deviceId, mqttResource, sensorState);
+            Map<String, String> dynamicProperties = new HashMap<>();
+            String publishTopic = APIUtil.getAuthenticatedUserTenantDomain()
+                    + "/" + DeviceTypeConstants.DEVICE_TYPE + "/" + deviceId + "/command";
+            dynamicProperties.put(DeviceTypeConstants.ADAPTER_TOPIC_PROPERTY, publishTopic);
+            APIUtil.getOutputEventAdapterService().publish(DeviceTypeConstants.MQTT_ADAPTER_NAME,
+                    dynamicProperties, state);
             return Response.ok().build();
-        } catch (TransportHandlerException e) {
-            log.error("Failed to send switch-bulb request to device [" + deviceId + "]");
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         } catch (DeviceAccessAuthorizationException e) {
             log.error(e.getErrorMessage(), e);
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();

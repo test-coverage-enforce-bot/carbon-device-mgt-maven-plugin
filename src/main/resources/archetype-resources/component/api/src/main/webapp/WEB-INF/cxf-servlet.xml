@@ -27,7 +27,6 @@
         <jaxrs:serviceBeans>
             <bean id="ControllerService"
                   class="${groupId}.${rootArtifactId}.api.ControllerServiceImpl">
-                <property name="MQTTConnector" ref="communicationHandler"/>
             </bean>
             <bean id="ManagerService"
                   class="${groupId}.${rootArtifactId}.api.ManagerServiceImpl">
@@ -37,7 +36,4 @@
             <bean class="org.codehaus.jackson.jaxrs.JacksonJsonProvider" />
         </jaxrs:providers>
     </jaxrs:server>
-    <bean id="communicationHandler"
-          class="${groupId}.${rootArtifactId}.api.transport.MQTTConnector" >
-    </bean>
 </beans>

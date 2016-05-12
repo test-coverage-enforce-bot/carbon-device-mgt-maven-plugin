@@ -24,7 +24,8 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 
-
+import org.wso2.carbon.base.ServerConfiguration;
+import org.wso2.carbon.core.util.Utils;
 import ${groupId}.${rootArtifactId}.plugin.constants.DeviceTypeConstants;
 import ${groupId}.${rootArtifactId}.plugin.exception.DeviceMgtPluginException;
 import org.apache.commons.logging.Log;
@@ -108,6 +109,30 @@ public class DeviceTypeUtils {
         } catch (Exception e) {
             throw new DeviceMgtPluginException("Error occurred while initializing Iot Device " +
                     "Management database schema", e);
+        }
+    }
+
+    public static String replaceMqttProperty(String urlWithPlaceholders) {
+        urlWithPlaceholders = Utils.replaceSystemProperty(urlWithPlaceholders);
+        urlWithPlaceholders = urlWithPlaceholders.replaceAll(DeviceTypeConstants.MQTT_PORT, "" +
+                (DeviceTypeConstants.DEFAULT_MQTT_PORT + getPortOffset()));
+        urlWithPlaceholders = urlWithPlaceholders.replaceAll(DeviceTypeConstants.MQTT_BROKER_HOST,
+                System.getProperty(DeviceTypeConstants.DEFAULT_CARBON_LOCAL_IP_PROPERTY, "localhost"));
+        return urlWithPlaceholders;
+    }
+
+    private static int getPortOffset() {
+        ServerConfiguration carbonConfig = ServerConfiguration.getInstance();
+        String portOffset = System.getProperty("portOffset", carbonConfig.getFirstProperty(
+                DeviceTypeConstants.CARBON_CONFIG_PORT_OFFSET));
+        try {
+            if ((portOffset != null)) {
+                return Integer.parseInt(portOffset.trim());
+            } else {
+                return DeviceTypeConstants.CARBON_DEFAULT_PORT_OFFSET;
+            }
+        } catch (NumberFormatException e) {
+            return DeviceTypeConstants.CARBON_DEFAULT_PORT_OFFSET;
         }
     }
 

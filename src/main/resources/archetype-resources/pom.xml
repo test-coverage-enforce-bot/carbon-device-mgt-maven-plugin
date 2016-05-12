@@ -296,6 +296,16 @@
                 <artifactId>h2-database-engine</artifactId>
                 <version>1.2.140.wso2v3</version>
             </dependency>
+            <dependency>
+                <groupId>org.wso2.carbon.analytics-common</groupId>
+                <artifactId>org.wso2.carbon.event.output.adapter.core</artifactId>
+                <version>${carbon.analytics.common.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.carbon.analytics-common</groupId>
+                <artifactId>org.wso2.carbon.event.input.adapter.core</artifactId>
+                <version>${carbon.analytics.common.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 

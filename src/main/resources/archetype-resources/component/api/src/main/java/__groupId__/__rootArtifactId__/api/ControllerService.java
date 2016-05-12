@@ -18,24 +18,14 @@
 
 package ${groupId}.${rootArtifactId}.api;
 
-import java.util.concurrent.ConcurrentHashMap;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 import ${groupId}.${rootArtifactId}.api.dto.DeviceJSON;
-import ${groupId}.${rootArtifactId}.api.transport.MQTTConnector;
-
 import org.wso2.carbon.apimgt.annotations.api.API;
 import org.wso2.carbon.device.mgt.extensions.feature.mgt.annotations.DeviceType;
 import org.wso2.carbon.device.mgt.extensions.feature.mgt.annotations.Feature;
-import org.wso2.carbon.device.mgt.iot.controlqueue.mqtt.MqttConfig;
-import org.wso2.carbon.device.mgt.iot.service.IoTServerStartupListener;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.Consumes;
-import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
-import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -44,6 +34,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+
 
 
 /**

@@ -1,6 +1,8 @@
 package ${groupId}.${rootArtifactId}.api.util;
 
 import ${groupId}.${rootArtifactId}.api.dto.SensorRecord;
+
+import org.wso2.carbon.event.output.adapter.core.OutputEventAdapterService;
 import org.wso2.carbon.analytics.api.AnalyticsDataAPI;
 import org.wso2.carbon.analytics.dataservice.core.AnalyticsDataServiceUtils;
 import org.wso2.carbon.analytics.dataservice.commons.AnalyticsDataResponse;
@@ -210,5 +212,22 @@ public class APIUtil {
             throw new IllegalStateException(msg);
         }
         return analyticsDataAPI;
+    }
+
+    public static String getAuthenticatedUserTenantDomain() {
+        PrivilegedCarbonContext threadLocalCarbonContext = PrivilegedCarbonContext.getThreadLocalCarbonContext();
+        return threadLocalCarbonContext.getTenantDomain();
+    }
+
+    public static OutputEventAdapterService getOutputEventAdapterService() {
+        PrivilegedCarbonContext ctx = PrivilegedCarbonContext.getThreadLocalCarbonContext();
+        OutputEventAdapterService outputEventAdapterService =
+                (OutputEventAdapterService) ctx.getOSGiService(OutputEventAdapterService.class, null);
+        if (outputEventAdapterService == null) {
+            String msg = "Device Authorization service has not initialized.";
+            log.error(msg);
+            throw new IllegalStateException(msg);
+        }
+        return outputEventAdapterService;
     }
 }

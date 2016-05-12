@@ -33,14 +33,21 @@ import org.wso2.carbon.device.mgt.common.DeviceIdentifier;
 import org.wso2.carbon.device.mgt.common.DeviceManagementException;
 import org.wso2.carbon.device.mgt.common.EnrolmentInfo;
 import org.wso2.carbon.device.mgt.common.authorization.DeviceAccessAuthorizationException;
-import org.wso2.carbon.device.mgt.iot.exception.DeviceControllerException;
 import org.wso2.carbon.device.mgt.iot.util.ZipArchive;
 import org.wso2.carbon.identity.jwt.client.extension.JWTClient;
 import org.wso2.carbon.identity.jwt.client.extension.dto.AccessTokenInfo;
 import org.wso2.carbon.identity.jwt.client.extension.exception.JWTClientException;
 import org.wso2.carbon.user.api.UserStoreException;
 
-import javax.ws.rs.*;
+import javax.ws.rs.DELETE;
+import javax.ws.rs.PUT;
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.QueryParam;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.Produces;
+
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.io.IOException;
@@ -63,7 +70,6 @@ public class ManagerServiceImpl implements ManagerService {
         long l = ByteBuffer.wrap(uuid.toString().getBytes(StandardCharsets.UTF_8)).getLong();
         return Long.toString(l, Character.MAX_RADIX);
     }
-
     @Path("/devices/{device_id}")
     @DELETE
     public Response removeDevice(@PathParam("device_id") String deviceId) {
@@ -191,9 +197,6 @@ public class ManagerServiceImpl implements ManagerService {
         } catch (APIManagerException ex) {
             log.error(ex.getMessage(), ex);
             return Response.status(500).entity(ex.getMessage()).build();
-        } catch (DeviceControllerException ex) {
-            log.error(ex.getMessage(), ex);
-            return Response.status(500).entity(ex.getMessage()).build();
         } catch (IOException ex) {
             log.error(ex.getMessage(), ex);
             return Response.status(500).entity(ex.getMessage()).build();
@@ -234,7 +237,7 @@ public class ManagerServiceImpl implements ManagerService {
     }
 
     private ZipArchive createDownloadFile(String owner, String deviceName, String sketchType)
-            throws DeviceManagementException, APIManagerException, JWTClientException, DeviceControllerException,
+            throws DeviceManagementException, APIManagerException, JWTClientException,
             UserStoreException {
         //create new device id
         String deviceId = shortUUID();

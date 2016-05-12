@@ -42,8 +42,8 @@ public class ServiceUtils {
         Object metdaData[] = {owner, DeviceTypeConstants.DEVICE_TYPE, deviceId, System.currentTimeMillis()};
         Object payloadData[] = {sensorValue};
         try {
-            deviceAnalyticsService.publishEvent(DeviceTypeConstants.TEMPERATURE_STREAM_DEFINITION,
-                    DeviceTypeConstants.TEMPERATURE_STREAM_DEFINITION_VERSION, metdaData, new Object[0], payloadData);
+            deviceAnalyticsService.publishEvent(DeviceTypeConstants.SENSOR_STREAM_DEFINITION,
+                    DeviceTypeConstants.SENSOR_STREAM_DEFINITION_VERSION, metdaData, new Object[0], payloadData);
         } catch (DataPublisherConfigurationException e) {
             return false;
         }
