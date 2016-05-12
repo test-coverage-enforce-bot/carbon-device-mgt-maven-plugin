@@ -73,7 +73,7 @@ def main():
     global TOPIC_TO_SUBSCRIBE
     TOPIC_TO_SUBSCRIBE = TANENT_DOMAIN + "/" + DEV_TYPE + "/" + DEV_ID
     global TOPIC_TO_PUBLISH
-    TOPIC_TO_PUBLISH = TANENT_DOMAIN + "/" + DEV_TYPE + "/" + DEV_ID + "/temperature"
+    TOPIC_TO_PUBLISH = TANENT_DOMAIN + "/" + DEV_TYPE + "/" + DEV_ID + "/${nameOfTheSensor}"
 
     print ("MQTT_LISTENER: MQTT_ENDPOINT is " + str(MQTT_ENDPOINT))
     print ("MQTT_LISTENER: MQTT_TOPIC is " + TOPIC_TO_SUBSCRIBE)

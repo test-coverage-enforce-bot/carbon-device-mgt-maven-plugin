@@ -31,6 +31,6 @@ public class DeviceTypeConstants {
     public final static String STATE_OFF = "OFF";
     public final static String SENSOR_CONTEXT = "SENSOR";
     public final static String TEMPERATURE_EVENT_TABLE = "DEVICE_TEMPERATURE_SUMMARY";
-    public final static String TEMPERATURE_STREAM_DEFINITION = "org.wso2.iot.devices.temperature";
+    public final static String TEMPERATURE_STREAM_DEFINITION = "org.wso2.iot.devices.${nameOfTheSensor}";
     public final static String TEMPERATURE_STREAM_DEFINITION_VERSION = "1.0.0";
 }
