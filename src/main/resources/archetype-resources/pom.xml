@@ -306,6 +306,25 @@
                 <artifactId>org.wso2.carbon.event.input.adapter.core</artifactId>
                 <version>${carbon.analytics.common.version}</version>
             </dependency>
+            <dependency>
+                <groupId>org.wso2.carbon.devicemgt-plugins</groupId>
+                <artifactId>org.wso2.carbon.device.mgt.iot.input.adapter.extension</artifactId>
+                <version>${carbon.devicemgt.plugins.version}</version>
+                <scope>system</scope>
+                <systemPath>
+                    ${basedir}/../../../../repository/components/plugins/org.wso2.carbon.device.mgt.iot.input.adapter.extension_${carbon.devicemgt.plugins.version}.jar
+                </systemPath>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.carbon.devicemgt</groupId>
+                <artifactId>org.wso2.carbon.device.mgt.extensions</artifactId>
+                <version>${carbon.devicemgt.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-codec.wso2</groupId>
+                <artifactId>commons-codec</artifactId>
+                <version>${commons-codec.wso2.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -415,6 +434,8 @@
         <!--Orbit versions-->
         <orbit.h2.engine.version>1.2.140.wso2v3</orbit.h2.engine.version>
 
+        <commons-json.version.range>(3.0.0, 4.0.0]</commons-json.version.range>
+        <commons-codec.wso2.version>1.4.0.wso2v1</commons-codec.wso2.version>
         <!--XMPP/MQTT Version-->
         <smack.wso2.version>3.0.4.wso2v1</smack.wso2.version>
         <smackx.wso2.version>3.0.4.wso2v1</smackx.wso2.version>

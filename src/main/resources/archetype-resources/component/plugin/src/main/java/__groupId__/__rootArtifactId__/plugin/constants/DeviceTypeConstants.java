@@ -24,7 +24,7 @@ import java.io.File;
 public class DeviceTypeConstants {
     public final static String DEVICE_TYPE = "${deviceType}";
     public final static String DEVICE_PLUGIN_DEVICE_NAME = "DEVICE_NAME";
-    public final static String DEVICE_PLUGIN_DEVICE_ID = "${deviceType}_DEVICE_ID";
+    public final static String DEVICE_PLUGIN_DEVICE_ID = "b_DEVICE_ID";
     public final static String STATE_ON = "ON";
     public final static String STATE_OFF = "OFF";
 
@@ -49,6 +49,10 @@ public class DeviceTypeConstants {
     public static final String DEFAULT_CARBON_LOCAL_IP_PROPERTY = "carbon.local.ip";
     public static final int CARBON_DEFAULT_PORT_OFFSET = 0;
     public static final int DEFAULT_MQTT_PORT = 1883;
+    public static final String SUBSCRIBED_TOPIC = "carbon.super/${deviceType}/+/publisher";
+    public static final String CONTENT_TRANSFORMATION = "contentTransformer";
+    public static final String CONTENT_VALIDATION = "contentValidator";
+    public static final String RESOURCE = "resource";
 
     public static final String USERNAME_PROPERTY_KEY = "username";
     public static final String DCR_PROPERTY_KEY = "dcrUrl";

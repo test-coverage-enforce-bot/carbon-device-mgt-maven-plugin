@@ -22,8 +22,9 @@
         <dependency artifact="Eventstream_${nameOfTheSensor}" version="1.0.0" include="true" serverRole="DataAnalyticsServer"/>
 		<dependency artifact="Eventstore_${nameOfTheSensor}" version="1.0.0" include="true" serverRole="DataAnalyticsServer"/>
         <dependency artifact="Eventreceiver_${nameOfTheSensor}" version="1.0.0" include="true" serverRole="DataAnalyticsServer"/>
-        <dependency artifact="Eventreceiver_mqtt_${nameOfTheSensor}" version="1.0.0" include="true" serverRole="DataAnalyticsServer"/>
+        <dependency artifact="Eventreceiver_mqtt_${deviceType}" version="1.0.0" include="true" serverRole="DataAnalyticsServer"/>
         <dependency artifact="Eventpublisher_${nameOfTheSensor}" version="1.0.0" include="true" serverRole="DataAnalyticsServer"/>
+       <!-- <dependency artifact="Execution_Plan_${nameOfTheSensor}" version="1.0.0" include="false" serverRole="DataAnalyticsServer"/>-->
         <dependency artifact="Sparkscripts" version="1.0.0" include="true" serverRole="DataAnalyticsServer"/>
     </artifact>
 </artifacts>

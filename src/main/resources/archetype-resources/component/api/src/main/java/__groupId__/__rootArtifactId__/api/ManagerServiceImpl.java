@@ -237,13 +237,13 @@ public class ManagerServiceImpl implements ManagerService {
     }
 
     private ZipArchive createDownloadFile(String owner, String deviceName, String sketchType)
-            throws DeviceManagementException, APIManagerException, JWTClientException,
+            throws DeviceManagementException, JWTClientException, APIManagerException,
             UserStoreException {
         //create new device id
         String deviceId = shortUUID();
         if (apiApplicationKey == null) {
-            String applicationUsername = PrivilegedCarbonContext.getThreadLocalCarbonContext().getUserRealm().getRealmConfiguration()
-                    .getAdminUserName();
+            String applicationUsername = PrivilegedCarbonContext.getThreadLocalCarbonContext().getUserRealm()
+                    .getRealmConfiguration().getAdminUserName();
             APIManagementProviderService apiManagementProviderService = APIUtil.getAPIManagementProviderService();
             String[] tags = {DeviceTypeConstants.DEVICE_TYPE};
             apiApplicationKey = apiManagementProviderService.generateAndRetrieveApplicationKeys(
@@ -253,18 +253,17 @@ public class ManagerServiceImpl implements ManagerService {
         String scopes = "device_type_" + DeviceTypeConstants.DEVICE_TYPE + " device_" + deviceId;
         AccessTokenInfo accessTokenInfo = jwtClient.getAccessToken(apiApplicationKey.getConsumerKey(),
                 apiApplicationKey.getConsumerSecret(), owner, scopes);
+        //create token
         String accessToken = accessTokenInfo.getAccessToken();
         String refreshToken = accessTokenInfo.getRefreshToken();
-        boolean status;
-        status = register(deviceId, deviceName);
+        boolean status = register(deviceId, deviceName);
         if (!status) {
             String msg = "Error occurred while registering the device with " + "id: " + deviceId + " owner:" + owner;
             throw new DeviceManagementException(msg);
         }
         ZipUtil ziputil = new ZipUtil();
-        ZipArchive zipFile = ziputil.createZipFile(owner, APIUtil.getTenantDomainOftheUser(), sketchType, deviceId,
-                deviceName, accessToken, refreshToken);
-        zipFile.setDeviceId(deviceId);
+        ZipArchive zipFile = ziputil.createZipFile(owner, APIUtil.getTenantDomainOftheUser(), sketchType,
+                deviceId, deviceName, accessToken, refreshToken);
         return zipFile;
     }
 

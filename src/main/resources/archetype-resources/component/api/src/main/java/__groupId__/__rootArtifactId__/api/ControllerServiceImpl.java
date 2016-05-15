@@ -89,7 +89,7 @@ public class ControllerServiceImpl implements ControllerService{
      */
     @Path("device/{deviceId}/change-status")
     @POST
-    @Feature(code = "change-status", name = "Change status of sensor: on/off", type = "operation",
+    @Feature(code = "change-status", name = "Change status of sensor: on/off",
             description = "Change status of sensor: on/off")
     public Response changeStatus(@PathParam("deviceId") String deviceId,
                                  @QueryParam("state") String state,
