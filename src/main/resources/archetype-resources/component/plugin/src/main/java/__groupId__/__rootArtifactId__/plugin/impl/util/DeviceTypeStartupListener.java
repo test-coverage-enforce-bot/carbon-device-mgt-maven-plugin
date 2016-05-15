@@ -18,6 +18,7 @@
 
 package ${groupId}.${rootArtifactId}.plugin.impl.util;
 
+import ${groupId}.${rootArtifactId}.plugin.impl.util.DeviceTypeUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.wso2.carbon.core.ServerStartupObserver;
@@ -35,8 +36,8 @@ public class DeviceTypeStartupListener implements ServerStartupObserver {
     public void completedServerStartup() {
         try {
 
-            ${groupId}.${rootArtifactId}.plugin.impl.util.DeviceTypeUtils.setupMqttOutputAdapter();
-            ${groupId}.${rootArtifactId}.plugin.impl.util.DeviceTypeUtils.setupMqttInputAdapter();
+            DeviceTypeUtils.setupMqttOutputAdapter();
+            DeviceTypeUtils.setupMqttInputAdapter();
 
         } catch (IOException e) {
             log.error("Failed to initialize the  ${deviceType} output adapter", e);

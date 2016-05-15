@@ -89,6 +89,7 @@
                                 <include>**/*.hbs</include>
                                 <include>**/*.py</include>
                                 <include>**/*-view.js</include>
+                                <include>**/*-graph.js</include>
                             </includes>
                         </fileSet>
                         <fileSet filtered="false" encoding="UTF-8">

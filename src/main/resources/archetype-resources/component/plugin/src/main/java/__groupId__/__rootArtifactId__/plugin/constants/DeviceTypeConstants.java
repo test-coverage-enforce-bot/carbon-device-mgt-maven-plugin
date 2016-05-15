@@ -24,23 +24,17 @@ import java.io.File;
 public class DeviceTypeConstants {
     public final static String DEVICE_TYPE = "${deviceType}";
     public final static String DEVICE_PLUGIN_DEVICE_NAME = "DEVICE_NAME";
-    public final static String DEVICE_PLUGIN_DEVICE_ID = "b_DEVICE_ID";
+    public final static String DEVICE_PLUGIN_DEVICE_ID = "${deviceType}_DEVICE_ID";
     public final static String STATE_ON = "ON";
     public final static String STATE_OFF = "OFF";
 
-    public static final String URL_PREFIX = "http://";
-    public static final String BULB_CONTEXT = "BULB";
-    public static final String TEMPERATURE_CONTEXT = "/TEMPERATURE/";
-
-    //type of the sensor
-    public static final String SENSOR_TEMPERATURE = "${nameOfTheSensor}";
     //sensor events summerized table name
     public static final String TEMPERATURE_EVENT_TABLE = "ORG_WSO2_IOT_DEVICES_${nameOfTheSensor}";
     public static final String DATA_SOURCE_NAME = "jdbc/${deviceType}DM_DB";
     public final static String DEVICE_TYPE_PROVIDER_DOMAIN = "carbon.super";
 
     //mqtt tranport related constants
-    public static final String MQTT_ADAPTER_NAME = "${deviceType}_mqtt";
+    public static final String MQTT_ADAPTER_NAME = "${nameOfTheSensor}_mqtt";
     public static final String MQTT_ADAPTER_TYPE = "oauth-mqtt";
     public static final String ADAPTER_TOPIC_PROPERTY = "topic";
     public static final String MQTT_PORT = "\\$\\{mqtt.broker.port\\}";
