@@ -3,6 +3,6 @@
   "deviceType": {
     "label": "${deviceType}",
     "category": "virtual",
-    "downloadAgentUri": "${deviceType}/enrollment/devices/download"
+    "downloadAgentUri": "${deviceType}/device/download"
   }
 }

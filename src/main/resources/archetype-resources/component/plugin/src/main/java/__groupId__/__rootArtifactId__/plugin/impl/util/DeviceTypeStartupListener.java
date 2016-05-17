@@ -43,5 +43,4 @@ public class DeviceTypeStartupListener implements ServerStartupObserver {
             log.error("Failed to initialize the  ${deviceType} output adapter", e);
         }
     }
-
 }

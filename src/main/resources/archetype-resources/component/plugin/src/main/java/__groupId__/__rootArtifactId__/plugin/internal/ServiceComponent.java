@@ -22,6 +22,7 @@ import ${groupId}.${rootArtifactId}.plugin.impl.util.DeviceTypeStartupListener;
 import ${groupId}.${rootArtifactId}.plugin.exception.DeviceMgtPluginException;
 import ${groupId}.${rootArtifactId}.plugin.impl.util.DeviceTypeUtils;
 import ${groupId}.${rootArtifactId}.plugin.impl.DeviceTypeManagerService;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.osgi.framework.BundleContext;
@@ -57,8 +58,8 @@ import org.wso2.carbon.event.output.adapter.core.OutputEventAdapterService;
  */
 
 public class ServiceComponent {
-    private ServiceRegistration serviceRegistration;
     private static final Log log = LogFactory.getLog(ServiceComponent.class);
+    private ServiceRegistration serviceRegistration;
 
     protected void activate(ComponentContext ctx) {
         if (log.isDebugEnabled()) {

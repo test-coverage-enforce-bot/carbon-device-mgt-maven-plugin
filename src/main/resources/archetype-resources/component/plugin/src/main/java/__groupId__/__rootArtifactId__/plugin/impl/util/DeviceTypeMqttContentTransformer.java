@@ -17,7 +17,6 @@
  */
 package ${groupId}.${rootArtifactId}.plugin.impl.util;
 
-
 import org.json.JSONObject;
 import org.wso2.carbon.context.PrivilegedCarbonContext;
 import org.wso2.carbon.device.mgt.iot.input.adapter.extension.ContentTransformer;
@@ -39,7 +38,7 @@ public class DeviceTypeMqttContentTransformer implements ContentTransformer {
             ctx.setTenantDomain(tenantDomain, true);
             String actualMessage = jsonPayload.toString();
             return message;
-        }  finally {
+        } finally {
             PrivilegedCarbonContext.endTenantFlow();
         }
     }

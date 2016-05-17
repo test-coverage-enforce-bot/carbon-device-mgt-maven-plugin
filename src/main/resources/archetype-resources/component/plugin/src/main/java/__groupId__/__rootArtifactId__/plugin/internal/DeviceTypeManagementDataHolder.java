@@ -27,18 +27,17 @@ import org.wso2.carbon.event.output.adapter.core.OutputEventAdapterService;
  */
 public class DeviceTypeManagementDataHolder {
 
+    private static DeviceTypeManagementDataHolder thisInstance = new DeviceTypeManagementDataHolder();
     private OutputEventAdapterService outputEventAdapterService;
     private InputEventAdapterService inputEventAdapterService;
     private EventsPublisherService eventsPublisherService;
 
-	private static DeviceTypeManagementDataHolder thisInstance = new DeviceTypeManagementDataHolder();
+    private DeviceTypeManagementDataHolder() {
+    }
 
-	private DeviceTypeManagementDataHolder() {
-	}
-
-	public static DeviceTypeManagementDataHolder getInstance() {
-		return thisInstance;
-	}
+    public static DeviceTypeManagementDataHolder getInstance() {
+        return thisInstance;
+    }
 
     public OutputEventAdapterService getOutputEventAdapterService() {
         return outputEventAdapterService;

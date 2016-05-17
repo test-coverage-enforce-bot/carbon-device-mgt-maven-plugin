@@ -25,11 +25,8 @@
          http://cxf.apache.org/jaxrs http://cxf.apache.org/schemas/jaxrs.xsd">
     <jaxrs:server id="${deviceType}" address="/">
         <jaxrs:serviceBeans>
-            <bean id="ControllerService"
-                  class="${groupId}.${rootArtifactId}.api.ControllerServiceImpl">
-            </bean>
-            <bean id="ManagerService"
-                  class="${groupId}.${rootArtifactId}.api.ManagerServiceImpl">
+            <bean id="DeviceTypeService"
+                  class="${groupId}.${rootArtifactId}.api.DeviceTypeServiceImpl">
             </bean>
         </jaxrs:serviceBeans>
         <jaxrs:providers>

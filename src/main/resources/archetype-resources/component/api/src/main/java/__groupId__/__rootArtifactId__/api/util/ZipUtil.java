@@ -18,7 +18,7 @@
 
 package ${groupId}.${rootArtifactId}.api.util;
 
-import  ${groupId}.${rootArtifactId}.plugin.mqtt.MqttConfig;
+import ${groupId}.${rootArtifactId}.plugin.mqtt.MqttConfig;
 
 import org.wso2.carbon.device.mgt.common.DeviceManagementException;
 import org.wso2.carbon.device.mgt.iot.util.Utils;

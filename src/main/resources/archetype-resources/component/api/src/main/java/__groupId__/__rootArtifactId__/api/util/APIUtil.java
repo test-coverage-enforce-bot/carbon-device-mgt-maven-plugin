@@ -174,12 +174,6 @@ public class APIUtil {
         return ids;
     }
 
-    /**
-     * Creates the SensorDatas from records.
-     *
-     * @param records the records
-     * @return the Map of SensorRecord <id, SensorRecord>
-     */
     public static Map<String, SensorRecord> createSensorData(List<Record> records) {
         Map<String, SensorRecord> sensorDatas = new HashMap<>();
         for (Record record : records) {
@@ -189,12 +183,6 @@ public class APIUtil {
         return sensorDatas;
     }
 
-    /**
-     * Create a SensorRecord object out of a Record object
-     *
-     * @param record the record object
-     * @return SensorRecord object
-     */
     public static SensorRecord createSensorData(Record record) {
         SensorRecord recordBean = new SensorRecord();
         recordBean.setId(record.getId());
