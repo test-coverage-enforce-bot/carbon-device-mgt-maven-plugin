@@ -129,11 +129,6 @@
                 <scope>provided</scope>
             </dependency>
             <dependency>
-                <groupId>org.wso2.carbon.devicemgt</groupId>
-                <artifactId>org.wso2.carbon.apimgt.webapp.publisher</artifactId>
-                <version>${carbon.device.mgt.version}</version>
-            </dependency>
-            <dependency>
                 <groupId>org.wso2.carbon</groupId>
                 <artifactId>org.wso2.carbon.ndatasource.core</artifactId>
                 <version>${carbon.kernel.version}</version>
@@ -300,20 +295,6 @@
                 <groupId>org.wso2.carbon.analytics-common</groupId>
                 <artifactId>org.wso2.carbon.event.output.adapter.core</artifactId>
                 <version>${carbon.analytics.common.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.wso2.carbon.analytics-common</groupId>
-                <artifactId>org.wso2.carbon.event.input.adapter.core</artifactId>
-                <version>${carbon.analytics.common.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.wso2.carbon.devicemgt-plugins</groupId>
-                <artifactId>org.wso2.carbon.device.mgt.iot.input.adapter.extension</artifactId>
-                <version>${carbon.devicemgt.plugins.version}</version>
-                <scope>system</scope>
-                <systemPath>
-                    ${basedir}/../../../../repository/components/plugins/org.wso2.carbon.device.mgt.iot.input.adapter.extension_${carbon.devicemgt.plugins.version}.jar
-                </systemPath>
             </dependency>
             <dependency>
                 <groupId>org.wso2.carbon.devicemgt</groupId>

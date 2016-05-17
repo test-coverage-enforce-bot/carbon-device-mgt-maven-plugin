@@ -29,9 +29,7 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.ComponentContext;
 import org.wso2.carbon.core.ServerStartupObserver;
-import org.wso2.carbon.device.mgt.analytics.data.publisher.service.EventsPublisherService;
 import org.wso2.carbon.device.mgt.common.spi.DeviceManagementService;
-import org.wso2.carbon.event.input.adapter.core.InputEventAdapterService;
 import org.wso2.carbon.event.output.adapter.core.OutputEventAdapterService;
 
 /**
@@ -43,18 +41,6 @@ import org.wso2.carbon.event.output.adapter.core.OutputEventAdapterService;
  * policy="dynamic"
  * bind="setOutputEventAdapterService"
  * unbind="unsetOutputEventAdapterService"
- * @scr.reference name="event.input.adapter.service"
- * interface="org.wso2.carbon.event.input.adapter.core.InputEventAdapterService"
- * cardinality="1..1"
- * policy="dynamic"
- * bind="setInputEventAdapterService"
- * unbind="unsetInputEventAdapterService"
- * @scr.reference name="event.publisher.service"
- * interface="org.wso2.carbon.device.mgt.analytics.data.publisher.service.EventsPublisherService"
- * cardinality="1..1"
- * policy="dynamic"
- * bind="setEventsPublisherService"
- * unbind="unsetEventsPublisherService"
  */
 
 public class ServiceComponent {
@@ -123,29 +109,5 @@ public class ServiceComponent {
      */
     protected void unsetOutputEventAdapterService(OutputEventAdapterService outputEventAdapterService) {
         DeviceTypeManagementDataHolder.getInstance().setOutputEventAdapterService(null);
-    }
-
-    /**
-     * Initialize the Input EventAdapter Service dependency
-     *
-     * @param inputEventAdapterService Input EventAdapter Service reference
-     */
-    protected void setInputEventAdapterService(InputEventAdapterService inputEventAdapterService) {
-        DeviceTypeManagementDataHolder.getInstance().setInputEventAdapterService(inputEventAdapterService);
-    }
-
-    /**
-     * De-reference the Input EventAdapter Service dependency.
-     */
-    protected void unsetInputEventAdapterService(InputEventAdapterService inputEventAdapterService) {
-        DeviceTypeManagementDataHolder.getInstance().setInputEventAdapterService(null);
-    }
-
-    protected void setEventsPublisherService(EventsPublisherService eventsPublisherService) {
-        DeviceTypeManagementDataHolder.getInstance().setEventsPublisherService(eventsPublisherService);
-    }
-
-    protected void unsetEventsPublisherService(EventsPublisherService eventsPublisherService) {
-        DeviceTypeManagementDataHolder.getInstance().setEventsPublisherService(null);
     }
 }

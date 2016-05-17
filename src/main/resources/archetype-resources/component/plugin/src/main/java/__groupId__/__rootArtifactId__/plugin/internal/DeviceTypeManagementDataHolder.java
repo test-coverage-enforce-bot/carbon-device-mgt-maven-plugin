@@ -18,19 +18,15 @@
 
 package ${groupId}.${rootArtifactId}.plugin.internal;
 
-import org.wso2.carbon.device.mgt.analytics.data.publisher.service.EventsPublisherService;
-import org.wso2.carbon.event.input.adapter.core.InputEventAdapterService;
 import org.wso2.carbon.event.output.adapter.core.OutputEventAdapterService;
 
 /**
- * DataHolder class of ${deviceType} plugins component.
+ * DataHolder class of fgfgt plugins component.
  */
 public class DeviceTypeManagementDataHolder {
 
     private static DeviceTypeManagementDataHolder thisInstance = new DeviceTypeManagementDataHolder();
     private OutputEventAdapterService outputEventAdapterService;
-    private InputEventAdapterService inputEventAdapterService;
-    private EventsPublisherService eventsPublisherService;
 
     private DeviceTypeManagementDataHolder() {
     }
@@ -47,22 +43,5 @@ public class DeviceTypeManagementDataHolder {
             OutputEventAdapterService outputEventAdapterService) {
         this.outputEventAdapterService = outputEventAdapterService;
     }
-
-    public InputEventAdapterService getInputEventAdapterService() {
-        return inputEventAdapterService;
-    }
-
-    public void setInputEventAdapterService(InputEventAdapterService inputEventAdapterService) {
-        this.inputEventAdapterService = inputEventAdapterService;
-    }
-
-    public EventsPublisherService getEventsPublisherService() {
-        return eventsPublisherService;
-    }
-
-    public void setEventsPublisherService(
-            EventsPublisherService eventsPublisherService) {
-        this.eventsPublisherService = eventsPublisherService;
-    }
-
 }
+

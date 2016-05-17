@@ -57,7 +57,7 @@ public class DeviceTypeManagerService implements DeviceManagementService {
 
     @Override
     public ProvisioningConfig getProvisioningConfig() {
-        return new ProvisioningConfig(DeviceTypeConstants.DEVICE_TYPE_PROVIDER_DOMAIN, true);
+        return new ProvisioningConfig(DeviceTypeConstants.DEVICE_TYPE_PROVIDER_DOMAIN, false);
     }
 
     @Override

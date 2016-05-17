@@ -17,6 +17,6 @@
   ~ under the License.
   -->
 
-<artifact name="Eventreceiver_${nameOfTheSensor}" version="1.0.0" type="event/receiver" serverRole="DataAnalyticsServer">
-    <file>EventReceiver_${nameOfTheSensor}.xml</file>
+<artifact name="EventReceiver_MQTT_${deviceType}_${nameOfTheSensor}" version="1.0.0" type="event/receiver" serverRole="DataAnalyticsServer">
+    <file>EventReceiver-MQTT-${deviceType}-${nameOfTheSensor}.xml</file>
 </artifact>

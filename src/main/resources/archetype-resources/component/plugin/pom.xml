@@ -77,13 +77,7 @@
                             org.wso2.carbon.core.util,
                             org.wso2.carbon.context,
                             org.wso2.carbon.core,
-                            org.apache.commons.codec.binary,
-                            org.json.*;version="${commons-json.version.range}",
-                            org.wso2.carbon.device.mgt.analytics.data.publisher.exception,
-                            org.wso2.carbon.device.mgt.analytics.data.publisher.service,
-                            org.wso2.carbon.event.input.adapter.core,
-                            org.wso2.carbon.event.input.adapter.core.exception,
-                            org.jivesoftware.smack.*
+                            org.apache.commons.codec.binary
                         </Import-Package>
                         <Export-Package>
                             !${project-base-package}.plugin.internal,
@@ -134,30 +128,6 @@
         <dependency>
             <groupId>org.wso2.carbon.analytics-common</groupId>
             <artifactId>org.wso2.carbon.event.output.adapter.core</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.wso2.carbon.analytics-common</groupId>
-            <artifactId>org.wso2.carbon.event.input.adapter.core</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.wso2.carbon.devicemgt-plugins</groupId>
-            <artifactId>org.wso2.carbon.device.mgt.iot.input.adapter.extension</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.json.wso2</groupId>
-            <artifactId>json</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.wso2.carbon.devicemgt</groupId>
-            <artifactId>org.wso2.carbon.device.mgt.analytics.data.publisher</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.igniterealtime.smack.wso2</groupId>
-            <artifactId>smack</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.igniterealtime.smack.wso2</groupId>
-            <artifactId>smackx</artifactId>
         </dependency>
     </dependencies>
 </project>

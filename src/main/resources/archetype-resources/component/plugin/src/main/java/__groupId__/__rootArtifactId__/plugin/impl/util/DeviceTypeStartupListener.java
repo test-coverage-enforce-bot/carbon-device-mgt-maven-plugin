@@ -35,10 +35,7 @@ public class DeviceTypeStartupListener implements ServerStartupObserver {
     @Override
     public void completedServerStartup() {
         try {
-
             DeviceTypeUtils.setupMqttOutputAdapter();
-            DeviceTypeUtils.setupMqttInputAdapter();
-
         } catch (IOException e) {
             log.error("Failed to initialize the  ${deviceType} output adapter", e);
         }

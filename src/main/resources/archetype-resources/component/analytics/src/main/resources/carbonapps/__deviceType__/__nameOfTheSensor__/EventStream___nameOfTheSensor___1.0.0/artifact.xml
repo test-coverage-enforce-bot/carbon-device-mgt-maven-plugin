@@ -17,10 +17,7 @@
   ~ under the License.
   -->
 
-<eventReceiver name="EventReceiver_${nameOfTheSensor}" statistics="disable" trace="disable" xmlns="http://wso2.org/carbon/eventreceiver">
-    <from eventAdapterType="wso2event">
-        <property name="events.duplicated.in.cluster">false</property>
-    </from>
-    <mapping customMapping="disable" type="wso2event"/>
-    <to streamName="org.wso2.iot.devices.${nameOfTheSensor}" version="1.0.0"/>
-</eventReceiver>
+<artifact name="EventStream_${deviceType}_${nameOfTheSensor}" version="1.0.0" type="event/stream" serverRole="DataAnalyticsServer">
+	<file>org-wso2-iot-devices-${deviceType}-${nameOfTheSensor}-1.0.0.json</file>
+</artifact>
+

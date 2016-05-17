@@ -26,11 +26,6 @@ import org.apache.commons.logging.LogFactory;
 import org.wso2.carbon.base.ServerConfiguration;
 import org.wso2.carbon.context.PrivilegedCarbonContext;
 import org.wso2.carbon.core.util.Utils;
-import org.wso2.carbon.device.mgt.analytics.data.publisher.exception.DataPublisherConfigurationException;
-import org.wso2.carbon.device.mgt.analytics.data.publisher.service.EventsPublisherService;
-import org.wso2.carbon.device.mgt.common.Device;
-import org.wso2.carbon.event.input.adapter.core.InputEventAdapterConfiguration;
-import org.wso2.carbon.event.input.adapter.core.exception.InputEventAdapterException;
 import org.wso2.carbon.event.output.adapter.core.MessageType;
 import org.wso2.carbon.event.output.adapter.core.OutputEventAdapterConfiguration;
 import org.wso2.carbon.event.output.adapter.core.exception.OutputEventAdapterException;
@@ -57,26 +52,6 @@ import java.util.Properties;
 public class DeviceTypeUtils {
 
     private static Log log = LogFactory.getLog(${groupId}.${rootArtifactId}.plugin.impl.util.DeviceTypeUtils.class);
-
-    public static String getDeviceProperty(List<Device.Property> deviceProperties, String propertyKey) {
-        String deviceProperty = "";
-        for (Device.Property property : deviceProperties) {
-            if (propertyKey.equals(property.getName())) {
-                deviceProperty = property.getValue();
-            }
-        }
-        return deviceProperty;
-    }
-
-    public static Device.Property getProperty(String property, String value) {
-        if (property != null) {
-            Device.Property prop = new Device.Property();
-            prop.setName(property);
-            prop.setValue(value);
-            return prop;
-        }
-        return null;
-    }
 
     public static void cleanupResources(Connection conn, PreparedStatement stmt, ResultSet rs) {
         if (rs != null) {
@@ -174,23 +149,6 @@ public class DeviceTypeUtils {
         }
     }
 
-    public static void setupMqttInputAdapter() throws IOException {
-        InputEventAdapterConfiguration inputEventAdapterConfiguration =
-                createMqttInputEventAdapterConfiguration(DeviceTypeConstants.MQTT_ADAPTER_NAME,
-                        DeviceTypeConstants.MQTT_ADAPTER_TYPE, MessageType.TEXT);
-        try {
-            PrivilegedCarbonContext.startTenantFlow();
-            PrivilegedCarbonContext.getThreadLocalCarbonContext().setTenantDomain(
-                    DeviceTypeConstants.DEVICE_TYPE_PROVIDER_DOMAIN, true);
-            DeviceTypeManagementDataHolder.getInstance().getInputEventAdapterService()
-                    .create(inputEventAdapterConfiguration, new ${groupId}.${rootArtifactId}.plugin.impl.util.DeviceTypeEventAdapterSubscription());
-        } catch (InputEventAdapterException e) {
-            log.error("Unable to create Input Event Adapter : " + DeviceTypeConstants.MQTT_ADAPTER_NAME, e);
-        } finally {
-            PrivilegedCarbonContext.endTenantFlow();
-        }
-    }
-
     /**
      * Create Output Event Adapter Configuration for given configuration.
      *
@@ -229,66 +187,4 @@ public class DeviceTypeUtils {
         }
         return outputEventAdapterConfiguration;
     }
-
-    /**
-     * Create Output Event Adapter Configuration for given configuration.
-     *
-     * @param name      Input Event Adapter name
-     * @param type      Input Event Adapter type
-     * @param msgFormat Input Event Adapter message format
-     * @return InputEventAdapterConfiguration instance for given configuration
-     */
-    private static InputEventAdapterConfiguration createMqttInputEventAdapterConfiguration(String name, String type,
-                                                                                           String msgFormat) throws IOException {
-        InputEventAdapterConfiguration inputEventAdapterConfiguration = new InputEventAdapterConfiguration();
-        inputEventAdapterConfiguration.setName(name);
-        inputEventAdapterConfiguration.setType(type);
-        inputEventAdapterConfiguration.setMessageFormat(msgFormat);
-        File configFile = new File(DeviceTypeConstants.MQTT_CONFIG_LOCATION);
-        if (configFile.exists()) {
-            Map<String, String> mqttAdapterProperties = new HashMap<>();
-            InputStream propertyStream = configFile.toURI().toURL().openStream();
-            Properties properties = new Properties();
-            properties.load(propertyStream);
-            mqttAdapterProperties.put(DeviceTypeConstants.USERNAME_PROPERTY_KEY, properties.getProperty(
-                    DeviceTypeConstants.USERNAME_PROPERTY_KEY));
-            mqttAdapterProperties.put(DeviceTypeConstants.DCR_PROPERTY_KEY, Utils.replaceSystemProperty(
-                    properties.getProperty(DeviceTypeConstants.DCR_PROPERTY_KEY)));
-            mqttAdapterProperties.put(DeviceTypeConstants.BROKER_URL_PROPERTY_KEY, replaceMqttProperty(
-                    properties.getProperty(DeviceTypeConstants.BROKER_URL_PROPERTY_KEY)));
-            mqttAdapterProperties.put(DeviceTypeConstants.SCOPES_PROPERTY_KEY, properties.getProperty(
-                    DeviceTypeConstants.SCOPES_PROPERTY_KEY));
-            mqttAdapterProperties.put(DeviceTypeConstants.CLEAR_SESSION_PROPERTY_KEY, properties.getProperty(
-                    DeviceTypeConstants.CLEAR_SESSION_PROPERTY_KEY));
-            mqttAdapterProperties.put(DeviceTypeConstants.QOS_PROPERTY_KEY, properties.getProperty(
-                    DeviceTypeConstants.QOS_PROPERTY_KEY));
-            mqttAdapterProperties.put(DeviceTypeConstants.CLIENT_ID_PROPERTY_KEY, "");
-            mqttAdapterProperties.put(DeviceTypeConstants.TOPIC, DeviceTypeConstants.SUBSCRIBED_TOPIC);
-            mqttAdapterProperties.put(DeviceTypeConstants.CONTENT_TRANSFORMATION,
-                    ${groupId}.${rootArtifactId}.plugin.impl.util.DeviceTypeMqttContentTransformer.class.getName());
-            mqttAdapterProperties.put(DeviceTypeConstants.CONTENT_VALIDATION, "default");
-            mqttAdapterProperties.put(DeviceTypeConstants.RESOURCE, "input-event");
-            inputEventAdapterConfiguration.setProperties(mqttAdapterProperties);
-        }
-        return inputEventAdapterConfiguration;
-    }
-
-    public static boolean publishToDAS(String deviceId, float temperature) {
-        EventsPublisherService deviceAnalyticsService =
-                DeviceTypeManagementDataHolder.getInstance().getEventsPublisherService();
-        if (deviceAnalyticsService != null) {
-            String owner = "";
-            Object metdaData[] = {owner, DeviceTypeConstants.DEVICE_TYPE, deviceId, System.currentTimeMillis()};
-            Object payloadData[] = {temperature};
-            try {
-                deviceAnalyticsService.publishEvent(DeviceTypeConstants.SENSOR_STREAM_DEFINITION,
-                        DeviceTypeConstants.SENSOR_STREAM_DEFINITION_VERSION, metdaData, new Object[0], payloadData);
-            } catch (DataPublisherConfigurationException e) {
-                return false;
-            }
-            return true;
-        }
-        return false;
-    }
-
 }
