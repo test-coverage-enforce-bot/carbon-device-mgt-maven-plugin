@@ -54,8 +54,7 @@ Then select the cdmf.devicetype:cdmf-devicetype-archetype as new archetype.
        version: 1.0.0-SNAPSHOT
        package: org.homeautomation
        deviceType: currentsensor
-
-
+       nameOfTheSensor: current
 
 # Configure the device-deployer.xml file that is in the IoTS_HOME directory.
 
