@@ -48,6 +48,7 @@ Then select the cdmf.devicetype:cdmf-devicetype-archetype as new archetype.
        Define value for property 'version':  1.0-SNAPSHOT: : 1.0.0-SNAPSHOT
        Define value for property 'package':  org.homeautomation: : 
        Define value for property 'deviceType': : currentsensor
+       Define value for property 'nameOfTheSensor': : current
        Confirm properties configuration:
        groupId: org.homeautomation
        artifactId: currentsensor
