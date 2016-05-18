@@ -20,10 +20,10 @@ package ${groupId}.${rootArtifactId}.plugin.impl.dao;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+
 import ${groupId}.${rootArtifactId}.plugin.constants.DeviceTypeConstants;
 import ${groupId}.${rootArtifactId}.plugin.impl.dao.impl.DeviceTypeDAOImpl;
-import ${groupId}.${rootArtifactId}.plugin.exception.DeviceTypePluginException;
-
+import ${groupId}.${rootArtifactId}.plugin.exception.DeviceMgtPluginException;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -32,7 +32,7 @@ import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-public class DeviceTypeDAO{
+public class DeviceTypeDAO {
 
     private static final Log log = LogFactory.getLog(DeviceTypeDAO.class);
     static DataSource dataSource;           // package local variable
@@ -42,43 +42,39 @@ public class DeviceTypeDAO{
         initDeviceTypeDAO();
     }
 
-    public DeviceTypeDAOImpl getDeviceTypeDAO() {
-        return new DeviceTypeDAOImpl();
-    }
-
-    public static void initDeviceTypeDAO(){
+    public static void initDeviceTypeDAO() {
         try {
             Context ctx = new InitialContext();
             dataSource = (DataSource) ctx.lookup(DeviceTypeConstants.DATA_SOURCE_NAME);
         } catch (NamingException e) {
             log.error("Error while looking up the data source: " +
-                      DeviceTypeConstants.DATA_SOURCE_NAME);
+                    DeviceTypeConstants.DATA_SOURCE_NAME);
         }
     }
 
-    public static void beginTransaction() throws DeviceTypePluginException {
+    public static void beginTransaction() throws DeviceMgtPluginException {
         try {
             Connection conn = dataSource.getConnection();
             conn.setAutoCommit(false);
             currentConnection.set(conn);
         } catch (SQLException e) {
-            throw new DeviceTypePluginException("Error occurred while retrieving datasource connection", e);
+            throw new DeviceMgtPluginException("Error occurred while retrieving datasource connection", e);
         }
     }
 
-    public static Connection getConnection() throws DeviceTypePluginException {
+    public static Connection getConnection() throws DeviceMgtPluginException {
         if (currentConnection.get() == null) {
             try {
                 currentConnection.set(dataSource.getConnection());
             } catch (SQLException e) {
-                throw new DeviceTypePluginException("Error occurred while retrieving data source connection",
+                throw new DeviceMgtPluginException("Error occurred while retrieving data source connection",
                         e);
             }
         }
         return currentConnection.get();
     }
 
-    public static void commitTransaction() throws DeviceTypePluginException {
+    public static void commitTransaction() throws DeviceMgtPluginException {
         try {
             Connection conn = currentConnection.get();
             if (conn != null) {
@@ -90,26 +86,26 @@ public class DeviceTypeDAO{
                 }
             }
         } catch (SQLException e) {
-            throw new DeviceTypePluginException("Error occurred while committing the transaction", e);
+            throw new DeviceMgtPluginException("Error occurred while committing the transaction", e);
         } finally {
             closeConnection();
         }
     }
 
-    public static void closeConnection() throws DeviceTypePluginException {
+    public static void closeConnection() throws DeviceMgtPluginException {
 
-		Connection con = currentConnection.get();
-		if(con != null){
-			try {
-				con.close();
-			} catch (SQLException e) {
-				log.error("Error occurred while close the connection");
-			}
-		}
+        Connection con = currentConnection.get();
+        if (con != null) {
+            try {
+                con.close();
+            } catch (SQLException e) {
+                log.error("Error occurred while close the connection");
+            }
+        }
         currentConnection.remove();
     }
 
-    public static void rollbackTransaction() throws DeviceTypePluginException {
+    public static void rollbackTransaction() throws DeviceMgtPluginException {
         try {
             Connection conn = currentConnection.get();
             if (conn != null) {
@@ -121,9 +117,13 @@ public class DeviceTypeDAO{
                 }
             }
         } catch (SQLException e) {
-            throw new DeviceTypePluginException("Error occurred while rollback the transaction", e);
+            throw new DeviceMgtPluginException("Error occurred while rollback the transaction", e);
         } finally {
             closeConnection();
         }
+    }
+
+    public DeviceTypeDAOImpl getDeviceTypeDAO() {
+        return new DeviceTypeDAOImpl();
     }
 }

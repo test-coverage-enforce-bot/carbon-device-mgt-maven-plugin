@@ -1,10 +1,11 @@
 # Install cdmf-devicetype-archetype
 
-First you need to download this maven archetype. To download 
+First you need to download correct version of maven archetype. Replace [version] with required version you need to download 
 
-    git clone https://github.com/GPrathap/cdmf-devicetype-archetype.git
+    git clone -b IoTS-1.0.0-[version] --single-branch https://github.com/GPrathap/cdmf-devicetype-archetype.git
 
-To install this maven archetype into your local system, inside the cdmf-devicetype-archetype
+
+To install this maven archetype into your local system, from inside the cdmf-devicetype-archetype
 
     mvn clean install
 
@@ -15,7 +16,7 @@ To create new project go to this folder:  IOTS_HOME/samples
     
     mvn archetype:generate -DarchetypeCatalog=local
     
-Then select the org.wso2.cdmf.devicetype:cdmf-devicetype-archetype as new archetype. 
+Then select the cdmf.devicetype:cdmf-devicetype-archetype as new archetype. 
 
         jobs@jobs-ThinkPad-T530:~/wso2/IoT/m3/product/IOTS_HOME/samples$ 
         mvn archetype:generate -DarchetypeCatalog=local
@@ -55,8 +56,6 @@ Then select the org.wso2.cdmf.devicetype:cdmf-devicetype-archetype as new archet
        package: org.homeautomation
        deviceType: currentsensor
        nameOfTheSensor: current
-
-
 
 # Configure the device-deployer.xml file that is in the IoTS_HOME directory.
 

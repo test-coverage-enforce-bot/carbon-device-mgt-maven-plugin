@@ -1,12 +1,13 @@
 {
   "deviceType": {
     "label": "${deviceType}",
-    "category": "virtual"
+    "category": "virtual",
+    "downloadAgentUri": "${deviceType}/enrollment/devices/download"
   },
   "analyticStreams": [
     {
-      "name": "${nameOfTheSensor}",
-      "table": "DEVICE_${nameOfTheSensor}_SUMMARY",
+      "name": "Temperature",
+      "table": "DEVICE_${deviceType}_${nameOfTheSensor}_SUMMARY",
       "ui_unit": {
         "name": "cdmf.unit.analytics.line-chart",
         "data":[
