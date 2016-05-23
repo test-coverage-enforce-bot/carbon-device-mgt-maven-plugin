@@ -171,22 +171,22 @@
             <dependency>
                 <groupId>org.wso2.carbon.analytics</groupId>
                 <artifactId>org.wso2.carbon.analytics.api</artifactId>
-                <version>${analytics.version}</version>
+                <version>${carbon.analytics.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.wso2.carbon.analytics</groupId>
                 <artifactId>org.wso2.carbon.analytics.datasource.commons</artifactId>
-                <version>${analytics.version}</version>
+                <version>${carbon.analytics.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.wso2.carbon.analytics</groupId>
                 <artifactId>org.wso2.carbon.analytics.dataservice.commons</artifactId>
-                <version>${analytics.version}</version>
+                <version>${carbon.analytics.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.wso2.carbon.analytics</groupId>
                 <artifactId>org.wso2.carbon.analytics.dataservice.core</artifactId>
-                <version>${analytics.version}</version>
+                <version>${carbon.analytics.version}</version>
             </dependency>
             <dependency>
                 <groupId>commons-httpclient.wso2</groupId>
@@ -378,14 +378,10 @@
         <carbon.analytics.common.version.range>[5.0.11,6.0.0)</carbon.analytics.common.version.range>
         <carbon.analytics.version.range>[1.0.5,2.0.0]</carbon.analytics.version.range>
         <carbon.analytics.version>1.0.6-ALPHA</carbon.analytics.version>
-        <analytics.version>1.0.6-ALPHA</analytics.version>
+
         <!-- Carbon Device Management -->
         <carbon.device.mgt.version>1.1.0-SNAPSHOT</carbon.device.mgt.version>
-        <carbon.device.mgt.jar.version>1.1.0.SNAPSHOT</carbon.device.mgt.jar.version>
-        <carbon.devicemgt.plugins.version>2.1.0.SNAPSHOT</carbon.devicemgt.plugins.version>
-        <carbon.iot.device.mgt.jar.version>2.1.0.SNAPSHOT</carbon.iot.device.mgt.jar.version>
         <carbon.device.mgt.plugin.version>2.1.0-SNAPSHOT</carbon.device.mgt.plugin.version>
-        <wso2.iot.version>1.0.0-SNAPSHOT</wso2.iot.version>
 
         <carbon.commons.version>4.4.8</carbon.commons.version>
         <carbon.kernel.version>4.4.3</carbon.kernel.version>
