@@ -81,9 +81,6 @@ public class DeviceTypeUtils {
         cleanupResources(null, stmt, rs);
     }
 
-    /**
-     * Creates the device management schema.
-     */
     public static void setupDeviceManagementSchema() throws DeviceMgtPluginException {
         try {
             Context ctx = new InitialContext();

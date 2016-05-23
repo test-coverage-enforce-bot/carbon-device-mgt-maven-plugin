@@ -28,6 +28,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
+/**
+ * MQTT configurations
+ */
 public class MqttConfig {
 
     private static String brokerEndpoint;

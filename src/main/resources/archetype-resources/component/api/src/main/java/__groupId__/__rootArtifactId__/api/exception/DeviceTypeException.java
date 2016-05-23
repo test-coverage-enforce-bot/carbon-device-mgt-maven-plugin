@@ -18,6 +18,9 @@
 
 package ${groupId}.${rootArtifactId}.api.exception;
 
+/**
+ * Device specific exception handler
+ */
 public class DeviceTypeException extends Exception {
 
     private static final long serialVersionUID = 2736466230451105441L;

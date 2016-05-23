@@ -25,8 +25,11 @@ import org.wso2.carbon.core.ServerStartupObserver;
 
 import java.io.IOException;
 
+/**
+ * When device type related plugin is depleting it will initiate mqtt connection with mqtt broker
+ */
 public class DeviceTypeStartupListener implements ServerStartupObserver {
-    private static final Log log = LogFactory.getLog(${groupId}.${rootArtifactId}.plugin.impl.util.DeviceTypeStartupListener.class);
+    private static final Log log = LogFactory.getLog(DeviceTypeStartupListener.class);
 
     @Override
     public void completingServerStartup() {

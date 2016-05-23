@@ -15,6 +15,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+
 package ${groupId}.${rootArtifactId}.plugin.impl.util;
 
 import org.apache.commons.logging.Log;

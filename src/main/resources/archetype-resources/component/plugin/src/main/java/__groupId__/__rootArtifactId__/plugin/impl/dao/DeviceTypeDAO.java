@@ -32,6 +32,9 @@ import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+/**
+ * Database handler which is specified for ${deviceType} type
+ */
 public class DeviceTypeDAO {
 
     private static final Log log = LogFactory.getLog(DeviceTypeDAO.class);

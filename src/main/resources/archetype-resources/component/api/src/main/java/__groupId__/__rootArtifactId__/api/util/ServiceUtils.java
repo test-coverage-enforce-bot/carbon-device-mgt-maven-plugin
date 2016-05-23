@@ -27,7 +27,9 @@ import org.wso2.carbon.device.mgt.analytics.data.publisher.exception.DataPublish
 import org.wso2.carbon.device.mgt.analytics.data.publisher.service.EventsPublisherService;
 import org.wso2.carbon.context.PrivilegedCarbonContext;
 
-
+/**
+ * This can be used to publish data to DAS for given stream definition
+ */
 public class ServiceUtils {
     private static final Log log = LogFactory.getLog(ServiceUtils.class);
 

@@ -42,7 +42,6 @@ import java.util.Map;
  */
 public class DeviceTypeDAOImpl {
 
-
     private static final Log log = LogFactory.getLog(DeviceTypeDAOImpl.class);
 
     public Device getDevice(String deviceId) throws DeviceMgtPluginException {
