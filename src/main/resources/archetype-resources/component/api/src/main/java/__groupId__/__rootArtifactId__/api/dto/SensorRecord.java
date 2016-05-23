@@ -38,7 +38,7 @@ public class SensorRecord {
     private Map<String, Object> values;
 
     /**
-     * The id.
+     * Unique identifier for each recode
      */
     @XmlElement(required = false, name = "id")
     private String id;
@@ -53,7 +53,7 @@ public class SensorRecord {
 
     /**
      * Sets the values.
-     * @param values the values
+     * @param values
      */
     public void setValues(Map<String, Object> values) {
         this.values = values;
@@ -69,7 +69,7 @@ public class SensorRecord {
 
     /**
      * Sets the id.
-     * @param id the new id
+     * @param id set unique identifier
      */
     public void setId(String id) {
         this.id = id;
