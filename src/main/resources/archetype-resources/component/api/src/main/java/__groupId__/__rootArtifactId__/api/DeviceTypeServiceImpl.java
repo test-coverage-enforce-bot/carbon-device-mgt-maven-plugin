@@ -157,8 +157,8 @@ public class DeviceTypeServiceImpl implements DeviceTypeService {
                                    @QueryParam("to") long to) {
         String fromDate = String.valueOf(from);
         String toDate = String.valueOf(to);
-        String query = "deviceId:" + deviceId + " AND deviceType:" +
-                DeviceTypeConstants.DEVICE_TYPE + " AND time : [" + fromDate + " TO " + toDate + "]";
+        String query = "meta_deviceId:" + deviceId + " AND meta_deviceType:" +
+                DeviceTypeConstants.DEVICE_TYPE + " AND meta_time : [" + fromDate + " TO " + toDate + "]";
         String sensorTableName = DeviceTypeConstants.SENSOR_EVENT_TABLE;
         try {
             if (!APIUtil.getDeviceAccessAuthorizationService().isUserAuthorized(new DeviceIdentifier(deviceId,
@@ -167,7 +167,7 @@ public class DeviceTypeServiceImpl implements DeviceTypeService {
             }
             if (sensorTableName != null) {
                 List<SortByField> sortByFields = new ArrayList<>();
-                SortByField sortByField = new SortByField("time", SORT.ASC, false);
+                SortByField sortByField = new SortByField("meta_time", SORT.ASC, false);
                 sortByFields.add(sortByField);
                 List<SensorRecord> sensorRecords = APIUtil.getAllEventsForDevice(sensorTableName, query, sortByFields);
                 return Response.status(Response.Status.OK.getStatusCode()).entity(sensorRecords).build();
