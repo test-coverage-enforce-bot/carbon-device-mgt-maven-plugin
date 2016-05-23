@@ -76,7 +76,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 
 /**
- * This is the controller API which is used to control agent side functionality
+ * This is the API which is used to control and manage device type functionality
  */
 @SuppressWarnings("NonJaxWsWebServices")
 @API(name = "${deviceType}", version = "1.0.0", context = "/${deviceType}", tags = "${deviceType}")
@@ -95,8 +95,8 @@ public class DeviceTypeServiceImpl implements DeviceTypeService {
     }
 
     /**
-     * @param agentInfo device owner,id and sensor value
-     * @return
+     * @param agentInfo device owner,id
+     * @return true if device instance is added to map
      */
     @Path("device/register")
     @POST
@@ -111,9 +111,8 @@ public class DeviceTypeServiceImpl implements DeviceTypeService {
     }
 
     /**
-     * @param deviceId unique identifier for given device type
+     * @param deviceId  unique identifier for given device type instance
      * @param state    change status of sensor: on/off
-     * @param response
      */
     @Path("device/{deviceId}/change-status")
     @POST
@@ -147,7 +146,11 @@ public class DeviceTypeServiceImpl implements DeviceTypeService {
     }
 
     /**
-     * Retrieve Sensor data for the
+     * Retrieve Sensor data for the given time period
+     * @param deviceId unique identifier for given device type instance
+     * @param from  starting time
+     * @param to    ending time
+     * @return  response with List<SensorRecord> object which includes sensor data which is requested
      */
     @Path("device/stats/{deviceId}")
     @GET
@@ -157,8 +160,8 @@ public class DeviceTypeServiceImpl implements DeviceTypeService {
                                    @QueryParam("to") long to) {
         String fromDate = String.valueOf(from);
         String toDate = String.valueOf(to);
-        String query = "deviceId:" + deviceId + " AND deviceType:" +
-                DeviceTypeConstants.DEVICE_TYPE + " AND time : [" + fromDate + " TO " + toDate + "]";
+        String query = "meta_deviceId:" + deviceId + " AND meta_deviceType:" +
+                DeviceTypeConstants.DEVICE_TYPE + " AND meta_time : [" + fromDate + " TO " + toDate + "]";
         String sensorTableName = DeviceTypeConstants.SENSOR_EVENT_TABLE;
         try {
             if (!APIUtil.getDeviceAccessAuthorizationService().isUserAuthorized(new DeviceIdentifier(deviceId,
@@ -167,7 +170,7 @@ public class DeviceTypeServiceImpl implements DeviceTypeService {
             }
             if (sensorTableName != null) {
                 List<SortByField> sortByFields = new ArrayList<>();
-                SortByField sortByField = new SortByField("time", SORT.ASC, false);
+                SortByField sortByField = new SortByField("meta_time", SORT.ASC, false);
                 sortByFields.add(sortByField);
                 List<SensorRecord> sensorRecords = APIUtil.getAllEventsForDevice(sensorTableName, query, sortByFields);
                 return Response.status(Response.Status.OK.getStatusCode()).entity(sensorRecords).build();
@@ -183,9 +186,13 @@ public class DeviceTypeServiceImpl implements DeviceTypeService {
         return Response.status(Response.Status.BAD_REQUEST).build();
     }
 
-    @Path("/device/{device_id}")
+    /**
+     * Remove device type instance using device id
+     * @param deviceId  unique identifier for given device type instance
+     */
+    @Path("/device/{deviceId}")
     @DELETE
-    public Response removeDevice(@PathParam("device_id") String deviceId) {
+    public Response removeDevice(@PathParam("deviceId") String deviceId) {
         try {
             DeviceIdentifier deviceIdentifier = new DeviceIdentifier();
             deviceIdentifier.setId(deviceId);
@@ -209,9 +216,14 @@ public class DeviceTypeServiceImpl implements DeviceTypeService {
         }
     }
 
-    @Path("/device/{device_id}")
+    /**
+     * Update device instance name
+     * @param deviceId  unique identifier for given device type instance
+     * @param name      new name for the device type instance
+     */
+    @Path("/device/{deviceId}")
     @PUT
-    public Response updateDevice(@PathParam("device_id") String deviceId, @QueryParam("name") String name) {
+    public Response updateDevice(@PathParam("deviceId") String deviceId, @QueryParam("name") String name) {
         try {
             DeviceIdentifier deviceIdentifier = new DeviceIdentifier();
             deviceIdentifier.setId(deviceId);
@@ -239,11 +251,16 @@ public class DeviceTypeServiceImpl implements DeviceTypeService {
         }
     }
 
-    @Path("/device/{device_id}")
+    /**
+     * To get device information
+     * @param deviceId  unique identifier for given device type instance
+     * @return
+     */
+    @Path("/device/{deviceId}")
     @GET
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getDevice(@PathParam("device_id") String deviceId) {
+    public Response getDevice(@PathParam("deviceId") String deviceId) {
         try {
             DeviceIdentifier deviceIdentifier = new DeviceIdentifier();
             deviceIdentifier.setId(deviceId);
@@ -262,6 +279,10 @@ public class DeviceTypeServiceImpl implements DeviceTypeService {
         }
     }
 
+    /**
+     * Get all device type instance which belongs to user
+     * @return  Array of devices which includes device's information
+     */
     @Path("/devices")
     @GET
     @Consumes(MediaType.APPLICATION_JSON)
@@ -285,6 +306,12 @@ public class DeviceTypeServiceImpl implements DeviceTypeService {
         }
     }
 
+    /**
+     * To download device type agent source code as zip file
+     * @param deviceName   name for the device type instance
+     * @param sketchType   folder name where device type agent was installed into server
+     * @return  Agent source code as zip file
+     */
     @Path("/device/download")
     @GET
     @Produces("application/zip")
@@ -319,6 +346,12 @@ public class DeviceTypeServiceImpl implements DeviceTypeService {
         }
     }
 
+    /**
+     * Register device into device management service
+     * @param deviceId unique identifier for given device type instance
+     * @param name  name for the device type instance
+     * @return check whether device is installed into cdmf
+     */
     private boolean register(String deviceId, String name) {
         try {
             DeviceIdentifier deviceIdentifier = new DeviceIdentifier();
