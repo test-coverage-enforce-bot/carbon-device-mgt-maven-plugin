@@ -171,7 +171,7 @@ function drawGraph_${deviceType}(from, to) {
         for (var i = 0; i < data.length; i++) {
             chartData.push(
                 {
-                    x: parseInt(data[i].values.time) - tzOffset,
+                    x: parseInt(data[i].values.meta_time) - tzOffset,
                     y: parseInt(data[i].values.${nameOfTheSensor})
                 }
             );
