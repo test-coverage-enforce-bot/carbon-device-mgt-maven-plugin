@@ -21,6 +21,10 @@ package ${groupId}.${rootArtifactId}.plugin.constants;
 import org.wso2.carbon.utils.CarbonUtils;
 import java.io.File;
 
+/**
+ * Device type specific constants which includes all transport protocols configurations,
+ * stream definition and device specific dome constants
+ */
 public class DeviceTypeConstants {
     public final static String DEVICE_TYPE = "${deviceType}";
     public final static String DEVICE_PLUGIN_DEVICE_NAME = "DEVICE_NAME";

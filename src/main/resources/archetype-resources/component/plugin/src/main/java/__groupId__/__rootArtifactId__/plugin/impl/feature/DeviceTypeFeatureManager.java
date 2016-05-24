@@ -23,6 +23,9 @@ import org.wso2.carbon.device.mgt.extensions.feature.mgt.GenericFeatureManager;
 
 import java.util.List;
 
+/**
+ * Device type specific feature management server
+ */
 public class DeviceTypeFeatureManager implements FeatureManager {
 	@Override
 	public boolean addFeature(Feature feature) throws DeviceManagementException {

@@ -18,6 +18,9 @@
 
 package ${groupId}.${rootArtifactId}.plugin.exception;
 
+/**
+ * Device type plugin exception handler
+ */
 public class DeviceMgtPluginException extends Exception {
 
     private String errorMessage;

@@ -37,7 +37,6 @@ public class ZipUtil {
 
     private static final String HTTPS_PORT_PROPERTY = "httpsPort";
     private static final String HTTP_PORT_PROPERTY = "httpPort";
-
     private static final String LOCALHOST = "localhost";
     private static final String HTTPS_PROTOCOL_APPENDER = "https://";
     private static final String HTTP_PROTOCOL_APPENDER = "http://";
