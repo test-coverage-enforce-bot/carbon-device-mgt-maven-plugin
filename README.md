@@ -2,7 +2,7 @@
 
 First you need to download correct version of maven archetype. Replace [version] with required version you need to download 
 
-    git clone -b IoTS-1.0.0-[version] --single-branch https://github.com/GPrathap/cdmf-devicetype-archetype.git
+    git clone -b IoTS-1.0.0-[version] --single-branch https://github.com/wso2/carbon-device-mgt-maven-plugin.git
 
 
 To install this maven archetype into your local system, from inside the cdmf-devicetype-archetype
