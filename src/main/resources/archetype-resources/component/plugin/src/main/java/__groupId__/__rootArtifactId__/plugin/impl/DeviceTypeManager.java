@@ -23,14 +23,13 @@ import org.apache.commons.logging.LogFactory;
 import ${groupId}.${rootArtifactId}.plugin.impl.dao.DeviceTypeDAO;
 import ${groupId}.${rootArtifactId}.plugin.exception.DeviceMgtPluginException;
 import ${groupId}.${rootArtifactId}.plugin.impl.feature.DeviceTypeFeatureManager;
-import org.wso2.carbon.device.mgt.common.*;
 import org.wso2.carbon.device.mgt.common.Device;
 import org.wso2.carbon.device.mgt.common.DeviceIdentifier;
 import org.wso2.carbon.device.mgt.common.DeviceManagementException;
 import org.wso2.carbon.device.mgt.common.DeviceManager;
 import org.wso2.carbon.device.mgt.common.EnrolmentInfo;
 import org.wso2.carbon.device.mgt.common.FeatureManager;
-import org.wso2.carbon.device.mgt.common.configuration.mgt.TenantConfiguration;
+import org.wso2.carbon.device.mgt.common.configuration.mgt.PlatformConfiguration;
 import org.wso2.carbon.device.mgt.common.license.mgt.License;
 import org.wso2.carbon.device.mgt.common.license.mgt.LicenseManagementException;
 
@@ -53,15 +52,12 @@ public class DeviceTypeManager implements DeviceManager {
     }
 
     @Override
-    public boolean saveConfiguration(TenantConfiguration tenantConfiguration)
-            throws DeviceManagementException {
-        //TODO implement this
+    public boolean saveConfiguration(PlatformConfiguration platformConfiguration) throws DeviceManagementException {
         return false;
     }
 
     @Override
-    public TenantConfiguration getConfiguration() throws DeviceManagementException {
-        //TODO implement this
+    public PlatformConfiguration getConfiguration() throws DeviceManagementException {
         return null;
     }
 
