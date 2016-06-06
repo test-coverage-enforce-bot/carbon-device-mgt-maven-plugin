@@ -19,7 +19,9 @@
 <archetype-descriptor name="${deviceType}">
     <requiredProperties>
         <requiredProperty key="deviceType"></requiredProperty>
-        <requiredProperty key="nameOfTheSensor"></requiredProperty>
+        <requiredProperty key="sensorType1"></requiredProperty>
+        <requiredProperty key="sensorType2"></requiredProperty>
+        <requiredProperty key="sensorType3"></requiredProperty>
     </requiredProperties>
     <modules>
         <module id="${rootArtifactId}-component" dir="component" name="${rootArtifactId}-component">

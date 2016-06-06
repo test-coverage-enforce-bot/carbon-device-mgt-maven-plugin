@@ -41,19 +41,19 @@ def on_connect(mqttClient, userdata, flags, rc):
 #       The callback for when a PUBLISH message is received from the server.
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 def on_message(mqttClient, userdata, msg):
-    	print( "MQTT_LISTENER: " + msg.topic + " " + str(msg.payload))
+    print( "MQTT_LISTENER: " + msg.topic + " " + str(msg.payload))
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #       The callback for when a PUBLISH message to the server when door is open or close
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-def on_publish(mqttClient, msg):
-        mqttClient.publish(TOPIC_TO_PUBLISH, msg)
+def on_publish(mqttClient, stream1PlayLoad, stream2PlayLoad):
+    mqttClient.publish(TOPIC_TO_PUBLISH_STREAM1, stream1PlayLoad)
+    mqttClient.publish(TOPIC_TO_PUBLISH_STREAM2, stream2PlayLoad)
 
-
-def sendSensorValue(msg):
+def sendSensorValue(stream1PlayLoad, stream2PlayLoad):
     global mqttClient
-    on_publish(mqttClient, msg)
+    on_publish(mqttClient,stream1PlayLoad, stream2PlayLoad)
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 #  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -61,19 +61,21 @@ def sendSensorValue(msg):
 #			This method is invoked from Agent.py on a new thread
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 def main():
-       
+
     MQTT_ENDPOINT = iotUtils.MQTT_EP.split(":")
     MQTT_IP = MQTT_ENDPOINT[1].replace('//','')
     MQTT_PORT = int(MQTT_ENDPOINT[2])
-        
+
     DEV_OWNER = iotUtils.DEVICE_OWNER
     DEV_ID = iotUtils.DEVICE_ID
     DEV_TYPE =iotUtils.DEVICE_TYPE
     TANENT_DOMAIN = iotUtils.SERVER_NAME
     global TOPIC_TO_SUBSCRIBE
     TOPIC_TO_SUBSCRIBE = TANENT_DOMAIN + "/" + DEV_TYPE + "/" + DEV_ID + "/command"
-    global TOPIC_TO_PUBLISH
-    TOPIC_TO_PUBLISH = TANENT_DOMAIN + "/" + DEV_TYPE + "/" + DEV_ID + "/publisher"
+    global TOPIC_TO_PUBLISH_STREAM1
+    TOPIC_TO_PUBLISH_STREAM1 = TANENT_DOMAIN + "/" + DEV_TYPE + "/" + DEV_ID + "/${sensorType1}"
+    global TOPIC_TO_PUBLISH_STREAM2
+    TOPIC_TO_PUBLISH_STREAM2 = TANENT_DOMAIN + "/" + DEV_TYPE + "/" + DEV_ID + "/${sensorType2}"
 
     print ("MQTT_LISTENER: MQTT_ENDPOINT is " + str(MQTT_ENDPOINT))
     print ("MQTT_LISTENER: MQTT_TOPIC is " + TOPIC_TO_SUBSCRIBE)
@@ -87,16 +89,16 @@ def main():
             mqttClient.connect(MQTT_IP, MQTT_PORT, 60)
             print "MQTT_LISTENER: " + time.asctime(), "Connected to MQTT Broker - %s:%s" % (MQTT_IP, MQTT_PORT)
             mqttClient.loop_forever()
-        
+
         except (KeyboardInterrupt, Exception) as e:
             print "MQTT_LISTENER: Exception in MQTTServerThread (either KeyboardInterrupt or Other)"
             print ("MQTT_LISTENER: " + str(e))
-            
+
             mqttClient.disconnect()
             print "MQTT_LISTENER: " + time.asctime(), "Connection to Broker closed - %s:%s" % (MQTT_IP, MQTT_PORT)
             print '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~'
             pass
 
 if __name__ == '__main__':
-	main()
-	
+    main()
+

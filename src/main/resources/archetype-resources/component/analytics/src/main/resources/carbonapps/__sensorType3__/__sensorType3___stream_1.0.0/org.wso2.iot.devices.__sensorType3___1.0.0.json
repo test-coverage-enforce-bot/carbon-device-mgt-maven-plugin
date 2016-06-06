@@ -1,8 +1,8 @@
 {
-  "name": "org.wso2.iot.devices.${nameOfTheSensor}",
+  "name": "org.wso2.iot.devices.${sensorType3}",
   "version": "1.0.0",
-  "nickName": "${nameOfTheSensor}",
-  "description": "${nameOfTheSensor} data received from the Device",
+  "nickName": "${sensorType3}",
+  "description": "${sensorType3} data received from the Device",
   "metaData": [
     {"name":"owner","type":"STRING"},
     {"name":"deviceType","type":"STRING"},
@@ -11,7 +11,7 @@
   ],
   "payloadData": [
       {
-        "name": "${nameOfTheSensor}","type": "FLOAT"
+        "name": "${sensorType3}","type": "FLOAT"
       }
   ]
 }

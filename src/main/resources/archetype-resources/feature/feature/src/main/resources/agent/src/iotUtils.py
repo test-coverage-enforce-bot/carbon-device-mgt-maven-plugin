@@ -24,7 +24,6 @@ import ConfigParser
 import os
 import random
 
-
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #       Device specific info when pushing data to server
 #       Read from a file "deviceConfig.properties" in the same folder level
@@ -44,7 +43,10 @@ CONTROLLER_CONTEXT = configParser.get('Device-Configurations', 'controller-conte
 DEVICE_INFO = '{"owner":"' + DEVICE_OWNER + '","deviceId":"' + DEVICE_ID + '",'
 HTTPS_EP = configParser.get('Device-Configurations', 'https-ep')
 DEVICE_DATA = '"sensorValue":"{sensorValue}"'
-SENSOR_STATS = '{{"event":{{"metaData":{{"owner":"' + DEVICE_OWNER + '","deviceType":"'+ DEVICE_TYPE +'","deviceId":"' + DEVICE_ID + '","time":{}}},"payloadData":{{"${nameOfTheSensor}":{:.2f}}}}}}}'
+SENSOR_STATS_SENSOR1 = '{{"event":{{"metaData":{{"owner":"' + DEVICE_OWNER + '","deviceType":"' + DEVICE_TYPE \
+                       + '","deviceId":"' + DEVICE_ID + '","time":{}}},"payloadData":{{"${sensorType1}":{:.2f}}}}}}}'
+SENSOR_STATS_SENSOR2 = '{{"event":{{"metaData":{{"owner":"' + DEVICE_OWNER + '","deviceType":"' + DEVICE_TYPE \
+                       + '","deviceId":"' + DEVICE_ID + '","time":{}}},"payloadData":{{"${sensorType2}":{:.2f}}}}}}}'
 ### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
@@ -52,21 +54,19 @@ SENSOR_STATS = '{{"event":{{"metaData":{{"owner":"' + DEVICE_OWNER + '","deviceT
 global IS_REGISTERED
 IS_REGISTERED = False
 
-def isEmpty (string):
+
+def isEmpty(string):
     if string and string.strip():
-        #string is not None AND string is not empty or blank
+        # string is not None AND string is not empty or blank
         return False
-    #string is None OR string is empty or blank
+    # string is None OR string is empty or blank
     return True
+
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #       This method generate a random sensor value between 15 and 40
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 def generateRandomSensorValues():
     return random.randint(15, 40)
+
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-
-
-
-
