@@ -16,23 +16,25 @@
  * under the License.
  */
 
-var ws;
-var graph;
-var chartData = [];
+var wsConnection1;
+var wsConnection2;
+var graphForSensorType1;
+var graphForSensorType2;
+var chartDataSensorType1 = [];
+var chartDataSensorType2 = [];
 var palette = new Rickshaw.Color.Palette({scheme: "classic9"});
-
-$(window).load(function () {
+function drawGraph(wsConnection, placeHolder, yAxis, chat, chartData, graph) {
     var tNow = new Date().getTime() / 1000;
     for (var i = 0; i < 30; i++) {
         chartData.push({
-                           x: tNow - (30 - i) * 15,
-                           y: parseFloat(0)
-                       });
+            x: tNow - (30 - i) * 15,
+            y: parseFloat(0)
+        });
     }
 
     graph = new Rickshaw.Graph({
-        element: document.getElementById("chart"),
-        width: $("#div-chart").width() - 50,
+        element: document.getElementById(chat),
+        width: $(placeHolder).width() - 50,
         height: 300,
         renderer: "line",
         padding: {top: 0.2, left: 0.0, right: 0.0, bottom: 0.2},
@@ -40,7 +42,7 @@ $(window).load(function () {
         series: [{
             'color': palette.color(),
             'data': chartData,
-            'name': "Temperature"
+            'name': "SensorValue"
         }]
     });
 
@@ -57,51 +59,58 @@ $(window).load(function () {
         orientation: 'left',
         height: 300,
         tickFormat: Rickshaw.Fixtures.Number.formatKMBT,
-        element: document.getElementById('y_axis')
+        element: document.getElementById(yAxis)
     });
 
     new Rickshaw.Graph.HoverDetail({
         graph: graph,
         formatter: function (series, x, y) {
-            var date = '<span class="date">' + moment.unix(x*1000).format('Do MMM YYYY h:mm:ss a') + '</span>';
+            var date = '<span class="date">' + moment.unix(x * 1000).format('Do MMM YYYY h:mm:ss a') + '</span>';
             var swatch = '<span class="detail_swatch" style="background-color: ' + series.color + '"></span>';
             return swatch + series.name + ": " + parseInt(y) + '<br>' + date;
         }
     });
+    var websocketurlStream = $(placeHolder).attr("data-websocketurlStream");
+    connect(wsConnection, websocketurlStream, chartData, graph);
+}
 
-    var websocketUrl = $("#div-chart").data("websocketurl");
-    connect(websocketUrl)
+$(window).load(function () {
+    drawGraph(wsConnection1, "#div-chart-sensorType1", "yAxisSensorType1", "chartSensorType1", chartDataSensorType1
+        , graphForSensorType1);
+    drawGraph(wsConnection2, "#div-chart-sensorType2", "yAxisSensorType2", "chartSensorType2", chartDataSensorType2
+        , graphForSensorType2);
 });
 
 $(window).unload(function () {
-    disconnect();
+    disconnect(wsConnection1);
+    disconnect(wsConnection2);
 });
 
 //websocket connection
-function connect(target) {
+function connect(wsConnection, target, chartData, graph) {
     if ('WebSocket' in window) {
-        ws = new WebSocket(target);
+        wsConnection = new WebSocket(target);
     } else if ('MozWebSocket' in window) {
-        ws = new MozWebSocket(target);
+        wsConnection = new MozWebSocket(target);
     } else {
         console.log('WebSocket is not supported by this browser.');
     }
-    if (ws) {
-        ws.onmessage = function (event) {
+    if (wsConnection) {
+        wsConnection.onmessage = function (event) {
             var dataPoint = JSON.parse(event.data);
             chartData.push({
-                               x: parseInt(dataPoint[4]) / 1000,
-                               y: parseFloat(dataPoint[5])
-                           });
+                x: parseInt(dataPoint[4]) / 1000,
+                y: parseFloat(dataPoint[5])
+            });
             chartData.shift();
             graph.update();
         };
     }
 }
 
-function disconnect() {
-    if (ws != null) {
-        ws.close();
-        ws = null;
+function disconnect(wsConnection) {
+    if (wsConnection != null) {
+        wsConnection.close();
+        wsConnection = null;
     }
 }

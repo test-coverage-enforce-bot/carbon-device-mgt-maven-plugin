@@ -172,7 +172,7 @@ function drawGraph_${deviceType}(from, to) {
             chartData.push(
                 {
                     x: parseInt(data[i].values.meta_time) - tzOffset,
-                    y: parseInt(data[i].values.${nameOfTheSensor})
+                    y: parseInt(data[i].values.${sensorType1})
                 }
             );
         }

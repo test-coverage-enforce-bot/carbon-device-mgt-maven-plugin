@@ -17,6 +17,7 @@
   ~ under the License.
   -->
 
-<artifact name="Eventpublisher_${nameOfTheSensor}" version="1.0.0" type="event/publisher" serverRole="DataAnalyticsServer">
-    <file>EventPublisher_${nameOfTheSensor}.xml</file>
+<artifact name="${sensorType3}_stream" version="1.0.0" type="event/stream" serverRole="DataAnalyticsServer">
+	<file>org.wso2.iot.devices.${sensorType3}_1.0.0.json</file>
 </artifact>
+

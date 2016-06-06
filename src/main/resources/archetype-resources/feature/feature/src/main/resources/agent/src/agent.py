@@ -53,7 +53,6 @@ PUSH_INTERVAL = 2  # time interval between successive data pushes in seconds
 LOG_FILENAME = "agent.log"
 logging_enabled = False
 LOG_LEVEL = logging.INFO  # Could be e.g. "DEBUG" or "WARNING"
-### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #       Python version
@@ -80,7 +79,6 @@ if args.log:
 
 if args.interval:
     PUSH_INTERVAL = args.interval
-### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -92,7 +90,6 @@ SERVER_PORT = int(SERVER_ENDPOINT[2])
 API_ENDPOINT_CONTEXT = iotUtils.CONTROLLER_CONTEXT
 REGISTER_ENDPOINT = str(API_ENDPOINT_CONTEXT) + '/device/register'
 PUSH_SENSOR_VALUE_ENDPOINT = str(API_ENDPOINT_CONTEXT) + '/push-sensor-value'
-### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -107,7 +104,6 @@ class IOTLogger(object):
     def write(self, message):
         if message.rstrip() != "":  # Only log if there is a message (not just a new line)
             self.logger.log(self.level, message.rstrip())
-### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -127,7 +123,6 @@ def configureLogger(loggerName):
     if (logging_enabled):
         sys.stdout = IOTLogger(logger, logging.INFO)  # Replace stdout with logging to file at INFO level
         sys.stderr = IOTLogger(logger, logging.ERROR)  # Replace stderr with logging to file at ERROR level
-### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -158,17 +153,16 @@ def registerAgent():
         iotUtils.IS_REGISTERED = True
         print "Your device has been registered with IoT Server"
     else:
-            iotUtils.IS_REGISTERED = False
-            print "Your device hasn't been registered with IoT Server"
-            print ('agentStats: ' + str(dcResponse.status))
-            print ('agentStats: ' + str(dcResponse.reason))
+        iotUtils.IS_REGISTERED = False
+        print "Your device hasn't been registered with IoT Server"
+        print ('agentStats: ' + str(dcResponse.status))
+        print ('agentStats: ' + str(dcResponse.reason))
     print '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~'
     print ('agentStats: ' + str(registerURL))
     print ('agentStats: Response Message')
     print str(dcResponse.msg)
     dcConncection.close()
     print '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~'
-### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #       This is a Thread object for listening for MQTT Messages
@@ -200,36 +194,6 @@ def getSensorValue():
 
 signal.signal(signal.SIGTERM, sigterm_handler)
 
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#			This method is used to send sensor reading to DAS
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-def pushSensorValue():
-    if sys.version_info<(2,7,9):
-        dcConncection = httplib.HTTPSConnection(host=SERVER_IP, port=SERVER_PORT)
-    else:
-        dcConncection = httplib.HTTPSConnection(host=SERVER_IP, port=SERVER_PORT
-                                                , context=ssl._create_unverified_context())
-    #TODO need to get server certificate when initializing https connection
-    dcConncection.set_debuglevel(1)
-    dcConncection.connect()
-    PUSH_DATA = iotUtils.DEVICE_INFO + iotUtils.DEVICE_DATA.format(sensorValue=getSensorValue())
-    PUSH_DATA += '}'
-    print PUSH_DATA
-    regist = str(PUSH_SENSOR_VALUE_ENDPOINT)
-    dcConncection.putrequest('POST', regist)
-    dcConncection.putheader('Authorization', 'Bearer ' + iotUtils.AUTH_TOKEN)
-    dcConncection.putheader('Content-Type', 'application/json')
-    dcConncection.putheader('Content-Length', len(PUSH_DATA))
-    dcConncection.endheaders()
-    dcConncection.send(PUSH_DATA)
-    dcResponse = dcConncection.getresponse()
-    print '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~'
-    print ('agentStats: ' + str(regist))
-    print ('agentStats: Response Message')
-    print str(dcResponse.msg)
-    dcConncection.close()
-    print '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~'
-
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #       The Main method of the Agent
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -241,11 +205,14 @@ def main():
         try:
             if(iotUtils.IS_REGISTERED):
                 currentTime = calendar.timegm(time.gmtime())
-                tempValue = getSensorValue()
-                PUSH_DATA = iotUtils.SENSOR_STATS.format(currentTime, tempValue)
-                mqttHandler.sendSensorValue(PUSH_DATA)
+                sensorValue = getSensorValue()
+                PUSH_DATA_TO_STREAM_1 = iotUtils.SENSOR_STATS_SENSOR1.format(currentTime, sensorValue)
+                sensorValue = getSensorValue()
+                PUSH_DATA_TO_STREAM_2 = iotUtils.SENSOR_STATS_SENSOR2.format(currentTime, sensorValue)
+                mqttHandler.sendSensorValue(PUSH_DATA_TO_STREAM_1, PUSH_DATA_TO_STREAM_2)
                 print '~~~~~~~~~~~~~~~~~~~~~~~~ Publishing Device-Data ~~~~~~~~~~~~~~~~~~~~~~~~~'
-                print ('PUBLISHED DATA: ' + PUSH_DATA)
+                print ('PUBLISHED DATA STREAM 1: ' + PUSH_DATA_TO_STREAM_1)
+                print ('PUBLISHED DATA STREAM 2: ' + PUSH_DATA_TO_STREAM_2)
             else:
                 registerAgent()
             time.sleep(PUSH_INTERVAL)

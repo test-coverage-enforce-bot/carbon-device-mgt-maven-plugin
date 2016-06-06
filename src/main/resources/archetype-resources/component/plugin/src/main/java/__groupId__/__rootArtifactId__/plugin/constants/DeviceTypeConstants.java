@@ -33,12 +33,12 @@ public class DeviceTypeConstants {
     public final static String STATE_OFF = "OFF";
 
     //sensor events summerized table name
-    public static final String SENSOR_EVENT_TABLE = "ORG_WSO2_IOT_DEVICES_${nameOfTheSensor}";
+    public static final String SENSOR_EVENT_TABLE = "ORG_WSO2_IOT_DEVICES_${sensorType1}";
     public static final String DATA_SOURCE_NAME = "jdbc/${deviceType}DM_DB";
     public final static String DEVICE_TYPE_PROVIDER_DOMAIN = "carbon.super";
 
     //mqtt tranport related constants
-    public static final String MQTT_ADAPTER_NAME = "${nameOfTheSensor}_mqtt";
+    public static final String MQTT_ADAPTER_NAME = "${sensorType1}_mqtt";
     public static final String MQTT_ADAPTER_TYPE = "oauth-mqtt";
     public static final String ADAPTER_TOPIC_PROPERTY = "topic";
     public static final String MQTT_PORT = "\\$\\{mqtt.broker.port\\}";
@@ -47,7 +47,7 @@ public class DeviceTypeConstants {
     public static final String DEFAULT_CARBON_LOCAL_IP_PROPERTY = "carbon.local.ip";
     public static final int CARBON_DEFAULT_PORT_OFFSET = 0;
     public static final int DEFAULT_MQTT_PORT = 1883;
-    public static final String SUBSCRIBED_TOPIC = "carbon.super/${deviceType}/+/publisher";
+    public static final String SUBSCRIBED_TOPIC = "carbon.super/${deviceType}/+/${sensorType1}";
     public static final String CONTENT_TRANSFORMATION = "contentTransformer";
     public static final String CONTENT_VALIDATION = "contentValidator";
     public static final String RESOURCE = "resource";
@@ -61,7 +61,7 @@ public class DeviceTypeConstants {
     public static final String CLEAR_SESSION_PROPERTY_KEY = "clearSession";
     public static final String TOPIC = "topic";
 
-    public final static String SENSOR_STREAM_DEFINITION = "org.wso2.iot.devices.${nameOfTheSensor}";
+    public final static String SENSOR_STREAM_DEFINITION = "org.wso2.iot.devices.${sensorType1}";
     public final static String SENSOR_STREAM_DEFINITION_VERSION = "1.0.0";
 
     public static final String MQTT_CONFIG_LOCATION = CarbonUtils.getEtcCarbonConfigDirPath() + File.separator

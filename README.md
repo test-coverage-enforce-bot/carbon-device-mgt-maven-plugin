@@ -43,31 +43,37 @@ Then select the cdmf.devicetype:cdmf-devicetype-archetype as new archetype.
 
  Then you need to provide groupId, artifactId, version, packaging, name of your device type and name for sensor as shown below.
  
-       Define value for property 'groupId': : org.homeautomation              
-       Define value for property 'artifactId': : currentsensor
+       Choose a number or apply filter (format: [groupId:]artifactId, case sensitive contains): : 3
+       Define value for property 'groupId': : org.homeautomation
+       Define value for property 'artifactId': : smartHomeMonitor
        Define value for property 'version':  1.0-SNAPSHOT: : 1.0.0-SNAPSHOT
        Define value for property 'package':  org.homeautomation: : 
-       Define value for property 'deviceType': : currentsensor
-       Define value for property 'nameOfTheSensor': : current
+       Define value for property 'deviceType': : SmartHomeMonitor
+       Define value for property 'sensorType1': : currentSensor
+       Define value for property 'sensorType2': : waterFlowSensor
+       Define value for property 'sensorType3': : voltageSensor
        Confirm properties configuration:
        groupId: org.homeautomation
-       artifactId: currentsensor
+       artifactId: smartHomeMonitor
        version: 1.0.0-SNAPSHOT
        package: org.homeautomation
-       deviceType: currentsensor
-       nameOfTheSensor: current
+       deviceType: SmartHomeMonitor
+       sensorType1: currentSensor
+       sensorType2: waterFlowSensor
+       sensorType3: voltageSensor
+        Y: : Y
 
 # Configure the device-deployer.xml file that is in the IoTS_HOME directory.
 
 Add the new module under the <modules> tag.
 
     <modules>
-     <module>samples/currentsensor</module>
+     <module>samples/smartHomeMonitor</module>
     </modules>
 
 Add the device type feature under the `<featureArtifacts>` tag.
 
-    <featureArtifactDef>org.homeautomation:org.homeautomation.currentsensor.feature:1.0.0-SNAPSHOT
+    <featureArtifactDef>org.homeautomation:org.homeautomation.smartHomeMonitor.feature:1.0.0-SNAPSHOT
     </featureArtifactDef>
 
 
@@ -75,7 +81,7 @@ Add the device type feature group under the <features> tag.
           
       <features>
           <feature>
-              <id>org.homeautomation.currentsensor.feature.group</id>
+              <id>org.homeautomation.smartHomeMonitor.feature.group</id>
               <version>1.0.0-SNAPSHOT</version>
           </feature>
      </features>

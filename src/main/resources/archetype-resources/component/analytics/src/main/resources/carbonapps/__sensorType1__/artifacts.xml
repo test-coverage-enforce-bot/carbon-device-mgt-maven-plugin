@@ -18,11 +18,11 @@
   -->
 
 <artifacts>
-    <artifact name="${nameOfTheSensor}_CAPP" version="1.0.0" type="carbon/application">
-        <dependency artifact="Eventstream_${nameOfTheSensor}" version="1.0.0" include="true" serverRole="DataAnalyticsServer"/>
-		<dependency artifact="Eventstore_${nameOfTheSensor}" version="1.0.0" include="true" serverRole="DataAnalyticsServer"/>
-        <dependency artifact="Eventreceiver_mqtt_${nameOfTheSensor}" version="1.0.0" include="true" serverRole="DataAnalyticsServer"/>
-        <dependency artifact="Eventpublisher_${nameOfTheSensor}" version="1.0.0" include="true" serverRole="DataAnalyticsServer"/>
-        <dependency artifact="Sparkscripts" version="1.0.0" include="true" serverRole="DataAnalyticsServer"/>
+    <artifact name="${sensorType1}_CAPP" version="1.0.0" type="carbon/application">
+        <dependency artifact="${sensorType1}_stream" version="1.0.0" include="true" serverRole="DataAnalyticsServer"/>
+		<dependency artifact="${sensorType1}_store" version="1.0.0" include="true" serverRole="DataAnalyticsServer"/>
+        <dependency artifact="${sensorType1}_mqtt_receiver" version="1.0.0" include="true" serverRole="DataAnalyticsServer"/>
+        <dependency artifact="${sensorType1}_publisher" version="1.0.0" include="true" serverRole="DataAnalyticsServer"/>
+        <dependency artifact="${sensorType1}_spark_script" version="1.0.0" include="true" serverRole="DataAnalyticsServer"/>
     </artifact>
 </artifacts>
