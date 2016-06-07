@@ -84,7 +84,7 @@ public interface DeviceTypeService {
     @Produces("application/json")
     @Permission(scope = "${deviceType}_user", permissions = {"/permission/admin/device-mgt/stats"})
     Response getSensorStats(@PathParam("deviceId") String deviceId, @QueryParam("from") long from,
-                            @QueryParam("to") long to);
+                            @QueryParam("to") long to, @QueryParam("sensorType") String sensorType);
 
     /**
      * Remove device type instance using device id

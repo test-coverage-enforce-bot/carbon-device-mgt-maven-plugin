@@ -33,9 +33,12 @@ public class DeviceTypeConstants {
     public final static String STATE_OFF = "OFF";
 
     //sensor events summerized table name
-    public static final String SENSOR_EVENT_TABLE = "ORG_WSO2_IOT_DEVICES_${sensorType1}";
+    public static final String SENSOR_TYPE1_EVENT_TABLE = "ORG_WSO2_IOT_DEVICES_${sensorType1}";
+    public static final String SENSOR_TYPE2_EVENT_TABLE = "ORG_WSO2_IOT_DEVICES_${sensorType2}";
     public static final String DATA_SOURCE_NAME = "jdbc/${deviceType}DM_DB";
     public final static String DEVICE_TYPE_PROVIDER_DOMAIN = "carbon.super";
+    public final static String SENSOR_TYPE1 = "${sensorType1}";
+    public final static String SENSOR_TYPE2 = "${sensorType2}";
 
     //mqtt tranport related constants
     public static final String MQTT_ADAPTER_NAME = "${sensorType1}_mqtt";
@@ -61,8 +64,11 @@ public class DeviceTypeConstants {
     public static final String CLEAR_SESSION_PROPERTY_KEY = "clearSession";
     public static final String TOPIC = "topic";
 
-    public final static String SENSOR_STREAM_DEFINITION = "org.wso2.iot.devices.${sensorType1}";
-    public final static String SENSOR_STREAM_DEFINITION_VERSION = "1.0.0";
+    public final static String SENSOR_TYPE1_STREAM_DEFINITION = "org.wso2.iot.devices.${sensorType1}";
+    public final static String SENSOR_TYPE1_STREAM_DEFINITION_VERSION = "1.0.0";
+
+    public final static String SENSOR_TYPE2_STREAM_DEFINITION = "org.wso2.iot.devices.${sensorType2}";
+    public final static String SENSOR_TYPE2_STREAM_DEFINITION_VERSION = "1.0.0";
 
     public static final String MQTT_CONFIG_LOCATION = CarbonUtils.getEtcCarbonConfigDirPath() + File.separator
             + "mqtt.properties";
