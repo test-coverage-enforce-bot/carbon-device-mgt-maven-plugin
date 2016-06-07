@@ -82,7 +82,7 @@ public interface DeviceTypeService {
     @GET
     @Consumes("application/json")
     @Produces("application/json")
-    @Permission(scope = "ggg_user", permissions = {"/permission/admin/device-mgt/stats"})
+    @Permission(scope = "${deviceType}_user", permissions = {"/permission/admin/device-mgt/stats"})
     Response getSensorStats(@PathParam("deviceId") String deviceId, @QueryParam("from") long from,
                             @QueryParam("to") long to, @QueryParam("sensorType") String sensorType);
 
