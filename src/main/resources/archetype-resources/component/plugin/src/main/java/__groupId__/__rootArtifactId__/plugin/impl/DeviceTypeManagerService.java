@@ -36,11 +36,12 @@ import org.wso2.carbon.device.mgt.common.push.notification.PushNotificationConfi
 import org.wso2.carbon.device.mgt.common.spi.DeviceManagementService;
 import org.wso2.carbon.device.mgt.common.OperationMonitoringTaskConfig;
 import org.wso2.carbon.device.mgt.common.policy.mgt.PolicyMonitoringManager;
-
+import org.wso2.carbon.device.mgt.common.OperationMonitoringTaskConfig;
 import java.util.List;
 
 public class DeviceTypeManagerService implements DeviceManagementService {
     private DeviceManager deviceManager;
+    private OperationMonitoringTaskConfig operationMonitoringTaskConfig;
 
     @Override
     public String getType() {
@@ -50,6 +51,7 @@ public class DeviceTypeManagerService implements DeviceManagementService {
     @Override
     public void init() throws DeviceManagementException {
         this.deviceManager = new DeviceTypeManager();
+        this.operationMonitoringTaskConfig = new OperationMonitoringTaskConfig();
     }
 
     @Override
@@ -69,7 +71,7 @@ public class DeviceTypeManagerService implements DeviceManagementService {
 
     @Override
     public OperationMonitoringTaskConfig getOperationMonitoringConfig() {
-        return null;
+        return operationMonitoringTaskConfig;
     }
 
     @Override

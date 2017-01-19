@@ -22,7 +22,7 @@
   <Script>
     CREATE TEMPORARY TABLE Device${sensorType3}Data USING CarbonAnalytics OPTIONS(tableName "ORG_WSO2_IOT_DEVICES_${sensorType3}");
     CREATE TEMPORARY TABLE Device${sensorType3}SummaryData USING CarbonAnalytics OPTIONS (tableName "DEVICE_${sensorType3}_SUMMARY", schema "${sensorType3} FLOAT, deviceType STRING -i, deviceId STRING -i, owner STRING -i, time LONG -i",primaryKeys "deviceType, deviceId, owner, time");
-    insert overwrite table Device${sensorType3}SummaryData select ${sensorType3}, meta_deviceType as deviceType, meta_deviceId as deviceId, meta_owner as owner, cast(meta_time/1000 as BIGINT)as time from Device${sensorType3}Data group by ${sensorType3}, meta_deviceType, meta_deviceId, meta_owner, cast(meta_time/1000 as BIGINT);
+    insert overwrite table Device${sensorType3}SummaryData select ${sensorType3}, meta_deviceType as deviceType, meta_deviceId as deviceId, meta_owner as owner, cast(meta_time as BIGINT)as time from Device${sensorType3}Data group by ${sensorType3}, meta_deviceType, meta_deviceId, meta_owner, cast(meta_time as BIGINT);
   </Script>
   <CronExpression>0 * * * * ?</CronExpression>
 </Analytics>

@@ -18,16 +18,7 @@
 
 package ${groupId}.${rootArtifactId}.api.util;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.SocketException;
-
-
-
+import org.wso2.carbon.apimgt.application.extension.constants.ApiApplicationConstants;
 import org.wso2.carbon.device.mgt.common.DeviceManagementException;
 import org.wso2.carbon.utils.CarbonUtils;
 
@@ -53,6 +44,8 @@ import java.util.Properties;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 import org.wso2.carbon.core.util.Utils;
+import org.json.JSONObject;
+import org.apache.commons.codec.binary.Base64;
 
 /**
  * This is used to create a zip file that includes the necessary configuration required for the agent.
@@ -68,7 +61,7 @@ public class ZipUtil {
 
     public ZipArchive createZipFile(String owner, String tenantDomain, String deviceType,
                                     String deviceId, String deviceName, String token,
-                                    String refreshToken) throws DeviceManagementException {
+                                    String refreshToken, String apiApplicationKey) throws DeviceManagementException {
 
         String sketchFolder = "repository" + File.separator + "resources" + File.separator + "sketches";
         String archivesPath = CarbonUtils.getCarbonHome() + File.separator + sketchFolder + File.separator + "archives" +
@@ -86,6 +79,7 @@ public class ZipUtil {
                 httpsServerEP = httpsServerEP.replace(LOCALHOST, iotServerIP);
                 httpServerEP = httpServerEP.replace(LOCALHOST, iotServerIP);
             }
+            String base64EncodedApplicationKey = getBase64EncodedAPIAppKey(apiApplicationKey).trim();
 
             Map<String, String> contextParams = new HashMap<>();
             contextParams.put("SERVER_NAME", APIUtil.getTenantDomainOftheUser());
@@ -98,6 +92,7 @@ public class ZipUtil {
             contextParams.put("MQTT_EP", mqttEndpoint);
             contextParams.put("DEVICE_TOKEN", token);
             contextParams.put("DEVICE_REFRESH_TOKEN", refreshToken);
+            contextParams.put("API_APPLICATION_KEY", base64EncodedApplicationKey);
 
             ZipArchive zipFile;
             zipFile = getSketchArchive(archivesPath, templateSketchPath, contextParams, deviceName);
@@ -105,6 +100,15 @@ public class ZipUtil {
         } catch (IOException e) {
             throw new DeviceManagementException("Zip File Creation Failed", e);
         }
+    }
+
+    private String getBase64EncodedAPIAppKey(String apiAppCredentialsAsJSONString) {
+
+        JSONObject jsonObject = new JSONObject(apiAppCredentialsAsJSONString);
+        String consumerKey = jsonObject.get(ApiApplicationConstants.OAUTH_CLIENT_ID).toString();
+        String consumerSecret = jsonObject.get(ApiApplicationConstants.OAUTH_CLIENT_SECRET).toString();
+        String stringToEncode = consumerKey + ":" + consumerSecret;
+        return Base64.encodeBase64String(stringToEncode.getBytes());
     }
 
     public static String getServerUrl() {

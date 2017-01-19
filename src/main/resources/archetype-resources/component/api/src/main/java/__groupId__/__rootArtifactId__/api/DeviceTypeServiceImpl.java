@@ -44,6 +44,12 @@ import org.wso2.carbon.identity.jwt.client.extension.JWTClient;
 import org.wso2.carbon.identity.jwt.client.extension.dto.AccessTokenInfo;
 import org.wso2.carbon.identity.jwt.client.extension.exception.JWTClientException;
 import org.wso2.carbon.user.api.UserStoreException;
+import org.wso2.carbon.device.mgt.common.*;
+import org.wso2.carbon.device.mgt.common.authorization.DeviceAccessAuthorizationException;
+import org.wso2.carbon.device.mgt.common.group.mgt.DeviceGroupConstants;
+import org.wso2.carbon.device.mgt.common.operation.mgt.Operation;
+import org.wso2.carbon.device.mgt.common.operation.mgt.OperationManagementException;
+import org.wso2.carbon.device.mgt.core.operation.mgt.CommandOperation;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.Path;
@@ -69,7 +75,7 @@ import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.concurrent.ConcurrentHashMap;
-
+import java.util.Properties;
 
 /**
  * This is the API which is used to control and manage device type functionality
@@ -125,12 +131,32 @@ public class DeviceTypeServiceImpl implements DeviceTypeService {
             String publishTopic = APIUtil.getAuthenticatedUserTenantDomain()
                     + "/" + DeviceTypeConstants.DEVICE_TYPE + "/" + deviceId + "/command";
             dynamicProperties.put(DeviceTypeConstants.ADAPTER_TOPIC_PROPERTY, publishTopic);
-            APIUtil.getOutputEventAdapterService().publish(DeviceTypeConstants.MQTT_ADAPTER_NAME,
-                    dynamicProperties, state);
+            Operation commandOp = new CommandOperation();
+            commandOp.setCode("change-status");
+            commandOp.setType(Operation.Type.COMMAND);
+            commandOp.setEnabled(true);
+            commandOp.setPayLoad(state);
+
+            Properties props = new Properties();
+            props.setProperty("mqtt.adapter.topic", publishTopic);
+            commandOp.setProperties(props);
+
+            List<DeviceIdentifier> deviceIdentifiers = new ArrayList<>();
+            deviceIdentifiers.add(new DeviceIdentifier(deviceId, "${deviceType}"));
+            APIUtil.getDeviceManagementService().addOperation("${deviceType}", commandOp,
+                                                              deviceIdentifiers);
             return Response.ok().build();
         } catch (DeviceAccessAuthorizationException e) {
             log.error(e.getErrorMessage(), e);
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        } catch (OperationManagementException e) {
+            String msg = "Error occurred while executing command operation upon ringing the buzzer";
+            log.error(msg, e);
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        } catch (InvalidDeviceException e) {
+            String msg = "Error occurred while executing command operation to send keywords";
+            log.error(msg, e);
+            return Response.status(Response.Status.BAD_REQUEST).build();
         }
     }
 
@@ -283,7 +309,7 @@ public class DeviceTypeServiceImpl implements DeviceTypeService {
         }
         ZipUtil ziputil = new ZipUtil();
         ZipArchive zipFile = ziputil.createZipFile(owner, APIUtil.getTenantDomainOftheUser(), sketchType,
-                deviceId, deviceName, accessToken, refreshToken);
+                deviceId, deviceName, accessToken, refreshToken, apiApplicationKey.toString());
         return zipFile;
     }
 }
