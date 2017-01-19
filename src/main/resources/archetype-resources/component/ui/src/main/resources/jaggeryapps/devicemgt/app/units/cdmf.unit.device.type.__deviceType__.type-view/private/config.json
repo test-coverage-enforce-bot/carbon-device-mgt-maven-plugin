@@ -3,6 +3,9 @@
   "deviceType": {
     "label": "${deviceType}",
     "category": "virtual",
-    "downloadAgentUri": "${deviceType}/device/download"
+    "downloadAgentUri": "${deviceType}/device/download",
+    "scopes" : [
+      "perm:${deviceType}:enroll"
+    ]
   }
 }

@@ -18,7 +18,6 @@
 
 package ${groupId}.${rootArtifactId}.plugin.internal;
 
-import ${groupId}.${rootArtifactId}.plugin.impl.util.DeviceTypeStartupListener;
 import ${groupId}.${rootArtifactId}.plugin.exception.DeviceMgtPluginException;
 import ${groupId}.${rootArtifactId}.plugin.impl.util.DeviceTypeUtils;
 import ${groupId}.${rootArtifactId}.plugin.impl.DeviceTypeManagerService;
@@ -30,17 +29,10 @@ import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.ComponentContext;
 import org.wso2.carbon.core.ServerStartupObserver;
 import org.wso2.carbon.device.mgt.common.spi.DeviceManagementService;
-import org.wso2.carbon.event.output.adapter.core.OutputEventAdapterService;
 
 /**
  * @scr.component name="${groupId}.${rootArtifactId}.plugin.internal.ServiceComponent"
  * immediate="true"
- * @scr.reference name="event.output.adapter.service"
- * interface="org.wso2.carbon.event.output.adapter.core.OutputEventAdapterService"
- * cardinality="1..1"
- * policy="dynamic"
- * bind="setOutputEventAdapterService"
- * unbind="unsetOutputEventAdapterService"
  */
 
 public class ServiceComponent {
@@ -57,8 +49,6 @@ public class ServiceComponent {
             serviceRegistration =
                     bundleContext.registerService(DeviceManagementService.class.getName(),
                             deviceTypeManagerService, null);
-            bundleContext.registerService(ServerStartupObserver.class.getName(), new DeviceTypeStartupListener(),
-                    null);
             String setupOption = System.getProperty("setup");
             if (setupOption != null) {
                 if (log.isDebugEnabled()) {
@@ -93,21 +83,5 @@ public class ServiceComponent {
         } catch (Throwable e) {
             log.error("Error occurred while de-activating Iot Device Management bundle", e);
         }
-    }
-
-    /**
-     * Initialize the Output EventAdapter Service dependency
-     *
-     * @param outputEventAdapterService Output EventAdapter Service reference
-     */
-    protected void setOutputEventAdapterService(OutputEventAdapterService outputEventAdapterService) {
-        DeviceTypeManagementDataHolder.getInstance().setOutputEventAdapterService(outputEventAdapterService);
-    }
-
-    /**
-     * De-reference the Output EventAdapter Service dependency.
-     */
-    protected void unsetOutputEventAdapterService(OutputEventAdapterService outputEventAdapterService) {
-        DeviceTypeManagementDataHolder.getInstance().setOutputEventAdapterService(null);
     }
 }

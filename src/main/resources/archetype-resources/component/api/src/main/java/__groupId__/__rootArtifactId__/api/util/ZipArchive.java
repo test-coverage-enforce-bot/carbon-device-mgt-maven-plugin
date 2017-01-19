@@ -18,15 +18,27 @@
 
 package ${groupId}.${rootArtifactId}.api.util;
 
-import org.wso2.carbon.user.core.Permission;
+
+import java.io.File;
 
 /**
- * This hold the constants related to the device type.
+ * This is an utility class to hold zip files.
  */
-public class Constants {
+public class ZipArchive {
 
-    public static final String DEFAULT_PERMISSION_RESOURCE = "/permission/admin/device-mgt/${deviceType}/user";
-    public static final String DEFAULT_ROLE_NAME = "${deviceType}_user";
-    public static final Permission DEFAULT_PERMISSION[]
-            = new Permission[]{new Permission(Constants.DEFAULT_PERMISSION_RESOURCE, "ui.execute")};
+    private File zipFile = null;
+    private String fileName = null;
+
+    public ZipArchive(String fileName, File zipFile) {
+        this.fileName = fileName;
+        this.zipFile = zipFile;
+    }
+
+    public File getZipFile() {
+        return zipFile;
+    }
+
+    public String getFileName() {
+        return fileName;
+    }
 }

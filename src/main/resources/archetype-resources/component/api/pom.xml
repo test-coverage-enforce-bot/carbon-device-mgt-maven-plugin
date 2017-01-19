@@ -88,26 +88,6 @@
 			<artifactId>cxf-rt-transports-http</artifactId>
 			<scope>provided</scope>
 		</dependency>
-
-        <!--MQTT -->
-        <dependency>
-            <groupId>org.eclipse.paho</groupId>
-            <artifactId>org.eclipse.paho.client.mqttv3</artifactId>
-            <scope>provided</scope>
-        </dependency>
-
-		<!--IOT -->
-		<dependency>
-			<groupId>org.apache.httpcomponents</groupId>
-			<artifactId>httpasyncclient</artifactId>
-			<version>4.1</version>
-            <scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.wso2.carbon.devicemgt-plugins</groupId>
-			<artifactId>org.wso2.carbon.device.mgt.iot</artifactId>
-            <scope>provided</scope>
-		</dependency>
         <dependency>
             <groupId>${groupId}</groupId>
             <artifactId>${project-base-package}.plugin</artifactId>
@@ -133,21 +113,10 @@
 			<artifactId>jsr311-api</artifactId>
             <scope>provided</scope>
 		</dependency>
-
-		<dependency>
-            <groupId>org.wso2.carbon.devicemgt</groupId>
-            <artifactId>org.wso2.carbon.device.mgt.analytics.data.publisher</artifactId>
-            <scope>provided</scope>
-		</dependency>
 		<dependency>
 			<groupId>org.wso2.carbon.devicemgt</groupId>
             <artifactId>org.wso2.carbon.apimgt.annotations</artifactId>
 			<scope>provided</scope>
-		</dependency>
-		<dependency>
-            <groupId>org.wso2.carbon.analytics</groupId>
-            <artifactId>org.wso2.carbon.analytics.api</artifactId>
-            <scope>provided</scope>
 		</dependency>
 		<dependency>
             <groupId>org.wso2.carbon.analytics</groupId>

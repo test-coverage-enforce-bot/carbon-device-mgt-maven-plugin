@@ -22,16 +22,15 @@ import ${groupId}.${rootArtifactId}.api.dto.DeviceJSON;
 import ${groupId}.${rootArtifactId}.api.dto.SensorRecord;
 import ${groupId}.${rootArtifactId}.api.util.APIUtil;
 import ${groupId}.${rootArtifactId}.api.util.ZipUtil;
+import ${groupId}.${rootArtifactId}.api.util.ZipArchive;
 import ${groupId}.${rootArtifactId}.plugin.constants.DeviceTypeConstants;
-import ${groupId}.${rootArtifactId}.api.DeviceTypeService;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.wso2.carbon.analytics.dataservice.commons.SORT;
 import org.wso2.carbon.analytics.dataservice.commons.SortByField;
+import org.wso2.carbon.analytics.dataservice.commons.SortType;
 import org.wso2.carbon.analytics.datasource.commons.exception.AnalyticsException;
-import org.wso2.carbon.apimgt.annotations.api.API;
 import org.wso2.carbon.apimgt.application.extension.APIManagementProviderService;
 import org.wso2.carbon.apimgt.application.extension.dto.ApiApplicationKey;
 import org.wso2.carbon.apimgt.application.extension.exception.APIManagerException;
@@ -41,9 +40,6 @@ import org.wso2.carbon.device.mgt.common.DeviceIdentifier;
 import org.wso2.carbon.device.mgt.common.DeviceManagementException;
 import org.wso2.carbon.device.mgt.common.EnrolmentInfo;
 import org.wso2.carbon.device.mgt.common.authorization.DeviceAccessAuthorizationException;
-import org.wso2.carbon.device.mgt.extensions.feature.mgt.annotations.DeviceType;
-import org.wso2.carbon.device.mgt.extensions.feature.mgt.annotations.Feature;
-import org.wso2.carbon.device.mgt.iot.util.ZipArchive;
 import org.wso2.carbon.identity.jwt.client.extension.JWTClient;
 import org.wso2.carbon.identity.jwt.client.extension.dto.AccessTokenInfo;
 import org.wso2.carbon.identity.jwt.client.extension.exception.JWTClientException;
@@ -78,15 +74,11 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * This is the API which is used to control and manage device type functionality
  */
-@SuppressWarnings("NonJaxWsWebServices")
-@API(name = "${deviceType}", version = "1.0.0", context = "/${deviceType}", tags = "${deviceType}")
-@DeviceType(value = "${deviceType}")
 public class DeviceTypeServiceImpl implements DeviceTypeService {
 
     private static final String KEY_TYPE = "PRODUCTION";
     private static Log log = LogFactory.getLog(DeviceTypeService.class);
     private static ApiApplicationKey apiApplicationKey;
-    private ConcurrentHashMap<String, DeviceJSON> deviceToIpMap = new ConcurrentHashMap<>();
 
     private static String shortUUID() {
         UUID uuid = UUID.randomUUID();
@@ -104,7 +96,6 @@ public class DeviceTypeServiceImpl implements DeviceTypeService {
     public Response registerDevice(final DeviceJSON agentInfo) {
         String deviceId = agentInfo.deviceId;
         if ((agentInfo.deviceId != null) && (agentInfo.owner != null)) {
-            deviceToIpMap.put(deviceId, agentInfo);
             return Response.status(Response.Status.OK).build();
         }
         return Response.status(Response.Status.NOT_ACCEPTABLE).build();
@@ -116,8 +107,6 @@ public class DeviceTypeServiceImpl implements DeviceTypeService {
      */
     @Path("device/{deviceId}/change-status")
     @POST
-    @Feature(code = "change-status", name = "Change status of sensor: on/off",
-            description = "Change status of sensor: on/off")
     public Response changeStatus(@PathParam("deviceId") String deviceId,
                                  @QueryParam("state") String state,
                                  @Context HttpServletResponse response) {
@@ -175,7 +164,7 @@ public class DeviceTypeServiceImpl implements DeviceTypeService {
             }
             if (sensorTableName != null) {
                 List<SortByField> sortByFields = new ArrayList<>();
-                SortByField sortByField = new SortByField("meta_time", SORT.ASC, false);
+                SortByField sortByField = new SortByField("meta_time", SortType.ASC);
                 sortByFields.add(sortByField);
                 List<SensorRecord> sensorRecords = APIUtil.getAllEventsForDevice(sensorTableName, query, sortByFields);
                 return Response.status(Response.Status.OK.getStatusCode()).entity(sensorRecords).build();
@@ -189,126 +178,6 @@ public class DeviceTypeServiceImpl implements DeviceTypeService {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
         return Response.status(Response.Status.BAD_REQUEST).build();
-    }
-
-    /**
-     * Remove device type instance using device id
-     * @param deviceId  unique identifier for given device type instance
-     */
-    @Path("/device/{deviceId}")
-    @DELETE
-    public Response removeDevice(@PathParam("deviceId") String deviceId) {
-        try {
-            DeviceIdentifier deviceIdentifier = new DeviceIdentifier();
-            deviceIdentifier.setId(deviceId);
-            deviceIdentifier.setType(DeviceTypeConstants.DEVICE_TYPE);
-            if (!APIUtil.getDeviceAccessAuthorizationService().isUserAuthorized(deviceIdentifier)) {
-                return Response.status(Response.Status.UNAUTHORIZED.getStatusCode()).build();
-            }
-            boolean removed = APIUtil.getDeviceManagementService().disenrollDevice(
-                    deviceIdentifier);
-            if (removed) {
-                return Response.ok().build();
-            } else {
-                return Response.status(Response.Status.NOT_ACCEPTABLE.getStatusCode()).build();
-            }
-        } catch (DeviceManagementException e) {
-            log.error(e.getErrorMessage(), e);
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR.getStatusCode()).build();
-        } catch (DeviceAccessAuthorizationException e) {
-            log.error(e.getErrorMessage(), e);
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR.getStatusCode()).build();
-        }
-    }
-
-    /**
-     * Update device instance name
-     * @param deviceId  unique identifier for given device type instance
-     * @param name      new name for the device type instance
-     */
-    @Path("/device/{deviceId}")
-    @PUT
-    public Response updateDevice(@PathParam("deviceId") String deviceId, @QueryParam("name") String name) {
-        try {
-            DeviceIdentifier deviceIdentifier = new DeviceIdentifier();
-            deviceIdentifier.setId(deviceId);
-            deviceIdentifier.setType(DeviceTypeConstants.DEVICE_TYPE);
-            if (!APIUtil.getDeviceAccessAuthorizationService().isUserAuthorized(deviceIdentifier)) {
-                return Response.status(Response.Status.UNAUTHORIZED.getStatusCode()).build();
-            }
-            Device device = APIUtil.getDeviceManagementService().getDevice(deviceIdentifier);
-            device.setDeviceIdentifier(deviceId);
-            device.getEnrolmentInfo().setDateOfLastUpdate(new Date().getTime());
-            device.setName(name);
-            device.setType(DeviceTypeConstants.DEVICE_TYPE);
-            boolean updated = APIUtil.getDeviceManagementService().modifyEnrollment(device);
-            if (updated) {
-                return Response.ok().build();
-            } else {
-                return Response.status(Response.Status.NOT_ACCEPTABLE.getStatusCode()).build();
-            }
-        } catch (DeviceManagementException e) {
-            log.error(e.getErrorMessage(), e);
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR.getStatusCode()).build();
-        } catch (DeviceAccessAuthorizationException e) {
-            log.error(e.getErrorMessage(), e);
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR.getStatusCode()).build();
-        }
-    }
-
-    /**
-     * To get device information
-     * @param deviceId  unique identifier for given device type instance
-     * @return
-     */
-    @Path("/device/{deviceId}")
-    @GET
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getDevice(@PathParam("deviceId") String deviceId) {
-        try {
-            DeviceIdentifier deviceIdentifier = new DeviceIdentifier();
-            deviceIdentifier.setId(deviceId);
-            deviceIdentifier.setType(DeviceTypeConstants.DEVICE_TYPE);
-            if (!APIUtil.getDeviceAccessAuthorizationService().isUserAuthorized(deviceIdentifier)) {
-                return Response.status(Response.Status.UNAUTHORIZED.getStatusCode()).build();
-            }
-            Device device = APIUtil.getDeviceManagementService().getDevice(deviceIdentifier);
-            return Response.ok().entity(device).build();
-        } catch (DeviceManagementException e) {
-            log.error(e.getErrorMessage(), e);
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR.getStatusCode()).build();
-        } catch (DeviceAccessAuthorizationException e) {
-            log.error(e.getErrorMessage(), e);
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR.getStatusCode()).build();
-        }
-    }
-
-    /**
-     * Get all device type instance which belongs to user
-     * @return  Array of devices which includes device's information
-     */
-    @Path("/devices")
-    @GET
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getAllDevices() {
-        try {
-            List<Device> userDevices =
-                    APIUtil.getDeviceManagementService().getDevicesOfUser(APIUtil.getAuthenticatedUser());
-            ArrayList<Device> userDevicesforFirealarm = new ArrayList<>();
-            for (Device device : userDevices) {
-                if (device.getType().equals(DeviceTypeConstants.DEVICE_TYPE) &&
-                        device.getEnrolmentInfo().getStatus().equals(EnrolmentInfo.Status.ACTIVE)) {
-                    userDevicesforFirealarm.add(device);
-                }
-            }
-            Device[] devices = userDevicesforFirealarm.toArray(new Device[]{});
-            return Response.ok().entity(devices).build();
-        } catch (DeviceManagementException e) {
-            log.error(e.getErrorMessage(), e);
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR.getStatusCode()).build();
-        }
     }
 
     /**
@@ -377,9 +246,6 @@ public class DeviceTypeServiceImpl implements DeviceTypeService {
             enrolmentInfo.setOwner(APIUtil.getAuthenticatedUser());
             device.setEnrolmentInfo(enrolmentInfo);
             boolean added = APIUtil.getDeviceManagementService().enrollDevice(device);
-            if (added) {
-                APIUtil.registerApiAccessRoles(APIUtil.getAuthenticatedUser());
-            }
             return added;
         } catch (DeviceManagementException e) {
             log.error(e.getMessage(), e);
@@ -399,7 +265,8 @@ public class DeviceTypeServiceImpl implements DeviceTypeService {
             APIManagementProviderService apiManagementProviderService = APIUtil.getAPIManagementProviderService();
             String[] tags = {DeviceTypeConstants.DEVICE_TYPE};
             apiApplicationKey = apiManagementProviderService.generateAndRetrieveApplicationKeys(
-                    DeviceTypeConstants.DEVICE_TYPE, tags, KEY_TYPE, applicationUsername, true);
+                    DeviceTypeConstants.DEVICE_TYPE, tags, KEY_TYPE, applicationUsername, true,
+                    "3600");
         }
         JWTClient jwtClient = APIUtil.getJWTClientManagerService().getJWTClient();
         String scopes = "device_type_" + DeviceTypeConstants.DEVICE_TYPE + " device_" + deviceId;

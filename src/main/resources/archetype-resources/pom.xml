@@ -373,20 +373,12 @@
         </repository>
     </repositories>
     <properties>
-        <!-- Carbon Analytics -->
-        <carbon.analytics.common.version>5.0.11</carbon.analytics.common.version>
-        <carbon.analytics.common.version.range>[5.0.11,6.0.0)</carbon.analytics.common.version.range>
-        <carbon.analytics.version.range>[1.0.5,2.0.0]</carbon.analytics.version.range>
-        <carbon.analytics.version>1.0.6-ALPHA</carbon.analytics.version>
+		<carbon.kernel.version>4.4.11</carbon.kernel.version>
 
-        <!-- Carbon Device Management -->
-        <carbon.device.mgt.version>1.1.1-SNAPSHOT</carbon.device.mgt.version>
-        <carbon.device.mgt.plugin.version>2.1.1-SNAPSHOT</carbon.device.mgt.plugin.version>
+		<!-- Carbon Device Management -->
+		<carbon.device.mgt.version>2.0.7</carbon.device.mgt.version>
+		<carbon.device.mgt.plugin.version>3.0.6</carbon.device.mgt.plugin.version>
 
-        <carbon.commons.version>4.4.8</carbon.commons.version>
-        <carbon.kernel.version>4.4.3</carbon.kernel.version>
-        <carbon-p2-plugin.version>1.5.3</carbon-p2-plugin.version>
-        <org.apache.httpcomponents.version>4.1</org.apache.httpcomponents.version>
 
         <project-base-package>${project.groupId}.${rootArtifactId}</project-base-package>
 
@@ -399,30 +391,24 @@
         <maven-scr-plugin.version>1.7.2</maven-scr-plugin.version>
         <maven-assembly-plugin.version>2.5.5</maven-assembly-plugin.version>
 
-        <!--Orbit versions-->
-        <orbit.h2.engine.version>1.2.140.wso2v3</orbit.h2.engine.version>
+		<paho.mqtt.version>1.0.2</paho.mqtt.version>
+		<commons-json.version>3.0.0.wso2v1</commons-json.version>
+		<eclipse.osgi.version>3.8.1.v20120830-144521</eclipse.osgi.version>
+		<javax.ws.rs.version>1.1.1</javax.ws.rs.version>
 
-        <commons-json.version.range>(3.0.0, 4.0.0]</commons-json.version.range>
-        <commons-codec.wso2.version>1.4.0.wso2v1</commons-codec.wso2.version>
-        <commons-json.version>3.0.0.wso2v1</commons-json.version>
-        <commons-io.version>2.4</commons-io.version>
-        <commons-httpclient.orbit.version>3.1.0.wso2v2</commons-httpclient.orbit.version>
-        <jackson.version>1.9.0</jackson.version>
-
-        <!--XMPP/MQTT Version-->
-        <smack.wso2.version>3.0.4.wso2v1</smack.wso2.version>
-        <smackx.wso2.version>3.0.4.wso2v1</smackx.wso2.version>
-        <paho.mqtt.version>1.0.2</paho.mqtt.version>
-
-        <cxf.version>2.6.1</cxf.version>
-        <javaee-web-api.version>6.0</javaee-web-api.version>
-        <javax.ws.rs.version>1.1.1</javax.ws.rs.version>
-        <junit.version>3.8.1</junit.version>
-        <eclipse.equinox.common.version>3.6.100.v20120522-1841</eclipse.equinox.common.version>
-        <h2-database-engine>1.2.140.wso2v3</h2-database-engine>
-        <eclipse.osgi.version>3.8.1.v20120830-144521</eclipse.osgi.version>
-        <org.apache.felix.version>1.4.0</org.apache.felix.version>
-        <org.eclipse.osgi.services.version>3.3.100.v20120522-1822</org.eclipse.osgi.services.version>
-        <eclipse.equinox.common.version>3.6.100.v20120522-1841</eclipse.equinox.common.version>
+		<!--XMPP/MQTT Version-->
+		<smack.wso2.version>3.0.4.wso2v1</smack.wso2.version>
+		<smackx.wso2.version>3.0.4.wso2v1</smackx.wso2.version>
+		<cxf.version>2.6.1</cxf.version>
+		<jackson.version>1.9.0</jackson.version>
+		<commons-httpclient.orbit.version>3.1.0.wso2v2</commons-httpclient.orbit.version>
+		<commons-json.version>3.0.0.wso2v1</commons-json.version>
+		<eclipse.equinox.common.version>3.6.100.v20120522-1841</eclipse.equinox.common.version>
+		<analytics.version>1.3.0</analytics.version>
+		<carbon.analytics.version>1.3.0</carbon.analytics.version>
+		<org.apache.felix.version>1.4.0</org.apache.felix.version>
+		<commons-codec.wso2.version>1.4.0.wso2v1</commons-codec.wso2.version>
+		<carbon.analytics.common.version>5.1.5</carbon.analytics.common.version>
+		<carbon-p2-plugin.version>1.5.3</carbon-p2-plugin.version>
     </properties>
 </project>

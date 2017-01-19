@@ -15,11 +15,15 @@
  */
 package ${groupId}.${rootArtifactId}.plugin.impl.feature;
 
-import ${groupId}.${rootArtifactId}.plugin.constants.DeviceTypeConstants;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+
 import org.wso2.carbon.device.mgt.common.DeviceManagementException;
 import org.wso2.carbon.device.mgt.common.Feature;
 import org.wso2.carbon.device.mgt.common.FeatureManager;
-import org.wso2.carbon.device.mgt.extensions.feature.mgt.GenericFeatureManager;
 
 import java.util.List;
 
@@ -27,6 +31,39 @@ import java.util.List;
  * Device type specific feature management server
  */
 public class DeviceTypeFeatureManager implements FeatureManager {
+
+    private static Feature feature = new Feature();
+    private static final String METHOD = "method";
+    private static final String URI = "uri";
+    private static final String CONTENT_TYPE = "contentType";
+    private static final String PATH_PARAMS = "pathParams";
+    private static final String QUERY_PARAMS = "queryParams";
+    private static final String FORM_PARAMS = "formParams";
+
+    public DeviceTypeFeatureManager () {
+        feature.setCode("change-status");
+        feature.setName("Change status of sensor: on/off");
+        feature.setDescription("Change status of sensor: on/off");
+
+        Map<String, Object> apiParams = new HashMap<>();
+        apiParams.put(METHOD, "POST");
+        apiParams.put(URI, "/${deviceType}/device/{deviceId}/change-status");
+        List<String> pathParams = new ArrayList<>();
+        List<String> queryParams = new ArrayList<>();
+        List<String> formParams = new ArrayList<>();
+        pathParams.add("deviceId");
+        apiParams.put(PATH_PARAMS, pathParams);
+        queryParams.add("state");
+        apiParams.put(QUERY_PARAMS, queryParams);
+        apiParams.put(FORM_PARAMS, formParams);
+        List<Feature.MetadataEntry> metadataEntries = new ArrayList<>();
+        Feature.MetadataEntry metadataEntry = new Feature.MetadataEntry();
+        metadataEntry.setId(-1);
+        metadataEntry.setValue(apiParams);
+        metadataEntries.add(metadataEntry);
+        feature.setMetadataEntries(metadataEntries);
+    }
+
 	@Override
 	public boolean addFeature(Feature feature) throws DeviceManagementException {
 		return false;
@@ -39,14 +76,14 @@ public class DeviceTypeFeatureManager implements FeatureManager {
 
 	@Override
 	public Feature getFeature(String name) throws DeviceManagementException {
-		GenericFeatureManager genericFeatureManager = GenericFeatureManager.getInstance();
-		return genericFeatureManager.getFeature(DeviceTypeConstants.DEVICE_TYPE, name);
+        return feature;
 	}
 
 	@Override
 	public List<Feature> getFeatures() throws DeviceManagementException {
-		GenericFeatureManager genericFeatureManager = GenericFeatureManager.getInstance();
-		return genericFeatureManager.getFeatures(DeviceTypeConstants.DEVICE_TYPE);
+        List<Feature> features = new ArrayList<>();
+        features.add(feature);
+        return features;
 	}
 
 	@Override

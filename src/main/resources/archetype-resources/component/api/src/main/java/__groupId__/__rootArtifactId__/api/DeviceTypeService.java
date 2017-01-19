@@ -18,12 +18,14 @@
 
 package ${groupId}.${rootArtifactId}.api;
 
-import ${groupId}.${rootArtifactId}.api.dto.DeviceJSON;
-
-import org.wso2.carbon.apimgt.annotations.api.API;
-import org.wso2.carbon.apimgt.annotations.api.Permission;
-import org.wso2.carbon.device.mgt.extensions.feature.mgt.annotations.DeviceType;
-import org.wso2.carbon.device.mgt.extensions.feature.mgt.annotations.Feature;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.Extension;
+import io.swagger.annotations.ExtensionProperty;
+import io.swagger.annotations.Info;
+import io.swagger.annotations.SwaggerDefinition;
+import io.swagger.annotations.Tag;
+import org.wso2.carbon.apimgt.annotations.api.Scope;
+import org.wso2.carbon.apimgt.annotations.api.Scopes;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.Path;
@@ -43,20 +45,34 @@ import javax.ws.rs.core.Response;
 /**
  * This is the API which is used to control and manage device type functionality
  */
+@SwaggerDefinition(
+        info = @Info(
+                version = "1.0.0",
+                title = "",
+                extensions = {
+                        @Extension(properties = {
+                                @ExtensionProperty(name = "name", value = "${deviceType}"),
+                                @ExtensionProperty(name = "context", value = "/${deviceType}"),
+                        })
+                }
+        ),
+        tags = {
+                @Tag(name = "${deviceType}", description = "")
+        }
+)
+@Scopes(
+        scopes = {
+                @Scope(
+                        name = "Enroll device",
+                        description = "",
+                        key = "perm:${deviceType}:enroll",
+                        permissions = {"/device-mgt/devices/enroll/${deviceType}"}
+                )
+        }
+)
 @SuppressWarnings("NonJaxWsWebServices")
-@API(name = "${deviceType}", version = "1.0.0", context = "/${deviceType}", tags = "${deviceType}")
-@DeviceType(value = "${deviceType}")
 public interface DeviceTypeService {
-
-    /**
-     * @param agentInfo device owner,id
-     * @return true if device instance is added to map
-     */
-    @Path("device/register")
-    @POST
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Permission(scope = "${deviceType}_user", permissions = {"/permission/admin/device-mgt/user/register"})
-    Response registerDevice(final DeviceJSON agentInfo);
+    String SCOPE = "scope";
 
     /**
      * @param deviceId  unique identifier for given device type instance
@@ -64,9 +80,19 @@ public interface DeviceTypeService {
      */
     @Path("device/{deviceId}/change-status")
     @POST
-    @Feature(code = "change-status", name = "Change status of sensor: on/off",
-            description = "Change status of sensor: on/off")
-    @Permission(scope = "${deviceType}_user", permissions = {"/permission/admin/device-mgt/change-status"})
+    @ApiOperation(
+            consumes = MediaType.APPLICATION_JSON,
+            httpMethod = "POST",
+            value = "Switch Status",
+            notes = "",
+            response = Response.class,
+            tags = "${deviceType}",
+            extensions = {
+                    @Extension(properties = {
+                            @ExtensionProperty(name = SCOPE, value = "perm:${deviceType}:enroll")
+                    })
+            }
+    )
     Response changeStatus(@PathParam("deviceId") String deviceId,
                           @QueryParam("state") String state,
                           @Context HttpServletResponse response);
@@ -82,52 +108,21 @@ public interface DeviceTypeService {
     @GET
     @Consumes("application/json")
     @Produces("application/json")
-    @Permission(scope = "${deviceType}_user", permissions = {"/permission/admin/device-mgt/stats"})
+    @ApiOperation(
+            consumes = MediaType.APPLICATION_JSON,
+            httpMethod = "GET",
+            value = "Sensor Stats",
+            notes = "",
+            response = Response.class,
+            tags = "${deviceType}",
+            extensions = {
+                    @Extension(properties = {
+                            @ExtensionProperty(name = SCOPE, value = "perm:${deviceType}:enroll")
+                    })
+            }
+    )
     Response getSensorStats(@PathParam("deviceId") String deviceId, @QueryParam("from") long from,
                             @QueryParam("to") long to, @QueryParam("sensorType") String sensorType);
-
-    /**
-     * Remove device type instance using device id
-     * @param deviceId  unique identifier for given device type instance
-     */
-    @Path("/device/{device_id}")
-    @DELETE
-    @Permission(scope = "${deviceType}_user", permissions = {"/permission/admin/device-mgt/removeDevice"})
-    Response removeDevice(@PathParam("device_id") String deviceId);
-
-    /**
-     * Update device instance name
-     * @param deviceId  unique identifier for given device type instance
-     * @param name      new name for the device type instance
-     */
-    @Path("/device/{device_id}")
-    @PUT
-    @Permission(scope = "${deviceType}_user", permissions = {"/permission/admin/device-mgt/updateDevice"})
-    Response updateDevice(@PathParam("device_id") String deviceId, @QueryParam("name") String name);
-
-    /**
-     * To get device information
-     * @param deviceId  unique identifier for given device type instance
-     * @return
-     */
-    @Path("/device/{device_id}")
-    @GET
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    @Permission(scope = "${deviceType}_user", permissions = {"/permission/admin/device-mgt/updateDevice"})
-    Response getDevice(@PathParam("device_id") String deviceId);
-
-    /**
-     * Get all device type instance which belongs to user
-     * @return  Array of devices which includes device's information
-     */
-    @Path("/devices")
-    @GET
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    @Permission(scope = "${deviceType}_user", permissions = {"/permission/admin/device-mgt/devices"})
-    Response getAllDevices();
-
     /**
      * To download device type agent source code as zip file
      * @param deviceName   name for the device type instance
@@ -137,6 +132,5 @@ public interface DeviceTypeService {
     @Path("/device/download")
     @GET
     @Produces("application/zip")
-    @Permission(scope = "${deviceType}_user", permissions = {"/permission/admin/device-mgt/download"})
     Response downloadSketch(@QueryParam("deviceName") String deviceName, @QueryParam("sketchType") String sketchType);
 }

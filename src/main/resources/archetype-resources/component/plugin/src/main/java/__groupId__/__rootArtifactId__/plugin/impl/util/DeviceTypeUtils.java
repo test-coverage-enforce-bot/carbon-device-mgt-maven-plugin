@@ -20,7 +20,6 @@ package ${groupId}.${rootArtifactId}.plugin.impl.util;
 
 import ${groupId}.${rootArtifactId}.plugin.constants.DeviceTypeConstants;
 import ${groupId}.${rootArtifactId}.plugin.exception.DeviceMgtPluginException;
-import ${groupId}.${rootArtifactId}.plugin.internal.DeviceTypeManagementDataHolder;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.wso2.carbon.base.ServerConfiguration;
@@ -129,59 +128,4 @@ public class DeviceTypeUtils {
         }
     }
 
-    public static void setupMqttOutputAdapter() throws IOException {
-        OutputEventAdapterConfiguration outputEventAdapterConfiguration =
-                createMqttOutputEventAdapterConfiguration(DeviceTypeConstants.MQTT_ADAPTER_NAME,
-                        DeviceTypeConstants.MQTT_ADAPTER_TYPE, MessageType.TEXT);
-        try {
-            PrivilegedCarbonContext.startTenantFlow();
-            PrivilegedCarbonContext.getThreadLocalCarbonContext().setTenantDomain(
-                    DeviceTypeConstants.DEVICE_TYPE_PROVIDER_DOMAIN, true);
-            DeviceTypeManagementDataHolder.getInstance().getOutputEventAdapterService()
-                    .create(outputEventAdapterConfiguration);
-        } catch (OutputEventAdapterException e) {
-            log.error("Unable to create Output Event Adapter : " + DeviceTypeConstants.MQTT_ADAPTER_NAME, e);
-        } finally {
-            PrivilegedCarbonContext.endTenantFlow();
-        }
-    }
-
-    /**
-     * Create Output Event Adapter Configuration for given configuration.
-     *
-     * @param name      Output Event Adapter name
-     * @param type      Output Event Adapter type
-     * @param msgFormat Output Event Adapter message format
-     * @return OutputEventAdapterConfiguration instance for given configuration
-     */
-    private static OutputEventAdapterConfiguration createMqttOutputEventAdapterConfiguration(String name, String type,
-                                                                                             String msgFormat) throws IOException {
-        OutputEventAdapterConfiguration outputEventAdapterConfiguration = new OutputEventAdapterConfiguration();
-        outputEventAdapterConfiguration.setName(name);
-        outputEventAdapterConfiguration.setType(type);
-        outputEventAdapterConfiguration.setMessageFormat(msgFormat);
-        File configFile = new File(DeviceTypeConstants.MQTT_CONFIG_LOCATION);
-        if (configFile.exists()) {
-            Map<String, String> mqttAdapterProperties = new HashMap<>();
-            InputStream propertyStream = configFile.toURI().toURL().openStream();
-            Properties properties = new Properties();
-            properties.load(propertyStream);
-            mqttAdapterProperties.put(DeviceTypeConstants.USERNAME_PROPERTY_KEY, properties.getProperty(
-                    DeviceTypeConstants.USERNAME_PROPERTY_KEY));
-            mqttAdapterProperties.put(DeviceTypeConstants.DCR_PROPERTY_KEY, Utils.replaceSystemProperty(
-                    properties.getProperty(DeviceTypeConstants.DCR_PROPERTY_KEY)));
-            mqttAdapterProperties.put(DeviceTypeConstants.BROKER_URL_PROPERTY_KEY, replaceMqttProperty(
-                    properties.getProperty(DeviceTypeConstants.BROKER_URL_PROPERTY_KEY)));
-            mqttAdapterProperties.put(DeviceTypeConstants.SCOPES_PROPERTY_KEY, properties.getProperty(
-                    DeviceTypeConstants.SCOPES_PROPERTY_KEY));
-            mqttAdapterProperties.put(DeviceTypeConstants.CLEAR_SESSION_PROPERTY_KEY, properties.getProperty(
-                    DeviceTypeConstants.CLEAR_SESSION_PROPERTY_KEY));
-            mqttAdapterProperties.put(DeviceTypeConstants.QOS_PROPERTY_KEY, properties.getProperty(
-                    DeviceTypeConstants.QOS_PROPERTY_KEY));
-            mqttAdapterProperties.put(DeviceTypeConstants.CLIENT_ID_PROPERTY_KEY, "");
-            mqttAdapterProperties.put(DeviceTypeConstants.RESOURCE, "output-event");
-            outputEventAdapterConfiguration.setStaticProperties(mqttAdapterProperties);
-        }
-        return outputEventAdapterConfiguration;
-    }
 }
