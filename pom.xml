@@ -56,5 +56,14 @@
     <properties>
         <archetype.packaging.version>2.4</archetype.packaging.version>
         <archetype.plugin.version>2.4</archetype.plugin.version>
+		<!-- Release plugin ID for github-->
+		<project.scm.id>github-scm</project.scm.id>
     </properties>
+
+	<scm>
+		<url>https://github.com/wso2/carbon-device-mgt-maven-plugin.git</url>
+		<developerConnection>scm:git:https://github.com/wso2/carbon-device-mgt-maven-plugin.git</developerConnection>
+		<connection>scm:git:https://github.com/wso2/carbon-device-mgt-maven-plugin.git</connection>
+		<tag>HEAD</tag>
+	</scm>
 </project>

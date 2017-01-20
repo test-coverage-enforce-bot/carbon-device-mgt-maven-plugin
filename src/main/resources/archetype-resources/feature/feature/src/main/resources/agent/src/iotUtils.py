@@ -52,7 +52,7 @@ SENSOR_STATS_SENSOR2 = '{{"event":{{"metaData":{{"owner":"' + DEVICE_OWNER + '",
 
 
 global IS_REGISTERED
-IS_REGISTERED = False
+IS_REGISTERED = True
 
 
 def isEmpty(string):

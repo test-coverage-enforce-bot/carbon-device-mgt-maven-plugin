@@ -179,16 +179,4 @@ public class APIUtil {
         PrivilegedCarbonContext threadLocalCarbonContext = PrivilegedCarbonContext.getThreadLocalCarbonContext();
         return threadLocalCarbonContext.getTenantDomain();
     }
-
-    public static OutputEventAdapterService getOutputEventAdapterService() {
-        PrivilegedCarbonContext ctx = PrivilegedCarbonContext.getThreadLocalCarbonContext();
-        OutputEventAdapterService outputEventAdapterService =
-                (OutputEventAdapterService) ctx.getOSGiService(OutputEventAdapterService.class, null);
-        if (outputEventAdapterService == null) {
-            String msg = "Device Authorization service has not initialized.";
-            log.error(msg);
-            throw new IllegalStateException(msg);
-        }
-        return outputEventAdapterService;
-    }
 }
