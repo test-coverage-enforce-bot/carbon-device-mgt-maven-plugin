@@ -40,6 +40,7 @@ Then select the cdmf.devicetype:cdmf-devicetype-archetype as new archetype.
         3: local -> org.wso2.cdmf.devicetype:cdmf-devicetype-archetype (WSO2 CDMF Device Type Archetype)
         Choose a number or apply filter (format: [groupId:]artifactId, case sensitive contains): : 3
 
+**NOTE**: If you still can't see cdmf-device-type archetype please refer SO answer [here](http://stackoverflow.com/a/43108651/1560536).
 
  Then you need to provide groupId, artifactId, version, packaging, name of your device type and name for sensor as shown below.
  
