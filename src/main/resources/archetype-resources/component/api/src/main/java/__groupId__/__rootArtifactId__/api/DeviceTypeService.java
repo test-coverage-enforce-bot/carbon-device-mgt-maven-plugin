@@ -57,7 +57,7 @@ import javax.ws.rs.core.Response;
                 }
         ),
         tags = {
-                @Tag(name = "${deviceType}", description = "")
+                @Tag(name = "${deviceType},device_management", description = "")
         }
 )
 @Scopes(
@@ -75,8 +75,8 @@ public interface DeviceTypeService {
     String SCOPE = "scope";
 
     /**
-     * @param deviceId  unique identifier for given device type instance
-     * @param state     change status of sensor: on/off
+     * @param deviceId unique identifier for given device type instance
+     * @param state    change status of sensor: on/off
      */
     @Path("device/{deviceId}/change-status")
     @POST
@@ -99,10 +99,11 @@ public interface DeviceTypeService {
 
     /**
      * Retrieve Sensor data for the given time period
+     *
      * @param deviceId unique identifier for given device type instance
-     * @param from  starting time
-     * @param to    ending time
-     * @return  response with List<SensorRecord> object which includes sensor data which is requested
+     * @param from     starting time
+     * @param to       ending time
+     * @return response with List<SensorRecord> object which includes sensor data which is requested
      */
     @Path("device/stats/{deviceId}")
     @GET
@@ -123,14 +124,29 @@ public interface DeviceTypeService {
     )
     Response getSensorStats(@PathParam("deviceId") String deviceId, @QueryParam("from") long from,
                             @QueryParam("to") long to, @QueryParam("sensorType") String sensorType);
+
     /**
      * To download device type agent source code as zip file
-     * @param deviceName   name for the device type instance
-     * @param sketchType   folder name where device type agent was installed into server
-     * @return  Agent source code as zip file
+     *
+     * @param deviceName name for the device type instance
+     * @param sketchType folder name where device type agent was installed into server
+     * @return Agent source code as zip file
      */
     @Path("/device/download")
     @GET
     @Produces("application/zip")
+    @ApiOperation(
+            consumes = MediaType.APPLICATION_JSON,
+            httpMethod = "GET",
+            value = "Download agent",
+            notes = "",
+            response = Response.class,
+            tags = "${deviceType}",
+            extensions = {
+                    @Extension(properties = {
+                            @ExtensionProperty(name = SCOPE, value = "perm:${deviceType}:enroll")
+                    })
+            }
+    )
     Response downloadSketch(@QueryParam("deviceName") String deviceName, @QueryParam("sketchType") String sketchType);
 }

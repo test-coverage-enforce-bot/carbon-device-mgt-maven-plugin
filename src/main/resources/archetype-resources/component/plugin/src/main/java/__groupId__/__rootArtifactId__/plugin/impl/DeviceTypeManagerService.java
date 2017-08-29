@@ -18,26 +18,19 @@
 
 package ${groupId}.${rootArtifactId}.plugin.impl;
 
-import java.util.HashMap;
-import java.util.Map;
-
-
-
 import ${groupId}.${rootArtifactId}.plugin.constants.DeviceTypeConstants;
-import org.wso2.carbon.device.mgt.common.DeviceIdentifier;
-import org.wso2.carbon.device.mgt.common.ProvisioningConfig;
 import org.wso2.carbon.device.mgt.common.DeviceManagementException;
 import org.wso2.carbon.device.mgt.common.DeviceManager;
-import org.wso2.carbon.device.mgt.common.app.mgt.Application;
-import org.wso2.carbon.device.mgt.common.app.mgt.ApplicationManagementException;
+import org.wso2.carbon.device.mgt.common.DeviceStatusTaskPluginConfig;
+import org.wso2.carbon.device.mgt.common.InitialOperationConfig;
+import org.wso2.carbon.device.mgt.common.OperationMonitoringTaskConfig;
+import org.wso2.carbon.device.mgt.common.ProvisioningConfig;
 import org.wso2.carbon.device.mgt.common.app.mgt.ApplicationManager;
-import org.wso2.carbon.device.mgt.common.operation.mgt.Operation;
+import org.wso2.carbon.device.mgt.common.policy.mgt.PolicyMonitoringManager;
+import org.wso2.carbon.device.mgt.common.pull.notification.PullNotificationSubscriber;
 import org.wso2.carbon.device.mgt.common.push.notification.PushNotificationConfig;
 import org.wso2.carbon.device.mgt.common.spi.DeviceManagementService;
-import org.wso2.carbon.device.mgt.common.OperationMonitoringTaskConfig;
-import org.wso2.carbon.device.mgt.common.policy.mgt.PolicyMonitoringManager;
-import org.wso2.carbon.device.mgt.common.OperationMonitoringTaskConfig;
-import java.util.List;
+
 
 public class DeviceTypeManagerService implements DeviceManagementService {
     private DeviceManager deviceManager;
@@ -76,20 +69,29 @@ public class DeviceTypeManagerService implements DeviceManagementService {
 
     @Override
     public PushNotificationConfig getPushNotificationConfig() {
-        // this needs to be retrieved from a config file.
-        Map<String, String> properties = new HashMap<>();
-        properties.put("mqttAdapterName", "${deviceType}_mqtt");
-        properties.put("username", "admin");
-        properties.put("password", "admin");
-        properties.put("qos", "0");
-        properties.put("clearSession", "true");
-        properties.put("scopes", "");
-        return new PushNotificationConfig("MQTT", properties);
+        return null;
     }
 
     @Override
     public PolicyMonitoringManager getPolicyMonitoringManager() {
         return null;
     }
+
+    @Override
+    public InitialOperationConfig getInitialOperationConfig() {
+        return null;
+    }
+
+    @Override
+    public PullNotificationSubscriber getPullNotificationSubscriber() {
+        return null;
+    }
+
+    @Override
+    public DeviceStatusTaskPluginConfig getDeviceStatusTaskPluginConfig() {
+        return null;
+    }
+
+
 
 }
