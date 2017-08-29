@@ -23,6 +23,14 @@
         <requiredProperty key="sensorType2"></requiredProperty>
         <requiredProperty key="sensorType3"></requiredProperty>
     </requiredProperties>
+    <fileSets>
+        <fileSet filtered="true" packaged="false" encoding="UTF-8">
+            <directory/>
+            <includes>
+                <include>__deviceType__-deployer.xml</include>
+            </includes>
+        </fileSet>
+    </fileSets>
     <modules>
         <module id="${rootArtifactId}-component" dir="component" name="${rootArtifactId}-component">
             <modules>
@@ -131,35 +139,6 @@
         </module>
         <module id="${rootArtifactId}-feature" dir="feature" name="${rootArtifactId}-feature">
             <modules>
-                <module id="${groupId}.${rootArtifactId}.feature" dir="feature"
-                        name="${groupId}.${rootArtifactId}.feature">
-                    <fileSets>
-                        <fileSet filtered="true" encoding="UTF-8">
-                            <directory>src/main/resources</directory>
-                            <includes>
-                                <include>**/*.xml</include>
-                                <include>**/*.properties</include>
-                                <include>**/*.car</include>
-                                <include>**/*.db</include>
-                                <include>**/*.sql</include>
-                                <include>**/*.json</include>
-                                <include>**/*.inf</include>
-                                <include>**/*.hbs</include>
-                                <include>**/*.py</include>
-                            </includes>
-                        </fileSet>
-                        <fileSet filtered="false" encoding="UTF-8">
-                            <directory>src/main/resources/</directory>
-                            <includes>
-                                <include>**/*.png</include>
-                                <include>**/*.js</include>
-                                <include>**/*.sh</include>
-                                <include>**/*.css</include>
-                            </includes>
-                        </fileSet>
-                    </fileSets>
-                </module>
-
                 <module id="${groupId}.${rootArtifactId}.feature" dir="analytics-feature"
                         name="${groupId}.${rootArtifactId}.analytics.feature">
                     <fileSets>
