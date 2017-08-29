@@ -20,18 +20,19 @@
 """
 
 import argparse
-import httplib
+import calendar
 import logging
 import logging.handlers
 import signal
 import ssl
 import sys
 import threading
-import time, calendar
+import time
 from functools import wraps
 
-import mqttHandler
 import iotUtils
+import mqttHandler
+
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #      Overriding the default SSL version used in some of the Python (2.7.x) versions
@@ -43,7 +44,10 @@ def sslwrap(func):
     def bar(*args, **kw):
         kw['ssl_version'] = ssl.PROTOCOL_TLSv1
         return func(*args, **kw)
+
     return bar
+
+
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 PUSH_INTERVAL = 2  # time interval between successive data pushes in seconds
 
@@ -57,7 +61,7 @@ LOG_LEVEL = logging.INFO  # Could be e.g. "DEBUG" or "WARNING"
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #       Python version
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-if sys.version_info<(2,6,0):
+if sys.version_info < (2, 6, 0):
     sys.stderr.write("You need python 2.6.0 or later to run this script\n")
     exit(1)
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -79,7 +83,6 @@ if args.log:
 
 if args.interval:
     PUSH_INTERVAL = args.interval
-
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #       Endpoint specific settings to connect with the IoT Server
@@ -115,13 +118,17 @@ def configureLogger(loggerName):
     handler = logging.handlers.TimedRotatingFileHandler(LOG_FILENAME, when="midnight",
                                                         backupCount=3)  # Handler that writes to a file,
     # ~~~make new file at midnight and keep 3 backups
-    formatter = logging.Formatter('%(asctime)s %(levelname)-8s %(message)s')  # Format each log message like this
+    formatter = logging.Formatter(
+        '%(asctime)s %(levelname)-8s %(message)s')  # Format each log message like this
     handler.setFormatter(formatter)  # Attach the formatter to the handler
     logger.addHandler(handler)  # Attach the handler to the logger
 
     if (logging_enabled):
-        sys.stdout = IOTLogger(logger, logging.INFO)  # Replace stdout with logging to file at INFO level
-        sys.stderr = IOTLogger(logger, logging.ERROR)  # Replace stderr with logging to file at ERROR level
+        sys.stdout = IOTLogger(logger,
+                               logging.INFO)  # Replace stdout with logging to file at INFO level
+        sys.stderr = IOTLogger(logger,
+                               logging.ERROR)  # Replace stderr with logging to file at ERROR level
+
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #       This is a Thread object for listening for MQTT Messages
@@ -134,6 +141,8 @@ class ListenMQTTThread(object):
 
     def run(self):
         mqttHandler.main()
+
+
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -142,6 +151,8 @@ class ListenMQTTThread(object):
 def sigterm_handler(_signo, _stack_frame):
     print("[] received signal {}, exiting...".format(_signo))
     sys.exit(0)
+
+
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -149,9 +160,12 @@ def sigterm_handler(_signo, _stack_frame):
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 def getSensorValue():
     return iotUtils.generateRandomSensorValues()
+
+
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 signal.signal(signal.SIGTERM, sigterm_handler)
+
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #       The Main method of the Agent
@@ -177,8 +191,9 @@ def main():
             print ("agentStats: " + str(e))
             print '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~'
             pass
+
+
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 if __name__ == "__main__":
     main()
-

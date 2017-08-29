@@ -77,7 +77,8 @@
                         </fileSet>
                     </fileSets>
                 </module>
-                <module id="${groupId}.${rootArtifactId}.ui" dir="ui" name="${groupId}.${rootArtifactId}.ui">
+                <module id="${groupId}.${rootArtifactId}.ui" dir="ui"
+                        name="${groupId}.${rootArtifactId}.ui">
                     <fileSets>
                         <fileSet filtered="true" encoding="UTF-8">
                             <directory>src/assembly</directory>

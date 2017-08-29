@@ -16,7 +16,8 @@
   ~ under the License.
   -->
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <parent>
         <groupId>org.wso2</groupId>
@@ -143,8 +144,10 @@
                         </goals>
                         <configuration>
                             <profile>analytics-default</profile>
-                            <metadataRepository>file:${project.basedir}/target/p2-repo</metadataRepository>
-                            <artifactRepository>file:${project.basedir}/target/p2-repo</artifactRepository>
+                            <metadataRepository>file:${project.basedir}/target/p2-repo
+                            </metadataRepository>
+                            <artifactRepository>file:${project.basedir}/target/p2-repo
+                            </artifactRepository>
                             <destination>${project.basedir}/../wso2/components</destination>
                             <deleteOldProfileFiles>false</deleteOldProfileFiles>
                             <features>

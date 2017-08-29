@@ -17,6 +17,7 @@
   ~ under the License.
   -->
 
-<artifact name="${sensorType3}_mqtt_receiver" version="1.0.0" type="event/receiver" serverRole="DataAnalyticsServer">
+<artifact name="${sensorType3}_mqtt_receiver" version="1.0.0" type="event/receiver"
+          serverRole="DataAnalyticsServer">
     <file>${sensorType3}_mqtt_receiver.xml</file>
 </artifact>

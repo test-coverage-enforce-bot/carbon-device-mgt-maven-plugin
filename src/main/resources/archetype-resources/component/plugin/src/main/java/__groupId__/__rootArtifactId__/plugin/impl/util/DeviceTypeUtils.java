@@ -50,7 +50,15 @@ import java.util.Properties;
  */
 public class DeviceTypeUtils {
 
-    private static Log log = LogFactory.getLog(${groupId}.${rootArtifactId}.plugin.impl.util.DeviceTypeUtils.class);
+    private static Log log = LogFactory.getLog($
+
+    {
+        groupId
+    }.$
+
+    {
+        rootArtifactId
+    }.plugin.impl.util.DeviceTypeUtils.class);
 
     public static void cleanupResources(Connection conn, PreparedStatement stmt, ResultSet rs) {
         if (rs != null) {
@@ -99,10 +107,10 @@ public class DeviceTypeUtils {
     public static String replaceMqttProperty(String urlWithPlaceholders) {
         String MQTT_BROKER_HOST = null;
         String MQTT_PORT = null;
-        if(!DeviceTypeConstants.MQTT_BROKER_HOST.startsWith("$")){
+        if (!DeviceTypeConstants.MQTT_BROKER_HOST.startsWith("$")) {
             MQTT_BROKER_HOST = "\\$".concat(DeviceTypeConstants.MQTT_BROKER_HOST);
         }
-        if(!DeviceTypeConstants.MQTT_PORT.startsWith("$")){
+        if (!DeviceTypeConstants.MQTT_PORT.startsWith("$")) {
             MQTT_PORT = "\\$".concat(DeviceTypeConstants.MQTT_PORT);
         }
         urlWithPlaceholders = Utils.replaceSystemProperty(urlWithPlaceholders);

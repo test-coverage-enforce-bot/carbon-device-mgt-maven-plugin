@@ -4,15 +4,28 @@
   "nickName": "${sensorType2}",
   "description": "${sensorType2} data received from the Device",
   "metaData": [
-    {"name":"owner","type":"STRING"},
-    {"name":"deviceType","type":"STRING"},
-    {"name":"deviceId","type":"STRING"},
-    {"name":"time","type":"LONG"}
+    {
+      "name": "owner",
+      "type": "STRING"
+    },
+    {
+      "name": "deviceType",
+      "type": "STRING"
+    },
+    {
+      "name": "deviceId",
+      "type": "STRING"
+    },
+    {
+      "name": "time",
+      "type": "LONG"
+    }
   ],
   "payloadData": [
-      {
-        "name": "${sensorType2}","type": "FLOAT"
-      }
+    {
+      "name": "${sensorType2}",
+      "type": "FLOAT"
+    }
   ]
 }
 	

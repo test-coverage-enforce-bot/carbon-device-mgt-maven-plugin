@@ -43,7 +43,7 @@ import javax.ws.rs.core.Response;
 
 
 /**
- * This is the API which is used to control and manage device type functionality
+ * This is the API which is used to control and manage device type functionality.
  */
 @SwaggerDefinition(
         info = @Info(
@@ -98,7 +98,7 @@ public interface DeviceTypeService {
                           @Context HttpServletResponse response);
 
     /**
-     * Retrieve Sensor data for the given time period
+     * Retrieve Sensor data for the given time period.
      *
      * @param deviceId unique identifier for given device type instance
      * @param from     starting time
@@ -126,7 +126,7 @@ public interface DeviceTypeService {
                             @QueryParam("to") long to, @QueryParam("sensorType") String sensorType);
 
     /**
-     * To download device type agent source code as zip file
+     * To download device type agent source code as zip file.
      *
      * @param deviceName name for the device type instance
      * @param sketchType folder name where device type agent was installed into server
