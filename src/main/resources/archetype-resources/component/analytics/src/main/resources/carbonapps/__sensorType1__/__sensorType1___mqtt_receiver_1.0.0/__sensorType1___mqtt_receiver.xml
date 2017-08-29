@@ -16,7 +16,8 @@
   ~ specific language governing permissions and limitations
   ~ under the License.
   -->
-<eventReceiver name="${sensorType1}-mqtt" statistics="disable" trace="disable" xmlns="http://wso2.org/carbon/eventreceiver">
+<eventReceiver name="${sensorType1}-mqtt" statistics="disable" trace="disable"
+               xmlns="http://wso2.org/carbon/eventreceiver">
     <from eventAdapterType="oauth-mqtt">
         <property name="topic">carbon.super/${deviceType}/+/${sensorType1}</property>
 		<property name="username">admin</property>

@@ -17,6 +17,7 @@
   ~ under the License.
   -->
 
-<artifact name="${sensorType1}_publisher" version="1.0.0" type="event/publisher" serverRole="DataAnalyticsServer">
+<artifact name="${sensorType1}_publisher" version="1.0.0" type="event/publisher"
+          serverRole="DataAnalyticsServer">
     <file>${sensorType1}_publisher.xml</file>
 </artifact>
