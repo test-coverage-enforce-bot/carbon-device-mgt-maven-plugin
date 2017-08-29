@@ -52,64 +52,12 @@ import org.apache.commons.codec.binary.Base64;
  */
 public class ZipUtil {
 
+    public static final String HOST_NAME = "HostName";
     private static final String LOCALHOST = "localhost";
     private static final String HTTPS_PROTOCOL_URL = "https://${iot.gateway.host}:${iot.gateway.https.port}";
     private static final String HTTP_PROTOCOL_URL = "http://${iot.gateway.host}:${iot.gateway.http.port}";
     private static final String CONFIG_TYPE = "general";
     private static final String DEFAULT_MQTT_ENDPOINT = "tcp://${mqtt.broker.host}:${mqtt.broker.port}";
-    public static final String HOST_NAME = "HostName";
-
-    public ZipArchive createZipFile(String owner, String tenantDomain, String deviceType,
-                                    String deviceId, String deviceName, String token,
-                                    String refreshToken, String apiApplicationKey) throws DeviceManagementException {
-
-        String sketchFolder = "repository" + File.separator + "resources" + File.separator + "sketches";
-        String archivesPath = CarbonUtils.getCarbonHome() + File.separator + sketchFolder + File.separator + "archives" +
-                File.separator + deviceId;
-        String templateSketchPath = sketchFolder + File.separator + deviceType;
-        String iotServerIP;
-
-        try {
-            iotServerIP = getServerUrl();
-            String httpsServerEP = Utils.replaceSystemProperty(HTTPS_PROTOCOL_URL);
-            String httpServerEP = Utils.replaceSystemProperty(HTTP_PROTOCOL_URL);
-            String mqttEndpoint = Utils.replaceSystemProperty(DEFAULT_MQTT_ENDPOINT);
-            if (mqttEndpoint.contains(LOCALHOST)) {
-                mqttEndpoint = mqttEndpoint.replace(LOCALHOST, iotServerIP);
-                httpsServerEP = httpsServerEP.replace(LOCALHOST, iotServerIP);
-                httpServerEP = httpServerEP.replace(LOCALHOST, iotServerIP);
-            }
-            String base64EncodedApplicationKey = getBase64EncodedAPIAppKey(apiApplicationKey).trim();
-
-            Map<String, String> contextParams = new HashMap<>();
-            contextParams.put("SERVER_NAME", APIUtil.getTenantDomainOftheUser());
-            contextParams.put("DEVICE_OWNER", owner);
-            contextParams.put("DEVICE_ID", deviceId);
-            contextParams.put("DEVICE_NAME", deviceName);
-            contextParams.put("HTTPS_EP", httpsServerEP);
-            contextParams.put("HTTP_EP", httpServerEP);
-            contextParams.put("APIM_EP", httpsServerEP);
-            contextParams.put("MQTT_EP", mqttEndpoint);
-            contextParams.put("DEVICE_TOKEN", token);
-            contextParams.put("DEVICE_REFRESH_TOKEN", refreshToken);
-            contextParams.put("API_APPLICATION_KEY", base64EncodedApplicationKey);
-
-            ZipArchive zipFile;
-            zipFile = getSketchArchive(archivesPath, templateSketchPath, contextParams, deviceName);
-            return zipFile;
-        } catch (IOException e) {
-            throw new DeviceManagementException("Zip File Creation Failed", e);
-        }
-    }
-
-    private String getBase64EncodedAPIAppKey(String apiAppCredentialsAsJSONString) {
-
-        JSONObject jsonObject = new JSONObject(apiAppCredentialsAsJSONString);
-        String consumerKey = jsonObject.get(ApiApplicationConstants.OAUTH_CLIENT_ID).toString();
-        String consumerSecret = jsonObject.get(ApiApplicationConstants.OAUTH_CLIENT_SECRET).toString();
-        String stringToEncode = consumerKey + ":" + consumerSecret;
-        return Base64.encodeBase64String(stringToEncode.getBytes());
-    }
 
     public static String getServerUrl() {
         try {
@@ -123,20 +71,22 @@ public class ZipUtil {
             , String zipFileName)
             throws DeviceManagementException, IOException {
         String sketchPath = CarbonUtils.getCarbonHome() + File.separator + templateSketchPath;
-        FileUtils.deleteDirectory(new File(archivesPath));//clear directory
-        FileUtils.deleteDirectory(new File(archivesPath + ".zip"));//clear zip
+        FileUtils.deleteDirectory(new File(archivesPath)); //clear directory
+        FileUtils.deleteDirectory(new File(archivesPath + ".zip")); //clear zip
         if (!new File(archivesPath).mkdirs()) { //new dir
             String message = "Could not create directory at path: " + archivesPath;
             throw new DeviceManagementException(message);
         }
         zipFileName = zipFileName + ".zip";
         try {
-            Map<String, List<String>> properties = getProperties(sketchPath + File.separator + "sketch" + ".properties");
+            Map<String, List<String>> properties = getProperties(sketchPath + File.separator
+                    + "sketch" + ".properties");
             List<String> templateFiles = properties.get("templates");
 
             for (String templateFile : templateFiles) {
-                parseTemplate(templateSketchPath + File.separator + templateFile, archivesPath + File.separator + templateFile,
-                              contextParams);
+                parseTemplate(templateSketchPath + File.separator + templateFile, archivesPath
+                                + File.separator + templateFile,
+                        contextParams);
             }
 
             templateFiles.add("sketch.properties");         // ommit copying the props file
@@ -269,10 +219,10 @@ public class ZipUtil {
         ZipOutputStream out = null;
 
         try {
-            final int BUFFER = 2048;
+            final int buffer = 2048;
             FileOutputStream dest = new FileOutputStream(new File(srcFolder + ".zip"));
             out = new ZipOutputStream(new BufferedOutputStream(dest));
-            byte data[] = new byte[BUFFER];
+            byte data[] = new byte[buffer];
             File subDir = new File(srcFolder);
             String subdirList[] = subDir.list();
             if (subdirList == null) {
@@ -290,24 +240,23 @@ public class ZipUtil {
 
                     for (int i = 0; i < files.length; i++) {
                         FileInputStream fi = new FileInputStream(srcFolder + "/" + sd + "/" + files[i]);
-                        origin = new BufferedInputStream(fi, BUFFER);
+                        origin = new BufferedInputStream(fi, buffer);
                         ZipEntry entry = new ZipEntry(sd + "/" + files[i]);
                         out.putNextEntry(entry);
                         int count;
-                        while ((count = origin.read(data, 0, BUFFER)) != -1) {
+                        while ((count = origin.read(data, 0, buffer)) != -1) {
                             out.write(data, 0, count);
                             out.flush();
                         }
 
                     }
-                } else //it is just a file
-                {
+                } else {
                     FileInputStream fi = new FileInputStream(f);
-                    origin = new BufferedInputStream(fi, BUFFER);
+                    origin = new BufferedInputStream(fi, buffer);
                     ZipEntry entry = new ZipEntry(sd);
                     out.putNextEntry(entry);
                     int count;
-                    while ((count = origin.read(data, 0, BUFFER)) != -1) {
+                    while ((count = origin.read(data, 0, buffer)) != -1) {
                         out.write(data, 0, count);
                         out.flush();
                     }
@@ -323,5 +272,58 @@ public class ZipUtil {
             }
         }
         return true;
+    }
+
+    public ZipArchive createZipFile(String owner, String tenantDomain, String deviceType,
+                                    String deviceId, String deviceName, String token,
+                                    String refreshToken, String apiApplicationKey) throws DeviceManagementException {
+
+        String sketchFolder = "repository" + File.separator + "resources" + File.separator + "sketches";
+        String archivesPath = CarbonUtils.getCarbonHome() + File.separator + sketchFolder
+                + File.separator + "archives" +
+                File.separator + deviceId;
+        String templateSketchPath = sketchFolder + File.separator + deviceType;
+        String iotServerIP;
+
+        try {
+            iotServerIP = getServerUrl();
+            String httpsServerEP = Utils.replaceSystemProperty(HTTPS_PROTOCOL_URL);
+            String httpServerEP = Utils.replaceSystemProperty(HTTP_PROTOCOL_URL);
+            String mqttEndpoint = Utils.replaceSystemProperty(DEFAULT_MQTT_ENDPOINT);
+            if (mqttEndpoint.contains(LOCALHOST)) {
+                mqttEndpoint = mqttEndpoint.replace(LOCALHOST, iotServerIP);
+                httpsServerEP = httpsServerEP.replace(LOCALHOST, iotServerIP);
+                httpServerEP = httpServerEP.replace(LOCALHOST, iotServerIP);
+            }
+            String base64EncodedApplicationKey = getBase64EncodedAPIAppKey(apiApplicationKey).trim();
+
+            Map<String, String> contextParams = new HashMap<>();
+            contextParams.put("SERVER_NAME", APIUtil.getTenantDomainOftheUser());
+            contextParams.put("DEVICE_OWNER", owner);
+            contextParams.put("DEVICE_ID", deviceId);
+            contextParams.put("DEVICE_NAME", deviceName);
+            contextParams.put("HTTPS_EP", httpsServerEP);
+            contextParams.put("HTTP_EP", httpServerEP);
+            contextParams.put("APIM_EP", httpsServerEP);
+            contextParams.put("MQTT_EP", mqttEndpoint);
+            contextParams.put("DEVICE_TOKEN", token);
+            contextParams.put("DEVICE_REFRESH_TOKEN", refreshToken);
+            contextParams.put("API_APPLICATION_KEY", base64EncodedApplicationKey);
+
+            ZipArchive zipFile;
+            zipFile = getSketchArchive(archivesPath, templateSketchPath, contextParams, deviceName);
+            return zipFile;
+        } catch (IOException e) {
+            throw new DeviceManagementException("Zip File Creation Failed", e);
+        }
+    }
+
+    private String getBase64EncodedAPIAppKey(String apiAppCredentialsAsJSONString) {
+
+        JSONObject jsonObject = new JSONObject(apiAppCredentialsAsJSONString);
+        String consumerKey = jsonObject.get(ApiApplicationConstants.OAUTH_CLIENT_ID).toString();
+        String consumerSecret = jsonObject.get(ApiApplicationConstants.OAUTH_CLIENT_SECRET).toString();
+        String stringToEncode = consumerKey + ":" + consumerSecret;
+        return Base64.encodeBase64String(stringToEncode.getBytes());
     }
 }

@@ -17,6 +17,7 @@
   ~ under the License.
   -->
 
-<artifact name="${sensorType3}_spark_script" version="1.0.0" type="analytics/spark" serverRole="DataAnalyticsServer">
+<artifact name="${sensorType3}_spark_script" version="1.0.0" type="analytics/spark"
+          serverRole="DataAnalyticsServer">
     <file>${sensorType3}_spark_script.xml</file>
 </artifact>
