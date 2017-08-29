@@ -25,7 +25,7 @@ import paho.mqtt.client as mqtt
 import iotUtils
 
 global mqttClient
-mqttClient = mqtt.Client()
+mqttClient = mqtt.Client(client_id = '${deviceType}_client')
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #       The callback for when the client receives a CONNACK response from the server.
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
