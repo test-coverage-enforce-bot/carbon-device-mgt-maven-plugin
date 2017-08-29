@@ -159,6 +159,93 @@
                         </fileSet>
                     </fileSets>
                 </module>
+
+                <module id="${groupId}.${rootArtifactId}.feature" dir="analytics-feature"
+                        name="${groupId}.${rootArtifactId}.analytics.feature">
+                    <fileSets>
+                        <fileSet filtered="true" encoding="UTF-8">
+                            <directory>src/main/resources</directory>
+                            <includes>
+                                <include>**/*.xml</include>
+                                <include>**/*.properties</include>
+                                <include>**/*.car</include>
+                                <include>**/*.db</include>
+                                <include>**/*.sql</include>
+                                <include>**/*.json</include>
+                                <include>**/*.inf</include>
+                                <include>**/*.hbs</include>
+                                <include>**/*.py</include>
+                            </includes>
+                        </fileSet>
+                        <fileSet filtered="false" encoding="UTF-8">
+                            <directory>src/main/resources/</directory>
+                            <includes>
+                                <include>**/*.png</include>
+                                <include>**/*.js</include>
+                                <include>**/*.sh</include>
+                                <include>**/*.css</include>
+                            </includes>
+                        </fileSet>
+                    </fileSets>
+                </module>
+
+                <module id="${groupId}.${rootArtifactId}.feature" dir="ui-feature"
+                        name="${groupId}.${rootArtifactId}.ui.feature">
+                    <fileSets>
+                        <fileSet filtered="true" encoding="UTF-8">
+                            <directory>src/main/resources</directory>
+                            <includes>
+                                <include>**/*.xml</include>
+                                <include>**/*.properties</include>
+                                <include>**/*.car</include>
+                                <include>**/*.db</include>
+                                <include>**/*.sql</include>
+                                <include>**/*.json</include>
+                                <include>**/*.inf</include>
+                                <include>**/*.hbs</include>
+                                <include>**/*.py</include>
+                            </includes>
+                        </fileSet>
+                        <fileSet filtered="false" encoding="UTF-8">
+                            <directory>src/main/resources/</directory>
+                            <includes>
+                                <include>**/*.png</include>
+                                <include>**/*.js</include>
+                                <include>**/*.sh</include>
+                                <include>**/*.css</include>
+                            </includes>
+                        </fileSet>
+                    </fileSets>
+                </module>
+
+                <module id="${groupId}.${rootArtifactId}.feature" dir="backend-feature"
+                        name="${groupId}.${rootArtifactId}.backend.feature">
+                    <fileSets>
+                        <fileSet filtered="true" encoding="UTF-8">
+                            <directory>src/main/resources</directory>
+                            <includes>
+                                <include>**/*.xml</include>
+                                <include>**/*.properties</include>
+                                <include>**/*.car</include>
+                                <include>**/*.db</include>
+                                <include>**/*.sql</include>
+                                <include>**/*.json</include>
+                                <include>**/*.inf</include>
+                                <include>**/*.hbs</include>
+                                <include>**/*.py</include>
+                            </includes>
+                        </fileSet>
+                        <fileSet filtered="false" encoding="UTF-8">
+                            <directory>src/main/resources/</directory>
+                            <includes>
+                                <include>**/*.png</include>
+                                <include>**/*.js</include>
+                                <include>**/*.sh</include>
+                                <include>**/*.css</include>
+                            </includes>
+                        </fileSet>
+                    </fileSets>
+                </module>
             </modules>
         </module>
     </modules>
