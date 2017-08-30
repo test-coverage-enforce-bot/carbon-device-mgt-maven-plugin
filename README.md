@@ -1,8 +1,8 @@
 # Install cdmf-devicetype-archetype
 
-First you need to download correct version of maven archetype. Replace [version] with required version you need to download 
+First you need to download correct version of maven archetype.
 
-    git clone -b IoTS-1.0.0-[version] --single-branch https://github.com/wso2/carbon-device-mgt-maven-plugin.git
+    git clone https://github.com/wso2/carbon-device-mgt-maven-plugin.git
 
 
 To install this maven archetype into your local system, from inside the cdmf-devicetype-archetype
@@ -45,50 +45,31 @@ Then select the cdmf.devicetype:cdmf-devicetype-archetype as new archetype.
  
        Choose a number or apply filter (format: [groupId:]artifactId, case sensitive contains): : 3
        Define value for property 'groupId': : org.homeautomation
-       Define value for property 'artifactId': : smartHomeMonitor
+       Define value for property 'artifactId': : smarthomemonitor
        Define value for property 'version':  1.0-SNAPSHOT: : 1.0.0-SNAPSHOT
        Define value for property 'package':  org.homeautomation: : 
-       Define value for property 'deviceType': : SmartHomeMonitor
+       Define value for property 'deviceType': : smarthomemonitor
        Define value for property 'sensorType1': : currentSensor
        Define value for property 'sensorType2': : waterFlowSensor
        Define value for property 'sensorType3': : voltageSensor
        Confirm properties configuration:
        groupId: org.homeautomation
-       artifactId: smartHomeMonitor
+       artifactId: smarthomemonitor
        version: 1.0.0-SNAPSHOT
        package: org.homeautomation
-       deviceType: SmartHomeMonitor
+       deviceType: smarthomeMonitor
        sensorType1: currentSensor
        sensorType2: waterFlowSensor
        sensorType3: voltageSensor
         Y: : Y
 
-# Configure the device-deployer.xml file that is in the IoTS_HOME directory.
+# Find the device deployer
 
-Add the new module under the <modules> tag.
-
-    <modules>
-     <module>samples/smartHomeMonitor</module>
-    </modules>
-
-Add the device type feature under the `<featureArtifacts>` tag.
-
-    <featureArtifactDef>org.homeautomation:org.homeautomation.smartHomeMonitor.feature:1.0.0-SNAPSHOT
-    </featureArtifactDef>
-
-
-Add the device type feature group under the <features> tag.
-          
-      <features>
-          <feature>
-              <id>org.homeautomation.smartHomeMonitor.feature.group</id>
-              <version>1.0.0-SNAPSHOT</version>
-          </feature>
-     </features>
+Copy the [devicetype]-deployer.xml inside the generated folder to the IOTS_HOME/samples folder
 
 
 To deploy sample device type into IoT Server
 
-      mvn clean install -f device-deployer.xml
+      mvn clean install -f [devicetype]-deployer.xml
       
-Note: This command should be executed place where `device-deployer.xml` is located  
+Note: This command should be executed place where `[devicetype]-deployer.xml` is located
