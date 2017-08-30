@@ -50,15 +50,7 @@ import java.util.Properties;
  */
 public class DeviceTypeUtils {
 
-    private static Log log = LogFactory.getLog($
-
-    {
-        groupId
-    }.$
-
-    {
-        rootArtifactId
-    }.plugin.impl.util.DeviceTypeUtils.class);
+    private static Log log = LogFactory.getLog(${groupId}.${rootArtifactId}.plugin.impl.util.DeviceTypeUtils.class);
 
     public static void cleanupResources(Connection conn, PreparedStatement stmt, ResultSet rs) {
         if (rs != null) {
