@@ -57,13 +57,13 @@
                             <publishArtifactRepository>true</publishArtifactRepository>
                             <featureArtifacts>
                                 <featureArtifactDef>
-                                    ${groupId}:${groupId}.${rootArtifactId}.ui.feature:1.0.0
+                                    ${groupId}:${groupId}.${rootArtifactId}.ui.feature:${version}
                                 </featureArtifactDef>
                                 <featureArtifactDef>
-                                    ${groupId}:${groupId}.${rootArtifactId}.backend.feature:1.0.0
+                                    ${groupId}:${groupId}.${rootArtifactId}.backend.feature:${version}
                                 </featureArtifactDef>
                                 <featureArtifactDef>
-                                    ${groupId}:${groupId}.${rootArtifactId}.analytics.feature:1.0.0
+                                    ${groupId}:${groupId}.${rootArtifactId}.analytics.feature:${version}
                                 </featureArtifactDef>
                             </featureArtifacts>
                         </configuration>

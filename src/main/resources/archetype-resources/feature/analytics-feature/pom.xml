@@ -54,10 +54,10 @@
                         <configuration>
                             <artifactItems>
                                 <artifactItem>
-                                    <groupId>org.wso2.carbon</groupId>
+                                    <groupId>${groupId}</groupId>
                                     <artifactId>${groupId}.${rootArtifactId}.analytics
                                     </artifactId>
-                                    <version>1.0.0</version>
+                                    <version>${version}</version>
                                     <type>zip</type>
                                     <overWrite>true</overWrite>
                                     <outputDirectory>
