@@ -1,7 +1,7 @@
 {
   "deviceType": {
     "label": "${deviceType}",
-    "category": "virtual",
+    "category": "iot",
     "downloadAgentUri": "${deviceType}/device/download",
     "scopes": [
       "perm:${deviceType}:enroll"
