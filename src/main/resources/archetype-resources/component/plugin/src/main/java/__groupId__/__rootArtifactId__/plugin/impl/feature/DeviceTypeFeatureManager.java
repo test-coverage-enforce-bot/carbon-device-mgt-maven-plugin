@@ -41,7 +41,7 @@ public class DeviceTypeFeatureManager implements FeatureManager {
 
     public DeviceTypeFeatureManager() {
         feature.setCode("change-status");
-        feature.setName("Change status of sensor: on/off");
+        feature.setName("Sensor: on/off");
         feature.setDescription("Change status of sensor: on/off");
 
         Map<String, Object> apiParams = new HashMap<>();

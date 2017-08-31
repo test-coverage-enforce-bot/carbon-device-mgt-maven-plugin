@@ -5,7 +5,7 @@ First you need to download correct version of maven archetype.
     git clone https://github.com/wso2/carbon-device-mgt-maven-plugin.git
 
 
-To install this maven archetype into your local system, from inside the cdmf-devicetype-archetype
+To install this maven archetype into your local system, from inside the carbon-device-mgt-maven-plugin
 
     mvn clean install
 
@@ -40,6 +40,7 @@ Then select the cdmf.devicetype:cdmf-devicetype-archetype as new archetype.
         3: local -> org.wso2.cdmf.devicetype:cdmf-devicetype-archetype (WSO2 CDMF Device Type Archetype)
         Choose a number or apply filter (format: [groupId:]artifactId, case sensitive contains): : 3
 
+ if the archetype is not shown, follow the **The available archetypes are not shown?** section in the  docs https://docs.wso2.com/display/IoTS310/Creating+a+New+Device+Type+via+the+Maven+Archetype
 
  Then you need to provide groupId, artifactId, version, packaging, name of your device type and name for sensor as shown below.
  
@@ -48,7 +49,7 @@ Then select the cdmf.devicetype:cdmf-devicetype-archetype as new archetype.
        Define value for property 'artifactId': : smarthomemonitor
        Define value for property 'version':  1.0-SNAPSHOT: : 1.0.0-SNAPSHOT
        Define value for property 'package':  org.homeautomation: : 
-       Define value for property 'deviceType': : smarthomemonitor
+       Define value for property 'deviceType': : SmartHomeMonitor
        Define value for property 'sensorType1': : currentSensor
        Define value for property 'sensorType2': : waterFlowSensor
        Define value for property 'sensorType3': : voltageSensor
@@ -57,11 +58,13 @@ Then select the cdmf.devicetype:cdmf-devicetype-archetype as new archetype.
        artifactId: smarthomemonitor
        version: 1.0.0-SNAPSHOT
        package: org.homeautomation
-       deviceType: smarthomeMonitor
+       deviceType: SmartHomeMonitor
        sensorType1: currentSensor
        sensorType2: waterFlowSensor
        sensorType3: voltageSensor
         Y: : Y
+
+
 
 # Find the device deployer
 
@@ -73,3 +76,13 @@ To deploy sample device type into IoT Server
       mvn clean install -f [devicetype]-deployer.xml
       
 Note: This command should be executed place where `[devicetype]-deployer.xml` is located
+
+# Start the WSO2 IoT Server
+
+Start the product by executing the scripts inside  IOTS_HOME/bin in the following order
+
+    -broker
+    -iot-server
+    -analytics
+
+

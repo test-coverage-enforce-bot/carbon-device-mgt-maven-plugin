@@ -190,6 +190,7 @@ def main():
             print "agentStats: Exception in AgentThread (either KeyboardInterrupt or Other)"
             print ("agentStats: " + str(e))
             print '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~'
+            sys.exit(0)
             pass
 
 

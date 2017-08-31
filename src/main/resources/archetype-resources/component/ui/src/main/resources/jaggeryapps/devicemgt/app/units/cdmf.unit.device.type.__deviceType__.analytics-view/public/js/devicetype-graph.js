@@ -92,7 +92,7 @@ function drawGraph_${deviceType}(from, to)
                     x: parseInt(new Date().getTime() / 1000),
                     y: 0
                 }],
-                'name': $("#details").data("devicename")
+                'name': sensorType1
             });
         graphConfigSensorType2['series'].push(
             {
@@ -101,7 +101,7 @@ function drawGraph_${deviceType}(from, to)
                     x: parseInt(new Date().getTime() / 1000),
                     y: 0
                 }],
-                'name': $("#details").data("devicename")
+                'name': sensorType2
             });
     }
 
