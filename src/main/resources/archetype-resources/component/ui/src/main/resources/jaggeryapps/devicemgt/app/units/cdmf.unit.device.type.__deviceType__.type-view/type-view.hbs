@@ -30,11 +30,11 @@
     </a>
     <div id="download-device-modal-content" class="hide">
         <div class="modal-content">
+            <h3 align="center">Name your device and download the agent from following link.</h3>
+            <br/>
             <div class="row">
-                <div class="col-md-7  center-container">
-                    <h3>Name your device and download the agent from following link.</h3>
-                    <br/>
-                    <form id="downloadForm" method="GET"
+                <div class="col-md-7  center-container col-lg-5 col-md-6 col-centered">
+                   <form id="downloadForm" method="GET"
                           action="{{@app.context}}/api/devices/sketch/download">
                         <div id="invalid-username-error-msg" class="alert alert-danger hidden"
                              role="alert">
@@ -42,7 +42,7 @@
                         </div>
                         <div class="control-group">
                             <div class="controls">
-                                <input class="new-device-name" style="color:#3f3f3f;padding:5px"
+                                <input class="new-device-name" style="color:#3f3f3f;padding:5px;width:100%"
                                        type="text"
                                        placeholder="Ex. Lobby_Device"
                                        name="deviceName" size="60" required>
@@ -53,7 +53,7 @@
                                        value="${deviceType}"/>
                             </div>
                         </div>
-                        <div class="buttons" style="padding-bottom: 0px">
+                        <div class="buttons" style="padding-bottom: 5px;padding-top: 5px" align="center">
                             <a class="btn btn-operations" onclick="downloadAgent()">Download Now</a>
 
                             <a href="#" id="download-device-download-link"
