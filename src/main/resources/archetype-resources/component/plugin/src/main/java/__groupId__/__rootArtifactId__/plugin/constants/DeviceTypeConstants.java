@@ -72,5 +72,18 @@ public class DeviceTypeConstants {
 
     public static final String MQTT_CONFIG_LOCATION = CarbonUtils.getEtcCarbonConfigDirPath() + File.separator
             + "mqtt.properties";
+
+    //agent config file related constants.
+    public static final String ZIP_CONFIG_SERVER_NAME = "SERVER_NAME";
+    public static final String ZIP_CONFIG_DEVICE_OWNER = "DEVICE_OWNER";
+    public static final String ZIP_CONFIG_DEVICE_ID = "DEVICE_ID";
+    public static final String ZIP_CONFIG_DEVICE_NAME = "DEVICE_NAME";
+    public static final String ZIP_CONFIG_HTTPS_EP = "HTTPS_EP";
+    public static final String ZIP_CONFIG_HTTP_EP = "HTTP_EP";
+    public static final String ZIP_CONFIG_APIM_EP = "APIM_EP";
+    public static final String ZIP_CONFIG_MQTT_EP = "MQTT_EP";
+    public static final String ZIP_CONFIG_DEVICE_TOKEN = "DEVICE_TOKEN";
+    public static final String ZIP_CONFIG_DEVICE_REFRESH_TOKEN = "DEVICE_REFRESH_TOKEN";
+    public static final String ZIP_CONFIG_API_APPLICATION_KEY = "API_APPLICATION_KEY";
 }
 
