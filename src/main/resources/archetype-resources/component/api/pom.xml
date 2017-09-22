@@ -28,7 +28,6 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>${project-base-package}.api</artifactId>
-    <version>${version}</version>
     <packaging>war</packaging>
     <name>${project-base-package}.api</name>
     <url>http://wso2.com</url>

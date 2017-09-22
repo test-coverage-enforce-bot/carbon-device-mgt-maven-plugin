@@ -18,10 +18,10 @@
   -->
 <archetype-descriptor name="${deviceType}">
     <requiredProperties>
-        <requiredProperty key="deviceType"></requiredProperty>
-        <requiredProperty key="sensorType1"></requiredProperty>
-        <requiredProperty key="sensorType2"></requiredProperty>
-        <requiredProperty key="sensorType3"></requiredProperty>
+        <requiredProperty key="deviceType"/>
+        <requiredProperty key="sensorType1"/>
+        <requiredProperty key="sensorType2"/>
+        <requiredProperty key="sensorType3"/>
     </requiredProperties>
     <fileSets>
         <fileSet filtered="true" packaged="false" encoding="UTF-8">
