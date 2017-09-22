@@ -30,8 +30,12 @@ import org.wso2.carbon.device.mgt.common.policy.mgt.PolicyMonitoringManager;
 import org.wso2.carbon.device.mgt.common.pull.notification.PullNotificationSubscriber;
 import org.wso2.carbon.device.mgt.common.push.notification.PushNotificationConfig;
 import org.wso2.carbon.device.mgt.common.spi.DeviceManagementService;
+import java.util.HashMap;
+import java.util.Map;
 
-
+/**
+ * This represents the ${rootArtifactId} implementation of DeviceTypeManagerService
+ */
 public class DeviceTypeManagerService implements DeviceManagementService {
     private DeviceManager deviceManager;
     private OperationMonitoringTaskConfig operationMonitoringTaskConfig;
@@ -69,7 +73,15 @@ public class DeviceTypeManagerService implements DeviceManagementService {
 
     @Override
     public PushNotificationConfig getPushNotificationConfig() {
-        return null;
+
+        Map<String, String> properties = new HashMap<>();
+        properties.put("mqttAdapterName", "${rootArtifactId}_mqtt");
+        properties.put("username", "admin");
+        properties.put("password", "admin");
+        properties.put("qos", "0");
+        properties.put("clearSession", "true");
+        properties.put("scopes", "");
+        return new PushNotificationConfig("MQTT",false, properties);
     }
 
     @Override
