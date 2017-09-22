@@ -27,6 +27,7 @@ import io.swagger.annotations.Tag;
 import org.wso2.carbon.apimgt.annotations.api.Scope;
 import org.wso2.carbon.apimgt.annotations.api.Scopes;
 
+import ${groupId}.${rootArtifactId}.plugin.constants.DeviceTypeConstants;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.Path;
 import javax.ws.rs.Consumes;
@@ -51,13 +52,13 @@ import javax.ws.rs.core.Response;
                 title = "",
                 extensions = {
                         @Extension(properties = {
-                                @ExtensionProperty(name = "name", value = "${deviceType}"),
-                                @ExtensionProperty(name = "context", value = "/${deviceType}"),
+                                @ExtensionProperty(name = "name", value = DeviceTypeConstants.DEVICE_TYPE),
+                                @ExtensionProperty(name = "context", value = "/"+DeviceTypeConstants.DEVICE_TYPE),
                         })
                 }
         ),
         tags = {
-                @Tag(name = "${deviceType},device_management", description = "")
+                @Tag(name = DeviceTypeConstants.DEVICE_TYPE+",device_management", description = "")
         }
 )
 @Scopes(
@@ -65,8 +66,8 @@ import javax.ws.rs.core.Response;
                 @Scope(
                         name = "Enroll device",
                         description = "",
-                        key = "perm:${deviceType}:enroll",
-                        permissions = {"/device-mgt/devices/enroll/${deviceType}"}
+                        key = "perm:" + DeviceTypeConstants.DEVICE_TYPE + ":enroll",
+                        permissions = {"/device-mgt/devices/enroll/" + DeviceTypeConstants.DEVICE_TYPE }
                 )
         }
 )
@@ -86,10 +87,10 @@ public interface DeviceTypeService {
             value = "Switch Status",
             notes = "",
             response = Response.class,
-            tags = "${deviceType}",
+            tags = DeviceTypeConstants.DEVICE_TYPE ,
             extensions = {
                     @Extension(properties = {
-                            @ExtensionProperty(name = SCOPE, value = "perm:${deviceType}:enroll")
+                            @ExtensionProperty(name = SCOPE, value = "perm:" + DeviceTypeConstants.DEVICE_TYPE + ":enroll")
                     })
             }
     )
@@ -115,10 +116,10 @@ public interface DeviceTypeService {
             value = "Sensor Stats",
             notes = "",
             response = Response.class,
-            tags = "${deviceType}",
+            tags = DeviceTypeConstants.DEVICE_TYPE,
             extensions = {
                     @Extension(properties = {
-                            @ExtensionProperty(name = SCOPE, value = "perm:${deviceType}:enroll")
+                            @ExtensionProperty(name = SCOPE, value = "perm:" + DeviceTypeConstants.DEVICE_TYPE + ":enroll")
                     })
             }
     )
@@ -141,10 +142,10 @@ public interface DeviceTypeService {
             value = "Download agent",
             notes = "",
             response = Response.class,
-            tags = "${deviceType}",
+            tags = DeviceTypeConstants.DEVICE_TYPE ,
             extensions = {
                     @Extension(properties = {
-                            @ExtensionProperty(name = SCOPE, value = "perm:${deviceType}:enroll")
+                            @ExtensionProperty(name = SCOPE, value = "perm:" + DeviceTypeConstants.DEVICE_TYPE + ":enroll")
                     })
             }
     )
