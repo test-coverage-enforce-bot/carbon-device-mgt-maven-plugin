@@ -142,8 +142,8 @@ public class DeviceTypeServiceImpl implements DeviceTypeService {
             commandOp.setProperties(props);
 
             List<DeviceIdentifier> deviceIdentifiers = new ArrayList<>();
-            deviceIdentifiers.add(new DeviceIdentifier(deviceId, "${deviceType}"));
-            APIUtil.getDeviceManagementService().addOperation("${deviceType}", commandOp,
+            deviceIdentifiers.add(new DeviceIdentifier(deviceId, DeviceTypeConstants.DEVICE_TYPE));
+            APIUtil.getDeviceManagementService().addOperation(DeviceTypeConstants.DEVICE_TYPE, commandOp,
                     deviceIdentifiers);
             return Response.ok().build();
         } catch (DeviceAccessAuthorizationException e) {

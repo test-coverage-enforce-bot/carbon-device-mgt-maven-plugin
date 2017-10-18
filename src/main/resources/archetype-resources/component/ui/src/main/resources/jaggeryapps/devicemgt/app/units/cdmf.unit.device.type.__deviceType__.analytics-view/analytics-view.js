@@ -21,7 +21,11 @@ function onRequest(context) {
 
 	var devices = context.unit.params.devices;
 	var deviceType = context.uriParams.deviceType;
-	var deviceId = request.getParameter("deviceId").trim();;
+	var deviceId = request.getParameter("deviceId");
+
+	if(deviceId){
+	    deviceId = deviceId.trim();
+	}
 
 	if (devices) {
 		return {
