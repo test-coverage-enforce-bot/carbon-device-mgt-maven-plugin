@@ -20,7 +20,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
 import org.wso2.carbon.device.mgt.common.DeviceManagementException;
 import org.wso2.carbon.device.mgt.common.Feature;
 import org.wso2.carbon.device.mgt.common.FeatureManager;
@@ -32,17 +31,17 @@ import java.util.List;
  */
 public class DeviceTypeFeatureManager implements FeatureManager {
 
-    private static Feature feature = new Feature();
     private static final String METHOD = "method";
     private static final String URI = "uri";
     private static final String CONTENT_TYPE = "contentType";
     private static final String PATH_PARAMS = "pathParams";
     private static final String QUERY_PARAMS = "queryParams";
     private static final String FORM_PARAMS = "formParams";
+    private static Feature feature = new Feature();
 
-    public DeviceTypeFeatureManager () {
+    public DeviceTypeFeatureManager() {
         feature.setCode("change-status");
-        feature.setName("Change status of sensor: on/off");
+        feature.setName("Sensor: on/off");
         feature.setDescription("Change status of sensor: on/off");
 
         Map<String, Object> apiParams = new HashMap<>();
@@ -64,35 +63,35 @@ public class DeviceTypeFeatureManager implements FeatureManager {
         feature.setMetadataEntries(metadataEntries);
     }
 
-	@Override
-	public boolean addFeature(Feature feature) throws DeviceManagementException {
-		return false;
-	}
+    @Override
+    public boolean addFeature(Feature feature) throws DeviceManagementException {
+        return false;
+    }
 
-	@Override
-	public boolean addFeatures(List<Feature> features) throws DeviceManagementException {
-		return false;
-	}
+    @Override
+    public boolean addFeatures(List<Feature> features) throws DeviceManagementException {
+        return false;
+    }
 
-	@Override
-	public Feature getFeature(String name) throws DeviceManagementException {
+    @Override
+    public Feature getFeature(String name) throws DeviceManagementException {
         return feature;
-	}
+    }
 
-	@Override
-	public List<Feature> getFeatures() throws DeviceManagementException {
+    @Override
+    public List<Feature> getFeatures() throws DeviceManagementException {
         List<Feature> features = new ArrayList<>();
         features.add(feature);
         return features;
-	}
+    }
 
-	@Override
-	public boolean removeFeature(String name) throws DeviceManagementException {
-		return false;
-	}
+    @Override
+    public boolean removeFeature(String name) throws DeviceManagementException {
+        return false;
+    }
 
-	@Override
-	public boolean addSupportedFeaturesToDB() throws DeviceManagementException {
-		return false;
-	}
+    @Override
+    public boolean addSupportedFeaturesToDB() throws DeviceManagementException {
+        return false;
+    }
 }

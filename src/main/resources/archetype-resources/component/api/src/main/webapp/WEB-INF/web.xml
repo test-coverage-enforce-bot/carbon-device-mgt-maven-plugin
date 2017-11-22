@@ -16,13 +16,13 @@
   ~ specific language governing permissions and limitations
   ~ under the License.
   -->
-<web-app version="2.5"
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         version="2.5"
          xmlns="http://java.sun.com/xml/ns/javaee"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
          metadata-complete="true">
-	<display-name>WSO2 IoT Server</display-name>
-	<description>WSO2 IoT Server</description>
+    <display-name>WSO2 IoT Server</display-name>
+    <description>WSO2 IoT Server</description>
 
     <servlet>
         <servlet-name>CXFServlet</servlet-name>

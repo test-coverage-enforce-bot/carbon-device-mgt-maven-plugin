@@ -27,6 +27,7 @@ import io.swagger.annotations.Tag;
 import org.wso2.carbon.apimgt.annotations.api.Scope;
 import org.wso2.carbon.apimgt.annotations.api.Scopes;
 
+import ${groupId}.${rootArtifactId}.plugin.constants.DeviceTypeConstants;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.Path;
 import javax.ws.rs.Consumes;
@@ -43,7 +44,7 @@ import javax.ws.rs.core.Response;
 
 
 /**
- * This is the API which is used to control and manage device type functionality
+ * This is the API which is used to control and manage device type functionality.
  */
 @SwaggerDefinition(
         info = @Info(
@@ -51,13 +52,13 @@ import javax.ws.rs.core.Response;
                 title = "",
                 extensions = {
                         @Extension(properties = {
-                                @ExtensionProperty(name = "name", value = "${deviceType}"),
-                                @ExtensionProperty(name = "context", value = "/${deviceType}"),
+                                @ExtensionProperty(name = "name", value = DeviceTypeConstants.DEVICE_TYPE),
+                                @ExtensionProperty(name = "context", value = "/"+DeviceTypeConstants.DEVICE_TYPE),
                         })
                 }
         ),
         tags = {
-                @Tag(name = "${deviceType}", description = "")
+                @Tag(name = DeviceTypeConstants.DEVICE_TYPE+",device_management", description = "")
         }
 )
 @Scopes(
@@ -65,8 +66,8 @@ import javax.ws.rs.core.Response;
                 @Scope(
                         name = "Enroll device",
                         description = "",
-                        key = "perm:${deviceType}:enroll",
-                        permissions = {"/device-mgt/devices/enroll/${deviceType}"}
+                        key = "perm:" + DeviceTypeConstants.DEVICE_TYPE + ":enroll",
+                        permissions = {"/device-mgt/devices/enroll/" + DeviceTypeConstants.DEVICE_TYPE }
                 )
         }
 )
@@ -75,8 +76,8 @@ public interface DeviceTypeService {
     String SCOPE = "scope";
 
     /**
-     * @param deviceId  unique identifier for given device type instance
-     * @param state     change status of sensor: on/off
+     * @param deviceId unique identifier for given device type instance
+     * @param state    change status of sensor: on/off
      */
     @Path("device/{deviceId}/change-status")
     @POST
@@ -86,10 +87,10 @@ public interface DeviceTypeService {
             value = "Switch Status",
             notes = "",
             response = Response.class,
-            tags = "${deviceType}",
+            tags = DeviceTypeConstants.DEVICE_TYPE ,
             extensions = {
                     @Extension(properties = {
-                            @ExtensionProperty(name = SCOPE, value = "perm:${deviceType}:enroll")
+                            @ExtensionProperty(name = SCOPE, value = "perm:" + DeviceTypeConstants.DEVICE_TYPE + ":enroll")
                     })
             }
     )
@@ -98,11 +99,12 @@ public interface DeviceTypeService {
                           @Context HttpServletResponse response);
 
     /**
-     * Retrieve Sensor data for the given time period
+     * Retrieve Sensor data for the given time period.
+     *
      * @param deviceId unique identifier for given device type instance
-     * @param from  starting time
-     * @param to    ending time
-     * @return  response with List<SensorRecord> object which includes sensor data which is requested
+     * @param from     starting time
+     * @param to       ending time
+     * @return response with List<SensorRecord> object which includes sensor data which is requested
      */
     @Path("device/stats/{deviceId}")
     @GET
@@ -114,23 +116,38 @@ public interface DeviceTypeService {
             value = "Sensor Stats",
             notes = "",
             response = Response.class,
-            tags = "${deviceType}",
+            tags = DeviceTypeConstants.DEVICE_TYPE,
             extensions = {
                     @Extension(properties = {
-                            @ExtensionProperty(name = SCOPE, value = "perm:${deviceType}:enroll")
+                            @ExtensionProperty(name = SCOPE, value = "perm:" + DeviceTypeConstants.DEVICE_TYPE + ":enroll")
                     })
             }
     )
     Response getSensorStats(@PathParam("deviceId") String deviceId, @QueryParam("from") long from,
                             @QueryParam("to") long to, @QueryParam("sensorType") String sensorType);
+
     /**
-     * To download device type agent source code as zip file
-     * @param deviceName   name for the device type instance
-     * @param sketchType   folder name where device type agent was installed into server
-     * @return  Agent source code as zip file
+     * To download device type agent source code as zip file.
+     *
+     * @param deviceName name for the device type instance
+     * @param sketchType folder name where device type agent was installed into server
+     * @return Agent source code as zip file
      */
     @Path("/device/download")
     @GET
     @Produces("application/zip")
+    @ApiOperation(
+            consumes = MediaType.APPLICATION_JSON,
+            httpMethod = "GET",
+            value = "Download agent",
+            notes = "",
+            response = Response.class,
+            tags = DeviceTypeConstants.DEVICE_TYPE ,
+            extensions = {
+                    @Extension(properties = {
+                            @ExtensionProperty(name = SCOPE, value = "perm:" + DeviceTypeConstants.DEVICE_TYPE + ":enroll")
+                    })
+            }
+    )
     Response downloadSketch(@QueryParam("deviceName") String deviceName, @QueryParam("sketchType") String sketchType);
 }

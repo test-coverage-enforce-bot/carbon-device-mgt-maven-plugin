@@ -226,7 +226,8 @@ public class DeviceTypeManager implements DeviceManager {
             try {
                 DeviceTypeDAO.rollbackTransaction();
             } catch (DeviceMgtPluginException iotDAOEx) {
-                String msg = "Error occurred while roll back the update device info transaction :" + device.toString();
+                String msg = "Error occurred while roll back the update device info transaction :"
+                        + device.toString();
                 log.warn(msg, iotDAOEx);
             }
             String msg =

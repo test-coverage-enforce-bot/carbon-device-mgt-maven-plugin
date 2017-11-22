@@ -108,8 +108,8 @@ public class DeviceTypeServiceImpl implements DeviceTypeService {
     }
 
     /**
-     * @param deviceId  unique identifier for given device type instance
-     * @param state     change status of sensor: on/off
+     * @param deviceId unique identifier for given device type instance
+     * @param state    change status of sensor: on/off
      */
     @Path("device/{deviceId}/change-status")
     @POST
@@ -142,9 +142,9 @@ public class DeviceTypeServiceImpl implements DeviceTypeService {
             commandOp.setProperties(props);
 
             List<DeviceIdentifier> deviceIdentifiers = new ArrayList<>();
-            deviceIdentifiers.add(new DeviceIdentifier(deviceId, "${deviceType}"));
-            APIUtil.getDeviceManagementService().addOperation("${deviceType}", commandOp,
-                                                              deviceIdentifiers);
+            deviceIdentifiers.add(new DeviceIdentifier(deviceId, DeviceTypeConstants.DEVICE_TYPE));
+            APIUtil.getDeviceManagementService().addOperation(DeviceTypeConstants.DEVICE_TYPE, commandOp,
+                    deviceIdentifiers);
             return Response.ok().build();
         } catch (DeviceAccessAuthorizationException e) {
             log.error(e.getErrorMessage(), e);
@@ -162,10 +162,11 @@ public class DeviceTypeServiceImpl implements DeviceTypeService {
 
     /**
      * Retrieve Sensor data for the given time period
+     *
      * @param deviceId unique identifier for given device type instance
-     * @param from  starting time
-     * @param to    ending time
-     * @return  response with List<SensorRecord> object which includes sensor data which is requested
+     * @param from     starting time
+     * @param to       ending time
+     * @return response with List<SensorRecord> object which includes sensor data which is requested
      */
     @Path("device/stats/{deviceId}")
     @GET
@@ -178,9 +179,9 @@ public class DeviceTypeServiceImpl implements DeviceTypeService {
         String query = "meta_deviceId:" + deviceId + " AND meta_deviceType:" +
                 DeviceTypeConstants.DEVICE_TYPE + " AND meta_time : [" + fromDate + " TO " + toDate + "]";
         String sensorTableName = null;
-        if(sensorType.equals(DeviceTypeConstants.SENSOR_TYPE1)){
+        if (sensorType.equals(DeviceTypeConstants.SENSOR_TYPE1)) {
             sensorTableName = DeviceTypeConstants.SENSOR_TYPE1_EVENT_TABLE;
-        }else if(sensorType.equals(DeviceTypeConstants.SENSOR_TYPE2)){
+        } else if (sensorType.equals(DeviceTypeConstants.SENSOR_TYPE2)) {
             sensorTableName = DeviceTypeConstants.SENSOR_TYPE2_EVENT_TABLE;
         }
         try {
@@ -208,9 +209,10 @@ public class DeviceTypeServiceImpl implements DeviceTypeService {
 
     /**
      * To download device type agent source code as zip file
-     * @param deviceName   name for the device type instance
-     * @param sketchType   folder name where device type agent was installed into server
-     * @return  Agent source code as zip file
+     *
+     * @param deviceName name for the device type instance
+     * @param sketchType folder name where device type agent was installed into server
+     * @return Agent source code as zip file
      */
     @Path("/device/download")
     @GET
@@ -248,8 +250,9 @@ public class DeviceTypeServiceImpl implements DeviceTypeService {
 
     /**
      * Register device into device management service
+     *
      * @param deviceId unique identifier for given device type instance
-     * @param name  name for the device type instance
+     * @param name     name for the device type instance
      * @return check whether device is installed into cdmf
      */
     private boolean register(String deviceId, String name) {

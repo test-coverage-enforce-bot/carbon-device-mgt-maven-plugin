@@ -24,6 +24,21 @@ var sensorType2Graph;
 
 function drawGraph_${deviceType}(from, to)
 {
+
+    $("#sensorType1yAxis").html("");
+    $("#smoother").html("");
+    $("#sensorType1Legend").html("");
+    $("#chartSensorType1").html("");
+    $("#sensorType1xAxis").html("");
+    $("#sensorType1Slider").html("");
+
+    $("#sensorType2yAxis").html("");
+    $("#smoother").html("");
+    $("#sensorType2Legend").html("");
+    $("#chartSensorType2").html("");
+    $("#sensorType2xAxis").html("");
+    $("#sensorType2Slider").html("");
+
     var devices = $("#details").data("devices");
     var tzOffset = new Date().getTimezoneOffset() * 60;
     var chartWrapperElmId = "#chartDivSensorType1";
@@ -77,7 +92,7 @@ function drawGraph_${deviceType}(from, to)
                     x: parseInt(new Date().getTime() / 1000),
                     y: 0
                 }],
-                'name': $("#details").data("devicename")
+                'name': sensorType1
             });
         graphConfigSensorType2['series'].push(
             {
@@ -86,7 +101,7 @@ function drawGraph_${deviceType}(from, to)
                     x: parseInt(new Date().getTime() / 1000),
                     y: 0
                 }],
-                'name': $("#details").data("devicename")
+                'name': sensorType2
             });
     }
 

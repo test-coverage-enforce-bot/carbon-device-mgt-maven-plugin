@@ -16,11 +16,13 @@
   ~ specific language governing permissions and limitations
   ~ under the License.
   -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.wso2.cdmf.devicetype</groupId>
     <artifactId>cdmf-devicetype-archetype</artifactId>
-    <version>1.0.1-SNAPSHOT</version>
+    <version>2.0.0-SNAPSHOT</version>
     <name>WSO2 CDMF Device Type Archetype</name>
     <description>WSO2 CDMF Device Type Archetype</description>
     <packaging>maven-archetype</packaging>
@@ -55,14 +57,15 @@
     <properties>
         <archetype.packaging.version>2.4</archetype.packaging.version>
         <archetype.plugin.version>2.4</archetype.plugin.version>
-		<!-- Release plugin ID for github-->
-		<project.scm.id>github-scm</project.scm.id>
+        <!-- Release plugin ID for github-->
+        <project.scm.id>github-scm</project.scm.id>
     </properties>
 
-	<scm>
-		<url>https://github.com/wso2/carbon-device-mgt-maven-plugin.git</url>
-		<developerConnection>scm:git:https://github.com/wso2/carbon-device-mgt-maven-plugin.git</developerConnection>
-		<connection>scm:git:https://github.com/wso2/carbon-device-mgt-maven-plugin.git</connection>
-		<tag>HEAD</tag>
-	</scm>
+    <scm>
+        <url>https://github.com/wso2/carbon-device-mgt-maven-plugin.git</url>
+        <developerConnection>scm:git:https://github.com/wso2/carbon-device-mgt-maven-plugin.git
+        </developerConnection>
+        <connection>scm:git:https://github.com/wso2/carbon-device-mgt-maven-plugin.git</connection>
+        <tag>HEAD</tag>
+    </scm>
 </project>

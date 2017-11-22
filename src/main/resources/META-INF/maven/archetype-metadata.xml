@@ -18,11 +18,19 @@
   -->
 <archetype-descriptor name="${deviceType}">
     <requiredProperties>
-        <requiredProperty key="deviceType"></requiredProperty>
-        <requiredProperty key="sensorType1"></requiredProperty>
-        <requiredProperty key="sensorType2"></requiredProperty>
-        <requiredProperty key="sensorType3"></requiredProperty>
+        <requiredProperty key="deviceType"/>
+        <requiredProperty key="sensorType1"/>
+        <requiredProperty key="sensorType2"/>
+        <requiredProperty key="sensorType3"/>
     </requiredProperties>
+    <fileSets>
+        <fileSet filtered="true" packaged="false" encoding="UTF-8">
+            <directory/>
+            <includes>
+                <include>__deviceType__-deployer.xml</include>
+            </includes>
+        </fileSet>
+    </fileSets>
     <modules>
         <module id="${rootArtifactId}-component" dir="component" name="${rootArtifactId}-component">
             <modules>
@@ -69,7 +77,8 @@
                         </fileSet>
                     </fileSets>
                 </module>
-                <module id="${groupId}.${rootArtifactId}.ui" dir="ui" name="${groupId}.${rootArtifactId}.ui">
+                <module id="${groupId}.${rootArtifactId}.ui" dir="ui"
+                        name="${groupId}.${rootArtifactId}.ui">
                     <fileSets>
                         <fileSet filtered="true" encoding="UTF-8">
                             <directory>src/assembly</directory>
@@ -131,8 +140,66 @@
         </module>
         <module id="${rootArtifactId}-feature" dir="feature" name="${rootArtifactId}-feature">
             <modules>
-                <module id="${groupId}.${rootArtifactId}.feature" dir="feature"
-                        name="${groupId}.${rootArtifactId}.feature">
+                <module id="${groupId}.${rootArtifactId}.feature" dir="analytics-feature"
+                        name="${groupId}.${rootArtifactId}.analytics.feature">
+                    <fileSets>
+                        <fileSet filtered="true" encoding="UTF-8">
+                            <directory>src/main/resources</directory>
+                            <includes>
+                                <include>**/*.xml</include>
+                                <include>**/*.properties</include>
+                                <include>**/*.car</include>
+                                <include>**/*.db</include>
+                                <include>**/*.sql</include>
+                                <include>**/*.json</include>
+                                <include>**/*.inf</include>
+                                <include>**/*.hbs</include>
+                                <include>**/*.py</include>
+                            </includes>
+                        </fileSet>
+                        <fileSet filtered="false" encoding="UTF-8">
+                            <directory>src/main/resources/</directory>
+                            <includes>
+                                <include>**/*.png</include>
+                                <include>**/*.js</include>
+                                <include>**/*.sh</include>
+                                <include>**/*.css</include>
+                            </includes>
+                        </fileSet>
+                    </fileSets>
+                </module>
+
+                <module id="${groupId}.${rootArtifactId}.feature" dir="ui-feature"
+                        name="${groupId}.${rootArtifactId}.ui.feature">
+                    <fileSets>
+                        <fileSet filtered="true" encoding="UTF-8">
+                            <directory>src/main/resources</directory>
+                            <includes>
+                                <include>**/*.xml</include>
+                                <include>**/*.properties</include>
+                                <include>**/*.car</include>
+                                <include>**/*.db</include>
+                                <include>**/*.sql</include>
+                                <include>**/*.json</include>
+                                <include>**/*.inf</include>
+                                <include>**/*.hbs</include>
+                                <include>**/*.py</include>
+                            </includes>
+                        </fileSet>
+                        <fileSet filtered="false" encoding="UTF-8">
+                            <directory>src/main/resources/</directory>
+                            <includes>
+                                <include>**/*.png</include>
+                                <include>**/*.js</include>
+                                <include>**/*.sh</include>
+                                <include>**/*.css</include>
+                            </includes>
+                        </fileSet>
+                    </fileSets>
+                </module>
+
+                <module id="${groupId}.${rootArtifactId}.feature" dir="backend-feature"
+                        name="${groupId}.${rootArtifactId}.backend.feature">
                     <fileSets>
                         <fileSet filtered="true" encoding="UTF-8">
                             <directory>src/main/resources</directory>

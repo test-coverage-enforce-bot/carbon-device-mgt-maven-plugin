@@ -24,7 +24,7 @@
     <property name="sensorType2_dir" value="${sensorType2}"/>
     <property name="sensorType3_dir" value="${sensorType3}"/>
     <target name="clean">
-        <delete dir="${target-dir}" />
+        <delete dir="${target-dir}"/>
     </target>
     <target name="zip" depends="clean">
         <mkdir dir="${target-dir}"/>

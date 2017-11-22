@@ -99,10 +99,10 @@ public class DeviceTypeUtils {
     public static String replaceMqttProperty(String urlWithPlaceholders) {
         String MQTT_BROKER_HOST = null;
         String MQTT_PORT = null;
-        if(!DeviceTypeConstants.MQTT_BROKER_HOST.startsWith("$")){
+        if (!DeviceTypeConstants.MQTT_BROKER_HOST.startsWith("$")) {
             MQTT_BROKER_HOST = "\\$".concat(DeviceTypeConstants.MQTT_BROKER_HOST);
         }
-        if(!DeviceTypeConstants.MQTT_PORT.startsWith("$")){
+        if (!DeviceTypeConstants.MQTT_PORT.startsWith("$")) {
             MQTT_PORT = "\\$".concat(DeviceTypeConstants.MQTT_PORT);
         }
         urlWithPlaceholders = Utils.replaceSystemProperty(urlWithPlaceholders);

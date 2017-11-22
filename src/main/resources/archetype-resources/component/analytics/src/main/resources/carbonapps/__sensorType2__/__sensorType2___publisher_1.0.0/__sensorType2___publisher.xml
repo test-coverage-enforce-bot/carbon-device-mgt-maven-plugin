@@ -17,9 +17,10 @@
   ~ under the License.
   -->
 
-<eventPublisher name="EventPublisher_${sensorType2}" statistics="disable" trace="disable" xmlns="http://wso2.org/carbon/eventpublisher">
+<eventPublisher name="EventPublisher_${sensorType2}" statistics="disable" trace="disable"
+                xmlns="http://wso2.org/carbon/eventpublisher">
     <from streamName="org.wso2.iot.devices.${sensorType2}" version="1.0.0"/>
     <mapping customMapping="disable" type="wso2event"/>
-	<to eventAdapterType="secured-websocket"/>
+    <to eventAdapterType="secured-websocket"/>
 </eventPublisher>
 

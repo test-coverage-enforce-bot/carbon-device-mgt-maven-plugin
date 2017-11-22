@@ -20,12 +20,13 @@ package ${groupId}.${rootArtifactId}.api.dto;
 
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementWrapper;
-import javax.xml.bind.annotation.XmlRootElement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlRootElement;
+
 
 /**
  * This stores sensor event data for ${deviceType}.
@@ -38,13 +39,14 @@ public class SensorRecord {
     private Map<String, Object> values;
 
     /**
-     * Unique identifier for each recode
+     * Unique identifier for each recode.
      */
     @XmlElement(required = false, name = "id")
     private String id;
 
     /**
      * Gets the values.
+     *
      * @return the values
      */
     public Map<String, Object> getValues() {
@@ -53,6 +55,7 @@ public class SensorRecord {
 
     /**
      * Sets the values.
+     *
      * @param values
      */
     public void setValues(Map<String, Object> values) {
@@ -61,6 +64,7 @@ public class SensorRecord {
 
     /**
      * Gets the id.
+     *
      * @return the id
      */
     public String getId() {
@@ -69,6 +73,7 @@ public class SensorRecord {
 
     /**
      * Sets the id.
+     *
      * @param id set unique identifier
      */
     public void setId(String id) {
